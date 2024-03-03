@@ -1,4 +1,4 @@
-package nl.tudelft.trustchain.currencyii.util.taproot
+package tudelft.trustchain.currencyii.util.taproot
 
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.core.NetworkParameters

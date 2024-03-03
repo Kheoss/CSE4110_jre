@@ -1,4 +1,4 @@
-package java.nl.tudelft.ipv8.jvm.demo.util
+package nl.tudelft.ipv8.jvm.demo.util
 
 // Simulate the SharedPreferences interface
 interface SharedPreferences {
@@ -30,7 +30,6 @@ class SimpleSharedPreferences : SharedPreferences {
     }
 }
 
-// Then, simulate the Context class with getSharedPreferences method
 class SimulatedContext {
     fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
         return SimpleSharedPreferences()

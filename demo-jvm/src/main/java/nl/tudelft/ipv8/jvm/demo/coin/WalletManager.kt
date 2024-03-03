@@ -1,14 +1,14 @@
 package nl.tudelft.ipv8.jvm.demo.coin
 
-import java.nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
-import java.nl.tudelft.ipv8.jvm.demo.util.Log
+import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
+import nl.tudelft.ipv8.jvm.demo.util.Log
 
 import com.google.common.base.Joiner
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
 
 import nl.tudelft.ipv8.jvm.demo.coin.CoinCommunity.Companion.DEFAULT_BITCOIN_MAX_TIMEOUT
-import nl.tudelft.trustchain.currencyii.util.taproot.*
+import nl.tudelft.ipv8.jvm.demo.util.taproot.*
 import org.bitcoinj.core.*
 import org.bitcoinj.core.listeners.DownloadProgressTracker
 import org.bitcoinj.crypto.DeterministicKey
