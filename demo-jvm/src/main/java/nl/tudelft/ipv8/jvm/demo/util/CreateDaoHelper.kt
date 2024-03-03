@@ -8,14 +8,29 @@ import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import org.bitcoinj.core.Coin
 import org.bitcoinj.core.ECKey
 import nl.tudelft.ipv8.util.toHex
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
 
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.*
 import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
+
+import java.io.File
+
 class CreateDaoHelper {
 
     // TO DO: Instantiate wallet manager
-    public val walletManager = null;
+
+    private val network = BitcoinNetworkOptions.REG_TEST
+    private val seed = WalletManager.generateRandomDeterministicSeed(network)
+    private val config = WalletManagerConfiguration(
+                        network,
+                        // SerializedDeterministicKey(seed, seed.creationTime),
+                        seed,
+                        null
+                    )
+    private val walletDir = File("D:/workspace/uni/master/blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/coin/walletDir")
+
+    public val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair);
 
     public var ipv8Instance: IPv8? = null
         get() = field                     

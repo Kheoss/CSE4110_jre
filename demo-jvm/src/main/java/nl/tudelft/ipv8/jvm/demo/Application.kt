@@ -71,8 +71,6 @@ class Application {
             //setup ipv8 instance for daoHelpers 
             daoCreateHelper.ipv8Instance = ipv8;
             // TODO : Instantiate the Wallet Manager
-            val walletManager = null;
-            daoCreateHelper.walletManager = walletManager;
             
             while (true) {
                 for ((_, overlay) in ipv8.overlays) {
