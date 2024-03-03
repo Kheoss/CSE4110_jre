@@ -34,16 +34,6 @@ class Application {
         startIpv8()
     }
 
-    private fun createDiscoveryCommunity(): OverlayConfiguration<DiscoveryCommunity> {
-        val randomWalk = RandomWalk.Factory(timeout = 3.0, peers = 20)
-        val randomChurn = RandomChurn.Factory()
-
-        val periodicSimilarity = PeriodicSimilarity.Factory()
-        return OverlayConfiguration(
-            DiscoveryCommunity.Factory(),
-            listOf(randomWalk, randomChurn, periodicSimilarity)
-        )
-    }
 
     private fun createTrustChainCommunity(): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
@@ -58,14 +48,6 @@ class Application {
         )
     }
 
-    private fun createDemoCommunity(): OverlayConfiguration<DemoCommunity> {
-        val randomWalk = RandomWalk.Factory(timeout = 3.0, peers = 20)
-        return OverlayConfiguration(
-            Overlay.Factory(DemoCommunity::class.java),
-            listOf(randomWalk)
-        )
-    }
-
     private fun startIpv8() {
         val myKey = JavaCryptoProvider.generateKey()
         val myPeer = Peer(myKey)
@@ -74,9 +56,7 @@ class Application {
 
         val config = IPv8Configuration(
             overlays = listOf(
-                createDiscoveryCommunity(),
                 createTrustChainCommunity(),
-                createDemoCommunity()
             ), walkerInterval = 1.0
         )
 
@@ -86,7 +66,7 @@ class Application {
         scope.launch {
             while (true) {
                 for ((_, overlay) in ipv8.overlays) {
-                    printPeersInfo(overlay)
+                    // printPeersInfo(overlay)
                 }
                 logger.info("===")
                 delay(5000)
@@ -117,6 +97,18 @@ class Application {
         }
     }
     
+
+    // private fun createDao(overlay: Overlay){
+    //     val newDAO =
+    //     getCoinCommunity().createBitcoinGenesisWallet(
+    //         currentEntranceFee,
+    //         currentThreshold,
+    //         requireContext()
+    //     )
+    //     val walletManager = WalletManagerAndroid.getInstance()
+    //     walletManager.addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, requireContext())
+
+    // }
 }
 
 fun main() {
