@@ -706,6 +706,102 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
 
         @Volatile private var instance: WalletManager? = null
 
+        private fun hideStoredWallets(walletDir: File) {
+            val vWalletFileMainNet =
+                File(
+                    walletDir,
+                    "$MAIN_NET_WALLET_NAME.wallet"
+                )
+            val vChainFileMainNet =
+                File(
+                    walletDir,
+                    "$MAIN_NET_WALLET_NAME.spvchain"
+                )
+            val vWalletFileTestNet =
+                File(
+                    walletDir,
+                    "$TEST_NET_WALLET_NAME.wallet"
+                )
+            val vChainFileTestNet =
+                File(
+                    walletDir,
+                    "$TEST_NET_WALLET_NAME.spvchain"
+                )
+            val vWalletFileRegTest =
+                File(
+                    walletDir,
+                    "$REG_TEST_WALLET_NAME.wallet"
+                )
+            val vChainFileRegTest =
+                File(
+                    walletDir,
+                    "$REG_TEST_WALLET_NAME.spvchain"
+                )
+
+            val fileSuffix = System.currentTimeMillis()
+
+            if (vWalletFileMainNet.exists()) {
+                vWalletFileMainNet.renameTo(
+                    File(
+                        walletDir,
+                        "${MAIN_NET_WALLET_NAME}_backup_main_net_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed MainNet wallet file")
+            }
+
+            if (vChainFileMainNet.exists()) {
+                vChainFileMainNet.renameTo(
+                    File(
+                        walletDir,
+                        "${MAIN_NET_WALLET_NAME}_backup_main_net_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed MainNet chain file")
+            }
+
+            if (vWalletFileTestNet.exists()) {
+                vWalletFileTestNet.renameTo(
+                    File(
+                        walletDir,
+                        "${TEST_NET_WALLET_NAME}_backup_test_net_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed TestNet wallet file")
+            }
+
+            if (vChainFileTestNet.exists()) {
+                vChainFileTestNet.renameTo(
+                    File(
+                        walletDir,
+                        "${TEST_NET_WALLET_NAME}_backup_test_net_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed TestNet chain file")
+            }
+
+            if (vWalletFileRegTest.exists()) {
+                vWalletFileRegTest.renameTo(
+                    File(
+                        walletDir,
+                        "${REG_TEST_WALLET_NAME}_backup_reg_test_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed RegTest wallet file")
+            }
+
+            if (vChainFileRegTest.exists()) {
+                vChainFileRegTest.renameTo(
+                    File(
+                        walletDir,
+                        "${REG_TEST_WALLET_NAME}_backup_reg_test_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed RegTest chain file")
+            }
+        }
+
+
 
         fun getInstance(): WalletManager {
             return instance ?: throw IllegalStateException("WalletManager is not initialized")
@@ -728,6 +824,7 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
                 walletDir: File,
                 serializedDeterministicKey: SerializedDeterministicKey? = null,
                 addressPrivateKeyPair: AddressPrivateKeyPair? = null): WalletManager {
+            hideStoredWallets(walletDir)
             return WalletManager(walletManagerConfiguration, walletDir, serializedDeterministicKey, addressPrivateKeyPair).also{ instance = it}
             
             // instance = WalletManager(walletManagerConfiguration, walletDir, serializedDeterministicKey, addressPrivateKeyPair)

@@ -32,10 +32,14 @@ class CreateDaoHelper {
 
     public val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair);
 
+
     public var ipv8Instance: IPv8? = null
         get() = field                     
         set(value) { field = value }      
     
+
+   
+
     private fun getTrustChainCommunity(): TrustChainCommunity {
         return ipv8Instance?.getOverlay()
             ?: throw IllegalStateException("TrustChainCommunity is not configured")

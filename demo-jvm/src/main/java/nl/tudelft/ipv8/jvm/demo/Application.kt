@@ -38,7 +38,6 @@ class Application {
         startIpv8()
     }
 
-
     private fun createTrustChainCommunity(): OverlayConfiguration<TrustChainCommunity> {
         val settings = TrustChainSettings()
         val driver: SqlDriver = JdbcSqliteDriver(IN_MEMORY)
