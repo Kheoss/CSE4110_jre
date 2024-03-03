@@ -1,4 +1,4 @@
-package java.nl.tudelft.ipv8.jvm.demo.util.taproot;
+package nl.tudelft.ipv8.jvm.demo.util.taproot;
 
 import nl.tudelft.ipv8.util.toHex
 import java.nio.ByteBuffer

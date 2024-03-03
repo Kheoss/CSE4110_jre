@@ -3,12 +3,12 @@ package nl.tudelft.ipv8.jvm.demo.util.taproot;
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.sha256
 import nl.tudelft.ipv8.util.toHex
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeString
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeStringVector
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeVectorCTxIn
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeVectorCTxOut
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.read
-import package java.nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.serCompactSize
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeString
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeStringVector
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeVectorCTxIn
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.deserializeVectorCTxOut
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.read
+import nl.tudelft.ipv8.jvm.demo.util.taproot.Messages.Companion.serCompactSize
 import java.math.BigInteger
 import java.nio.ByteBuffer
 import java.nio.ByteOrder

@@ -259,6 +259,7 @@ class WalletManager(
         val pubKeyDataMusig = aggPubKey.getEncoded(true)
         val addressMuSig = TaprootUtil.keyToWitness(pubKeyDataMusig)
 
+
         val transaction = Transaction(params)
 
         transaction.addOutput(
