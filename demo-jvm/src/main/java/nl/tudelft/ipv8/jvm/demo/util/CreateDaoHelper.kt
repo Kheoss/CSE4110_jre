@@ -5,13 +5,21 @@ import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 import nl.tudelft.ipv8.jvm.demo.util.taproot.TaprootUtil
 import nl.tudelft.ipv8.jvm.demo.TrustChainHelper
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
+import org.bitcoinj.core.Coin
+import org.bitcoinj.core.ECKey
+import nl.tudelft.ipv8.util.toHex
+
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
 import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
 class CreateDaoHelper {
 
+    // TO DO: Instantiate wallet manager
+    public val walletManager = null;
+
     public var ipv8Instance: IPv8? = null
-        get() = field                     // getter
-        set(value) { field = value }      // setter
+        get() = field                     
+        set(value) { field = value }      
     
     private fun getTrustChainCommunity(): TrustChainCommunity {
         return ipv8Instance?.getOverlay()
@@ -35,9 +43,8 @@ class CreateDaoHelper {
         threshold: Int,
         context: SimulatedContext
     ): SWJoinBlockTransactionData {
-        val walletManager = WalletManagerAndroid.getInstance() // TO DO get wallet
         val (_, serializedTransaction) =
-            walletManager.safeCreationAndSendGenesisWallet(
+            walletManager!!.safeCreationAndSendGenesisWallet(
                 Coin.valueOf(entranceFee)
             )
 
@@ -62,11 +69,12 @@ class CreateDaoHelper {
         votingThreshold: Int,
         context: SimulatedContext
     ): SWJoinBlockTransactionData {
-        val walletManager = WalletManagerAndroid.getInstance()
-        val bitcoinPublicKey = walletManager.networkPublicECKeyHex()
+        val bitcoinPublicKey = walletManager!!.networkPublicECKeyHex()
         val trustChainPk = myPeer.publicKey.keyToBin()
         val nonceKey = TaprootUtil.generateSchnorrNonce(ECKey().privKeyBytes)
         val noncePoint = nonceKey.second.getEncoded(true).toHex()
+
+        if(walletManager == null) throw IllegalStateException("WalletManager is not configured")
 
         val blockData =
             SWJoinBlockTransactionData(
