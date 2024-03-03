@@ -5,6 +5,8 @@ import com.google.gson.JsonObject
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainTransaction
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity
 
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWBlockTransactionData
+
 data class SWJoinBlockTD(
     var SW_UNIQUE_ID: String,
     var SW_ENTRANCE_FEE: Long,

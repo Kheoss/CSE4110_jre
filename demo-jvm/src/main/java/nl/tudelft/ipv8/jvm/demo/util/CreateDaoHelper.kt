@@ -1,14 +1,25 @@
 package nl.tudelft.ipv8.jvm.demo.util
 
 import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
-import package nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 import nl.tudelft.ipv8.jvm.demo.util.taproot.TaprootUtil
 import nl.tudelft.ipv8.jvm.demo.TrustChainHelper
-
+import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
+import nl.tudelft.ipv8.IPv8
+import nl.tudelft.ipv8.Peer
 class CreateDaoHelper {
 
-    private val trustchain: TrustChainHelper by lazy {
-        TrustChainHelper(getTrustChainCommunity())
+    public var ipv8Instance: IPv8? = null
+        get() = field                     // getter
+        set(value) { field = value }      // setter
+    
+    private fun getTrustChainCommunity(): TrustChainCommunity {
+        return ipv8Instance?.getOverlay()
+            ?: throw IllegalStateException("TrustChainCommunity is not configured")
+    }
+
+    fun getTrustchain(): TrustChainHelper {
+        return TrustChainHelper(getTrustChainCommunity())
     }
 
 
@@ -69,7 +80,7 @@ class CreateDaoHelper {
 
         walletManager.storeNonceKey(blockData.getData().SW_UNIQUE_ID, context, nonceKey.first.privKeyBytes.toHex())
 
-        trustchain.createProposalBlock(blockData.getJsonString(), trustChainPk, blockData.blockType)
+        getTrustchain().createProposalBlock(blockData.getJsonString(), trustChainPk, blockData.blockType)
         return blockData
     }
 

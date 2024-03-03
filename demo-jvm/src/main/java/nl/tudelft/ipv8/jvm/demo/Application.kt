@@ -23,13 +23,17 @@ import nl.tudelft.ipv8.sqldelight.Database
 import java.net.InetAddress
 import java.util.*
 import kotlin.math.roundToInt
+import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
 
 
 
 class Application {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
-
+    
+    // Create dao helper
+    private val daoCreateHelper = CreateDaoHelper()
+   
     fun run() {
         startIpv8()
     }
@@ -64,6 +68,9 @@ class Application {
         ipv8.start()
 
         scope.launch {
+            //setup ipv8 instance for daoHelpers 
+                daoCreateHelper.ipv8Instance = ipv8;
+
             while (true) {
                 for ((_, overlay) in ipv8.overlays) {
                     // printPeersInfo(overlay)
