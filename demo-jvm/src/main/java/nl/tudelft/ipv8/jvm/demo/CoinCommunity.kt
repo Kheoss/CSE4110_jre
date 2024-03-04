@@ -9,6 +9,7 @@ import nl.tudelft.ipv8.Overlay
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
 
+import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
 
 
@@ -16,9 +17,13 @@ class CoinCommunity constructor(trustChain: TrustChainCommunity, myPeer: Peer){
     
     private val trustChain = trustChain;
     private val myPeer = myPeer;
+    public var ipv8Instance: IPv8? = null
+        get() = field                     
+        set(value) { field = value }      
+
    
     private fun getTrustChainCommunity(): TrustChainCommunity {
-        return trustChain
+        return ipv8Instance?.getOverlay()
             ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
     /**

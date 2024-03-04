@@ -24,6 +24,8 @@ import java.net.InetAddress
 import java.util.*
 import kotlin.math.roundToInt
 import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
+
+import nl.tudelft.ipv8.jvm.demo.CoinCommunity
 import java.util.Scanner
 
 
@@ -33,6 +35,8 @@ class Application {
     
     // Create dao helper
     private val daoCreateHelper = CreateDaoHelper()
+
+    private val coinCommunity = CoinCommunity();
    
     fun run() {
         startIpv8()
@@ -71,7 +75,7 @@ class Application {
             
             //setup ipv8 instance for daoHelpers 
             daoCreateHelper.ipv8Instance = ipv8;
-            // TODO : Instantiate the Wallet Manager
+            coinCommunity.ipv8Instance = ipv8;
             
             while (true) {
                 // for ((_, overlay) in ipv8.overlays) {
