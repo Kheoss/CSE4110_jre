@@ -3,10 +3,7 @@ package nl.tudelft.ipv8.jvm.demo
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import mu.KotlinLogging
 import nl.tudelft.ipv8.*
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
@@ -24,15 +21,18 @@ import java.net.InetAddress
 import java.util.*
 import kotlin.math.roundToInt
 import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
+import nl.tudelft.ipv8.jvm.demo.CoinCommunity
+
 import java.util.Scanner
 
 
 class Application {
-    private val scope = CoroutineScope(Dispatchers.Default)
+    private val scope = CoroutineScope(Dispatchers.Default + Job())
     private val logger = KotlinLogging.logger {}
     
     // Create dao helper
     private val daoCreateHelper = CreateDaoHelper()
+    private val coinCommunity = CoinCommunity()
    
     fun run() {
         startIpv8()
@@ -70,10 +70,14 @@ class Application {
         scope.launch {
             
             //setup ipv8 instance for daoHelpers 
-            daoCreateHelper.ipv8Instance = ipv8;
+            daoCreateHelper.ipv8Instance = ipv8
+            coinCommunity.ipv8Instance = ipv8
+            coinCommunity.myPeer = myPeer
             // TODO : Instantiate the Wallet Manager
             
             while (true) {
+                print("DA:")
+
                 // for ((_, overlay) in ipv8.overlays) {
                     // printPeersInfo(overlay)
                 // }

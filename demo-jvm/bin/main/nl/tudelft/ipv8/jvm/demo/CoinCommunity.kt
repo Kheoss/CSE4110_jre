@@ -13,10 +13,12 @@ import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
 
 
-class CoinCommunity constructor(trustChain: TrustChainCommunity, myPeer: Peer){
+class CoinCommunity constructor(){
     
-    private val trustChain = trustChain;
-    private val myPeer = myPeer;
+    public var myPeer: Peer? = null
+        get() = field
+        set(value) {field = value}
+
     public var ipv8Instance: IPv8? = null
         get() = field                     
         set(value) { field = value }      
@@ -30,7 +32,7 @@ class CoinCommunity constructor(trustChain: TrustChainCommunity, myPeer: Peer){
         * Discover shared wallets that you can join, return the latest blocks that the user knows of.
     */
     fun discoverSharedWallets(): List<TrustChainBlock> {
-        val swBlocks = trustChain.database.getBlocksWithType(JOIN_BLOCK)
+        val swBlocks = getTrustChainCommunity().database.getBlocksWithType(JOIN_BLOCK)
         return swBlocks
         .distinctBy { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID }
         .map { fetchLatestSharedWalletBlock(it, swBlocks) ?: it }
@@ -76,7 +78,7 @@ class CoinCommunity constructor(trustChain: TrustChainCommunity, myPeer: Peer){
         return discoverSharedWallets().filter {
             val blockData = SWJoinBlockTransactionData(it.transaction).getData()
             val userTrustchainPks = blockData.SW_TRUSTCHAIN_PKS
-            userTrustchainPks.contains(myPeer.publicKey.keyToBin().toHex())
+            userTrustchainPks.contains(myPeer!!.publicKey.keyToBin().toHex())
         }
     }
 
