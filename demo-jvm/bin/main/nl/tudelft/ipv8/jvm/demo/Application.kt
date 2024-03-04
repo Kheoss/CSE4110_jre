@@ -24,7 +24,7 @@ import java.net.InetAddress
 import java.util.*
 import kotlin.math.roundToInt
 import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
-
+import java.util.Scanner
 
 
 class Application {
@@ -66,23 +66,61 @@ class Application {
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
 
+
         scope.launch {
+            
             //setup ipv8 instance for daoHelpers 
             daoCreateHelper.ipv8Instance = ipv8;
             // TODO : Instantiate the Wallet Manager
             
             while (true) {
-                for ((_, overlay) in ipv8.overlays) {
+                // for ((_, overlay) in ipv8.overlays) {
                     // printPeersInfo(overlay)
-                }
-                logger.info("===")
-                delay(5000)
+                // }
+                // logger.info("===")
+                // delay(5000)
             }
         }
 
-        while (ipv8.isStarted()) {
-            Thread.sleep(1000)
+        // while (ipv8.isStarted()) {
+        //     while (true) {
+        //         print("command> ") // Prompt for command
+        //         val command = readLine() // Read command from standard input
+        //         if (command != null) {
+        //             if (command == "exit") {
+        //                 println("Exiting command line...")
+        //                 break
+        //             }
+        //             // Process the command
+        //             println("You entered: $command")
+        //             // Add more command processing logic here
+        //         }
+        //     }
+        //     // Thread.sleep(1000)
+        // }
+
+        val scanner = Scanner(System.`in`)
+        val commandLineThread = Thread {
+            try {
+                while (true) {
+                    print("command> ")
+                    while (!scanner.hasNextLine()) {
+                        Thread.sleep(100) // Sleep a bit waiting for input
+                    }
+                    val command = scanner.nextLine()
+                    if (command == "exit") {
+                        println("Exiting command line...")
+                        break
+                    }
+                    println("You entered: $command")
+                }
+            } catch (e: Exception) {
+                println("An error occurred: ${e.message}")
+            }
         }
+    
+        commandLineThread.start()
+        commandLineThread.join()
     }
 
     private fun printPeersInfo(overlay: Overlay) {

@@ -18,8 +18,6 @@ import java.io.File
 
 class CreateDaoHelper {
 
-    // TO DO: Instantiate wallet manager
-
     private val network = BitcoinNetworkOptions.REG_TEST
     private val seed = WalletManager.generateRandomDeterministicSeed(network)
     private val config = WalletManagerConfiguration(
@@ -28,7 +26,7 @@ class CreateDaoHelper {
                         seed,
                         null
                     )
-    private val walletDir = File("D:/workspace/uni/master/blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/coin/walletDir")
+    private val walletDir = File("wallet")
 
     public val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair);
 
