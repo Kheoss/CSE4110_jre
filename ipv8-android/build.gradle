@@ -13,7 +13,7 @@ ktlint {
 android {
 
     defaultConfig {
-        minSdkVersion 22
+        minSdkVersion 23
         compileSdk 34
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
