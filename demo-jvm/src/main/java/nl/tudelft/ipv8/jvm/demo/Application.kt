@@ -45,6 +45,8 @@ import nl.tudelft.ipv8.jvm.demo.util.WalletService
 
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 
+import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
+
 class Application {
 
     private val cacheDir = File("cacheDir")
@@ -98,20 +100,31 @@ class Application {
             coinCommunity.ipv8Instance = ipv8
             coinCommunity.myPeer = myPeer       
             delay(15000)
-            // while (true) {
+           
+
                 printAllSharedWallets()
                 delay(5000)
+
+                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
+                delay(2000)
                 logger.error("ADD BTC")
                 addBTC(WalletManager.getInstance()!!.protocolAddress().toString())
                 logger.error("Wait 50 seconds")
                 
-                delay(50000)
+                delay(5000)
                 logger.error("CREATE A WALLET")
                 createDao(myPeer)
                 delay(5000)
-                printAllSharedWallets()
-            // }
+                // printAllSharedWallets()
 
+                 while (true) {
+                printAllSharedWallets()
+                delay(1000)
+
+                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
+                delay(3000)
+            }
+           
         }
 
         while (ipv8.isStarted()) {
@@ -120,6 +133,10 @@ class Application {
        
     }
 
+
+    fun getUsers(trustChainCommunity: TrustChainCommunity): List<UserInfo> {
+        return trustChainCommunity.database.getUsers()
+    }
     /**
      * Add bitcoin to the wallet
      * @param address - The address where I have to send the BTC to.
