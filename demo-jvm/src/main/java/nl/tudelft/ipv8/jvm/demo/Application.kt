@@ -3,9 +3,13 @@ package nl.tudelft.ipv8.jvm.demo
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import nl.tudelft.ipv8.*
+import nl.tudelft.ipv8.jvm.demo.coin.*
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainSettings
 import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainSQLiteStore
@@ -19,16 +23,22 @@ import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
 import java.net.InetAddress
 import java.util.*
+
 import kotlin.math.roundToInt
+
+
+import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
 import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity
 
-import java.util.Scanner
 
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 
 class Application {
-    private val scope = CoroutineScope(Dispatchers.Default + Job())
+    private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
+
+    private val simContext = SimulatedContext()
     
     // Create dao helper
     private val daoCreateHelper = CreateDaoHelper()
@@ -65,66 +75,38 @@ class Application {
 
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
-
-
+        
         scope.launch {
-            
-            //setup ipv8 instance for daoHelpers 
             daoCreateHelper.ipv8Instance = ipv8
             coinCommunity.ipv8Instance = ipv8
-            coinCommunity.myPeer = myPeer
-            // TODO : Instantiate the Wallet Manager
-            
-            while (true) {
-                print("DA:")
+            coinCommunity.myPeer = myPeer       
+            // while (true) {
+                delay(15000)
+                printAllSharedWallets()
+                delay(1000)
+                logger.error("CREATE A WALLET")
+                // createDao(myPeer)
+                delay(5000)
+                printAllSharedWallets()
+            // }
 
-                // for ((_, overlay) in ipv8.overlays) {
-                    // printPeersInfo(overlay)
-                // }
-                // logger.info("===")
-                // delay(5000)
-            }
         }
 
-        // while (ipv8.isStarted()) {
-        //     while (true) {
-        //         print("command> ") // Prompt for command
-        //         val command = readLine() // Read command from standard input
-        //         if (command != null) {
-        //             if (command == "exit") {
-        //                 println("Exiting command line...")
-        //                 break
-        //             }
-        //             // Process the command
-        //             println("You entered: $command")
-        //             // Add more command processing logic here
-        //         }
-        //     }
-        //     // Thread.sleep(1000)
-        // }
-
-        val scanner = Scanner(System.`in`)
-        val commandLineThread = Thread {
-            try {
-                while (true) {
-                    print("command> ")
-                    while (!scanner.hasNextLine()) {
-                        Thread.sleep(100) // Sleep a bit waiting for input
-                    }
-                    val command = scanner.nextLine()
-                    if (command == "exit") {
-                        println("Exiting command line...")
-                        break
-                    }
-                    println("You entered: $command")
-                }
-            } catch (e: Exception) {
-                println("An error occurred: ${e.message}")
-            }
+        while (ipv8.isStarted()) {
+            Thread.sleep(1000)
         }
-    
-        commandLineThread.start()
-        commandLineThread.join()
+       
+    }
+
+    private fun printAllSharedWallets(){
+        val wallets = coinCommunity.fetchLatestJoinedSharedWalletBlocks()
+        
+        logger.error("Available wallets: " + wallets.size);
+
+        for(wallet in wallets){
+            val blockData = SWJoinBlockTransactionData(wallet.transaction).getData()
+            logger.error(blockData.SW_UNIQUE_ID);
+        }
     }
 
     private fun printPeersInfo(overlay: Overlay) {
@@ -147,17 +129,16 @@ class Application {
     }
     
 
-    // private fun createDao(overlay: Overlay){
-    //     val newDAO =
-    //     getCoinCommunity().createBitcoinGenesisWallet(
-    //         currentEntranceFee,
-    //         currentThreshold,
-    //         requireContext()
-    //     )
-    //     val walletManager = WalletManagerAndroid.getInstance()
-    //     walletManager.addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, requireContext())
-
-    // }
+    private fun createDao(myPeer: Peer){
+        val newDAO =
+        daoCreateHelper.createBitcoinGenesisWallet(
+            myPeer,
+            50000,
+            50,
+            simContext
+        )
+        WalletManager.getInstance()!!.addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
+    }
 }
 
 fun main() {
