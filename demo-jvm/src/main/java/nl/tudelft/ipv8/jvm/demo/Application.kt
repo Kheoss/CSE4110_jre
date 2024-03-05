@@ -32,9 +32,23 @@ import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity
 
 
+import java.net.HttpURLConnection
+import java.net.URL
+import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
+import java.io.File
+
+import nl.tudelft.ipv8.jvm.demo.util.WalletService
+
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 
 class Application {
+
+    private val cacheDir = File("cacheDir")
+
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
 
@@ -75,6 +89,9 @@ class Application {
 
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
+
+        WalletService.createGlobalWallet(cacheDir ?: throw Error("CacheDir not found"))
+
         
         scope.launch {
             daoCreateHelper.ipv8Instance = ipv8
@@ -84,6 +101,11 @@ class Application {
             // while (true) {
                 printAllSharedWallets()
                 delay(5000)
+                logger.error("ADD BTC")
+                addBTC(WalletManager.getInstance()!!.protocolAddress().toString())
+                logger.error("Wait 50 seconds")
+                
+                delay(50000)
                 logger.error("CREATE A WALLET")
                 createDao(myPeer)
                 delay(5000)
@@ -98,8 +120,47 @@ class Application {
        
     }
 
+    /**
+     * Add bitcoin to the wallet
+     * @param address - The address where I have to send the BTC to.
+     * @return Boolean - if the transaction was successful
+     */
+    private fun addBTC(address: String): Boolean {
+        val executor: ExecutorService =
+            Executors.newCachedThreadPool(Executors.defaultThreadFactory())
+        val future: Future<Boolean>
+
+        val url = "https://taproot.tribler.org/addBTC?address=$address"
+
+        future =
+            executor.submit(
+                object : Callable<Boolean> {
+                    override fun call(): Boolean {
+                        val connection = URL(url).openConnection() as HttpURLConnection
+
+                        try {
+                            // If it fails, check if there is enough balance available on the server
+                            // Otherwise reset the bitcoin network on the server (there is only 15k BTC available).
+                            // Also check if the Python server is still running!
+                            logger.error("Coin", url)
+                            logger.error("Coin", connection.responseMessage)
+                            return connection.responseCode == 200
+                        } finally {
+                            connection.disconnect()
+                        }
+                    }
+                }
+            )
+
+        return try {
+            future.get(10, TimeUnit.SECONDS)
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     private fun printAllSharedWallets(){
-        val wallets = coinCommunity.fetchLatestJoinedSharedWalletBlocks()
+        val wallets = coinCommunity.discoverSharedWallets()
         
         logger.error("Available wallets: " + wallets.size);
 
