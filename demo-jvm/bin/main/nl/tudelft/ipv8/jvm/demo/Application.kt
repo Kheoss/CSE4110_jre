@@ -80,12 +80,12 @@ class Application {
             daoCreateHelper.ipv8Instance = ipv8
             coinCommunity.ipv8Instance = ipv8
             coinCommunity.myPeer = myPeer       
+            delay(15000)
             // while (true) {
-                delay(15000)
                 printAllSharedWallets()
-                delay(1000)
+                delay(5000)
                 logger.error("CREATE A WALLET")
-                // createDao(myPeer)
+                createDao(myPeer)
                 delay(5000)
                 printAllSharedWallets()
             // }
