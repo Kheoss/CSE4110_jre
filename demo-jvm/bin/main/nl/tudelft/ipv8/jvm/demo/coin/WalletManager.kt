@@ -7,7 +7,7 @@ import com.google.common.base.Joiner
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
 
-import nl.tudelft.ipv8.jvm.demo.coin.CoinCommunity.Companion.DEFAULT_BITCOIN_MAX_TIMEOUT
+import nl.tudelft.ipv8.jvm.demo.CoinCommunity.Companion.DEFAULT_BITCOIN_MAX_TIMEOUT
 import nl.tudelft.ipv8.jvm.demo.util.taproot.*
 import org.bitcoinj.core.*
 import org.bitcoinj.core.listeners.DownloadProgressTracker
@@ -56,17 +56,17 @@ var minBlockchainPeers = MIN_BLOCKCHAIN_PEERS_TEST_NET
  * Make sure to also change the IP's (and URLs) in the kotlin code when swapping to a different server.
  */
 @Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class WalletManager(
-    walletManagerConfiguration: WalletManagerConfiguration,
-    walletDir: File,
-    serializedDeterministicKey: SerializedDeterministicKey? = null,
-    addressPrivateKeyPair: AddressPrivateKeyPair? = null
-) {
+class WalletManager private constructor(walletManagerConfiguration: WalletManagerConfiguration,
+                walletDir: File,
+                serializedDeterministicKey: SerializedDeterministicKey? = null,
+                addressPrivateKeyPair: AddressPrivateKeyPair? = null) {
+
     val kit: WalletAppKit
     val params: NetworkParameters
     var isDownloading: Boolean = true
     var progress: Int = 0
     val key = addressPrivateKeyPair
+    
 
     val onSetupCompletedListeners = mutableListOf<() -> Unit>()
 
@@ -74,129 +74,127 @@ class WalletManager(
         onSetupCompletedListeners.add(listener)
     }
 
-    /**
-     * Initializes WalletManager.
-     */
     init {
         Log.i("Coin", "Coin: WalletManager attempting to start.")
+            
+            params =
+                when (walletManagerConfiguration.network) {
+                    BitcoinNetworkOptions.TEST_NET -> TestNet3Params.get()
+                    BitcoinNetworkOptions.PRODUCTION -> MainNetParams.get()
+                    BitcoinNetworkOptions.REG_TEST -> RegTestParams.get()
+                }
 
-        params =
-            when (walletManagerConfiguration.network) {
-                BitcoinNetworkOptions.TEST_NET -> TestNet3Params.get()
-                BitcoinNetworkOptions.PRODUCTION -> MainNetParams.get()
-                BitcoinNetworkOptions.REG_TEST -> RegTestParams.get()
-            }
+            val filePrefix =
+                when (walletManagerConfiguration.network) {
+                    BitcoinNetworkOptions.TEST_NET -> TEST_NET_WALLET_NAME
+                    BitcoinNetworkOptions.PRODUCTION -> MAIN_NET_WALLET_NAME
+                    BitcoinNetworkOptions.REG_TEST -> REG_TEST_WALLET_NAME
+                }
 
-        val filePrefix =
-            when (walletManagerConfiguration.network) {
-                BitcoinNetworkOptions.TEST_NET -> TEST_NET_WALLET_NAME
-                BitcoinNetworkOptions.PRODUCTION -> MAIN_NET_WALLET_NAME
-                BitcoinNetworkOptions.REG_TEST -> REG_TEST_WALLET_NAME
-            }
-
-        kit =
-            object : WalletAppKit(params, walletDir, filePrefix) {
-                override fun onSetupCompleted() {
-                    // Make a fresh new key if no keys in stored wallet.
-                    if (wallet().keyChainGroupSize < 1) {
-                        Log.i("Coin", "Coin: Added manually created fresh key")
-                        wallet().importKey(ECKey())
+            kit =
+                object : WalletAppKit(params, walletDir, filePrefix) {
+                    override fun onSetupCompleted() {
+                        // Make a fresh new key if no keys in stored wallet.
+                        if (wallet().keyChainGroupSize < 1) {
+                            Log.i("Coin", "Coin: Added manually created fresh key")
+                            wallet().importKey(ECKey())
+                        }
+                        wallet().allowSpendingUnconfirmedTransactions()
+                        Log.i("Coin", "Coin: WalletManager started successfully.")
+                        onSetupCompletedListeners.forEach {
+                            Log.i("Coin", "Coin: calling listener $it")
+                            it()
+                        }
                     }
-                    wallet().allowSpendingUnconfirmedTransactions()
-                    Log.i("Coin", "Coin: WalletManager started successfully.")
-                    onSetupCompletedListeners.forEach {
-                        Log.i("Coin", "Coin: calling listener $it")
-                        it()
-                    }
+                }
+
+            minBlockchainPeers =
+                when (params) {
+                    RegTestParams.get() -> MIN_BLOCKCHAIN_PEERS_REG_TEST
+                    MainNetParams.get() -> MIN_BLOCKCHAIN_PEERS_PRODUCTION
+                    TestNet3Params.get() -> MIN_BLOCKCHAIN_PEERS_TEST_NET
+                    else -> minBlockchainPeers
+                }
+
+            if (params == RegTestParams.get()) {
+                try {
+                    val localHost = InetAddress.getByName(REG_TEST_FAUCET_IP)
+                    kit.setPeerNodes(PeerAddress(params, localHost, params.port))
+                } catch (e: UnknownHostException) {
+                    throw RuntimeException(e)
                 }
             }
 
-        minBlockchainPeers =
-            when (params) {
-                RegTestParams.get() -> MIN_BLOCKCHAIN_PEERS_REG_TEST
-                MainNetParams.get() -> MIN_BLOCKCHAIN_PEERS_PRODUCTION
-                TestNet3Params.get() -> MIN_BLOCKCHAIN_PEERS_TEST_NET
-                else -> minBlockchainPeers
-            }
-
-        if (params == RegTestParams.get()) {
-            try {
-                val localHost = InetAddress.getByName(REG_TEST_FAUCET_IP)
-                kit.setPeerNodes(PeerAddress(params, localHost, params.port))
-            } catch (e: UnknownHostException) {
-                throw RuntimeException(e)
-            }
-        }
-
-        if (serializedDeterministicKey != null) {
-            Log.i(
-                "Coin",
-                "Coin: received a key to import, will clear the wallet and download again."
-            )
-            val deterministicSeed =
-                DeterministicSeed(
-                    serializedDeterministicKey.seed,
-                    null,
-                    "",
-                    serializedDeterministicKey.creationTime
+            if (serializedDeterministicKey != null) {
+                Log.i(
+                    "Coin",
+                    "Coin: received a key to import, will clear the wallet and download again."
                 )
-            kit.restoreWalletFromSeed(deterministicSeed)
-        }
-
-        kit.setDownloadListener(
-            object : DownloadProgressTracker() {
-                override fun progress(
-                    pct: Double,
-                    blocksSoFar: Int,
-                    date: Date?
-                ) {
-                    super.progress(pct, blocksSoFar, date)
-                    val percentage = pct.toInt()
-                    progress = percentage
-                    println("Progress: $percentage")
-                    Log.i("Coin", "Progress: $percentage")
-                }
-
-                override fun doneDownload() {
-                    super.doneDownload()
-                    progress = 100
-                    Log.i("Coin", "Download Complete!")
-                    Log.i("Coin", "Balance: ${kit.wallet().balance}")
-                    isDownloading = false
-                }
+                val deterministicSeed =
+                    DeterministicSeed(
+                        serializedDeterministicKey.seed,
+                        null,
+                        "",
+                        serializedDeterministicKey.creationTime
+                    )
+                kit.restoreWalletFromSeed(deterministicSeed)
             }
-        )
 
-        Log.i("Coin", "Coin: starting the setup of kit.")
-        kit.setBlockingStartup(false)
-            .startAsync()
-            .awaitRunning()
+            kit.setDownloadListener(
+                object : DownloadProgressTracker() {
+                    override fun progress(
+                        pct: Double,
+                        blocksSoFar: Int,
+                        date: Date?
+                    ) {
+                        super.progress(pct, blocksSoFar, date)
+                        val percentage = pct.toInt()
+                        progress = percentage
+                        println("Progress: $percentage")
+                        Log.i("Coin", "Progress: $percentage")
+                    }
 
-        if (addressPrivateKeyPair != null) {
-            Log.i(
-                "Coin",
-                "Coin: Importing Address: ${addressPrivateKeyPair.address}, " +
-                    "with SK: ${addressPrivateKeyPair.privateKey}"
+                    override fun doneDownload() {
+                        super.doneDownload()
+                        progress = 100
+                        Log.i("Coin", "Download Complete!")
+                        Log.i("Coin", "Balance: ${kit.wallet().balance}")
+                        isDownloading = false
+                    }
+                }
             )
 
-            val privateKey = addressPrivateKeyPair.privateKey
-            val key = formatKey(privateKey)
+            Log.i("Coin", "Coin: starting the setup of kit.")
+            kit.setBlockingStartup(false)
+                .startAsync()
+                .awaitRunning()
 
-            Log.i(
-                "Coin",
-                "Coin: Address from private key is: " +
-                    LegacyAddress.fromKey(
-                        params,
-                        key
-                    ).toString()
-            )
+            if (addressPrivateKeyPair != null) {
+                Log.i(
+                    "Coin",
+                    "Coin: Importing Address: ${addressPrivateKeyPair.address}, " +
+                        "with SK: ${addressPrivateKeyPair.privateKey}"
+                )
 
-            kit.wallet().importKey(key)
-        }
-        Log.i("Coin", "Coin: finished the setup of kit.")
-        Log.i("Coin", "Coin: Imported Keys: ${kit.wallet().importedKeys}")
-        Log.i("Coin", "Coin: Imported Keys: ${kit.wallet().toString(true, false, false, null)}")
+                val privateKey = addressPrivateKeyPair.privateKey
+                val key = formatKey(privateKey)
+
+                Log.i(
+                    "Coin",
+                    "Coin: Address from private key is: " +
+                        LegacyAddress.fromKey(
+                            params,
+                            key
+                        ).toString()
+                )
+
+                kit.wallet().importKey(key)
+            }
+            Log.i("Coin", "Coin: finished the setup of kit.")
+            Log.i("Coin", "Coin: Imported Keys: ${kit.wallet().importedKeys}")
+            Log.i("Coin", "Coin: Imported Keys: ${kit.wallet().toString(true, false, false, null)}")
     }
+
 
     private fun formatKey(privateKey: String): ECKey {
         return if (privateKey.length == 51 || privateKey.length == 52) {
@@ -705,6 +703,134 @@ class WalletManager(
     }
 
     companion object {
+
+        @Volatile private var instance: WalletManager? = null
+
+        private fun hideStoredWallets(walletDir: File) {
+            val vWalletFileMainNet =
+                File(
+                    walletDir,
+                    "$MAIN_NET_WALLET_NAME.wallet"
+                )
+            val vChainFileMainNet =
+                File(
+                    walletDir,
+                    "$MAIN_NET_WALLET_NAME.spvchain"
+                )
+            val vWalletFileTestNet =
+                File(
+                    walletDir,
+                    "$TEST_NET_WALLET_NAME.wallet"
+                )
+            val vChainFileTestNet =
+                File(
+                    walletDir,
+                    "$TEST_NET_WALLET_NAME.spvchain"
+                )
+            val vWalletFileRegTest =
+                File(
+                    walletDir,
+                    "$REG_TEST_WALLET_NAME.wallet"
+                )
+            val vChainFileRegTest =
+                File(
+                    walletDir,
+                    "$REG_TEST_WALLET_NAME.spvchain"
+                )
+
+            val fileSuffix = System.currentTimeMillis()
+
+            if (vWalletFileMainNet.exists()) {
+                vWalletFileMainNet.renameTo(
+                    File(
+                        walletDir,
+                        "${MAIN_NET_WALLET_NAME}_backup_main_net_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed MainNet wallet file")
+            }
+
+            if (vChainFileMainNet.exists()) {
+                vChainFileMainNet.renameTo(
+                    File(
+                        walletDir,
+                        "${MAIN_NET_WALLET_NAME}_backup_main_net_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed MainNet chain file")
+            }
+
+            if (vWalletFileTestNet.exists()) {
+                vWalletFileTestNet.renameTo(
+                    File(
+                        walletDir,
+                        "${TEST_NET_WALLET_NAME}_backup_test_net_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed TestNet wallet file")
+            }
+
+            if (vChainFileTestNet.exists()) {
+                vChainFileTestNet.renameTo(
+                    File(
+                        walletDir,
+                        "${TEST_NET_WALLET_NAME}_backup_test_net_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed TestNet chain file")
+            }
+
+            if (vWalletFileRegTest.exists()) {
+                vWalletFileRegTest.renameTo(
+                    File(
+                        walletDir,
+                        "${REG_TEST_WALLET_NAME}_backup_reg_test_wallet_$fileSuffix.wallet"
+                    )
+                )
+                Log.i("Coin", "Renamed RegTest wallet file")
+            }
+
+            if (vChainFileRegTest.exists()) {
+                vChainFileRegTest.renameTo(
+                    File(
+                        walletDir,
+                        "${REG_TEST_WALLET_NAME}_backup_reg_test_spvchain_$fileSuffix.spvchain"
+                    )
+                )
+                Log.i("Coin", "Renamed RegTest chain file")
+            }
+        }
+
+
+
+        fun getInstance(): WalletManager {
+            return instance ?: throw IllegalStateException("WalletManager is not initialized")
+        }
+
+
+        fun isInitialized(): Boolean {
+            return instance != null
+        }
+
+        fun close() {
+            instance!!.kit.stopAsync().awaitTerminated()
+            instance = null
+        }
+
+        /**
+        * Initializes WalletManager.
+        */
+        fun createInstance(walletManagerConfiguration: WalletManagerConfiguration,
+                walletDir: File,
+                serializedDeterministicKey: SerializedDeterministicKey? = null,
+                addressPrivateKeyPair: AddressPrivateKeyPair? = null): WalletManager {
+            hideStoredWallets(walletDir)
+            return WalletManager(walletManagerConfiguration, walletDir, serializedDeterministicKey, addressPrivateKeyPair).also{ instance = it}
+            
+            // instance = WalletManager(walletManagerConfiguration, walletDir, serializedDeterministicKey, addressPrivateKeyPair)
+            // return instance
+        }
+
         /**
          * A method to create a serialized seed for use in BitcoinJ.
          * @param paramsRaw BitcoinNetworkOptions
