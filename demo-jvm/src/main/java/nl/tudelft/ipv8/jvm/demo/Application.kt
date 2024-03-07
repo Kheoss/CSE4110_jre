@@ -92,7 +92,7 @@ class Application {
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
 
-        WalletService.createGlobalWallet(cacheDir ?: throw Error("CacheDir not found"))
+        WalletService.createGlobalWallet(cacheDir)
 
         
         scope.launch {
@@ -108,7 +108,7 @@ class Application {
                 logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
                 delay(2000)
                 logger.error("ADD BTC")
-                addBTC(WalletManager.getInstance()!!.protocolAddress().toString())
+                addBTC(WalletManager.getInstance().protocolAddress().toString())
                 logger.error("Wait 50 seconds")
                 
                 delay(5000)
@@ -134,7 +134,7 @@ class Application {
     }
 
 
-    fun getUsers(trustChainCommunity: TrustChainCommunity): List<UserInfo> {
+    private fun getUsers(trustChainCommunity: TrustChainCommunity): List<UserInfo> {
         return trustChainCommunity.database.getUsers()
     }
     /**
@@ -215,7 +215,7 @@ class Application {
             50,
             simContext
         )
-        WalletManager.getInstance()!!.addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
+        WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
     }
 }
 
