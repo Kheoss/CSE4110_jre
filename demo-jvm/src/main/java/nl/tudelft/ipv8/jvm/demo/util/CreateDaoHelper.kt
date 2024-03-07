@@ -1,19 +1,17 @@
 package nl.tudelft.ipv8.jvm.demo.util
 
-import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
-import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
-import nl.tudelft.ipv8.jvm.demo.util.taproot.TaprootUtil
-import nl.tudelft.ipv8.jvm.demo.TrustChainHelper
-import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
-import org.bitcoinj.core.Coin
-import org.bitcoinj.core.ECKey
-import nl.tudelft.ipv8.util.toHex
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
-
-import nl.tudelft.ipv8.jvm.demo.coin.*
 import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
-
+import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
+import nl.tudelft.ipv8.jvm.demo.TrustChainHelper
+import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
+import nl.tudelft.ipv8.jvm.demo.util.taproot.TaprootUtil
+import nl.tudelft.ipv8.util.toHex
+import org.bitcoinj.core.Coin
+import org.bitcoinj.core.ECKey
 import java.io.File
 
 class CreateDaoHelper {
@@ -28,22 +26,18 @@ class CreateDaoHelper {
                     )
     private val walletDir = File("wallet")
 
-    public val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair);
+    private val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
 
 
-    public var ipv8Instance: IPv8? = null
-        get() = field                     
-        set(value) { field = value }      
-    
+    var ipv8Instance: IPv8? = null
 
-   
 
     private fun getTrustChainCommunity(): TrustChainCommunity {
         return ipv8Instance?.getOverlay()
             ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
 
-    fun getTrustchain(): TrustChainHelper {
+    private fun getTrustchain(): TrustChainHelper {
         return TrustChainHelper(getTrustChainCommunity())
     }
 
@@ -61,7 +55,7 @@ class CreateDaoHelper {
         context: SimulatedContext
     ): SWJoinBlockTransactionData {
         val (_, serializedTransaction) =
-            walletManager!!.safeCreationAndSendGenesisWallet(
+            walletManager.safeCreationAndSendGenesisWallet(
                 Coin.valueOf(entranceFee)
             )
 
@@ -79,21 +73,19 @@ class CreateDaoHelper {
      * 1.2 Finishes the last step of creating a genesis shared bitcoin wallet.
      * Posts a self-signed trust chain block containing the shared wallet data.
      */
-    fun broadcastCreatedSharedWallet(
+        private fun broadcastCreatedSharedWallet(
         myPeer: Peer,
         transactionSerialized: String,
         entranceFee: Long,
         votingThreshold: Int,
         context: SimulatedContext
     ): SWJoinBlockTransactionData {
-        val bitcoinPublicKey = walletManager!!.networkPublicECKeyHex()
+        val bitcoinPublicKey = walletManager.networkPublicECKeyHex()
         val trustChainPk = myPeer.publicKey.keyToBin()
         val nonceKey = TaprootUtil.generateSchnorrNonce(ECKey().privKeyBytes)
         val noncePoint = nonceKey.second.getEncoded(true).toHex()
 
-        if(walletManager == null) throw IllegalStateException("WalletManager is not configured")
-
-        val blockData =
+            val blockData =
             SWJoinBlockTransactionData(
                 entranceFee,
                 transactionSerialized,
