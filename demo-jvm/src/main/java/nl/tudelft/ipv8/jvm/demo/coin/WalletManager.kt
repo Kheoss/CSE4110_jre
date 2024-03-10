@@ -661,7 +661,7 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
         context: SimulatedContext,
         privateKey: String
     ) {
-        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)!!
+        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)
         val editor = nonceKeyData.edit()
         Log.i("NONCE_KEY", "Stored key for DAO: $swUniqueId")
         Log.i("NONCE_KEY", privateKey)
@@ -678,7 +678,7 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
         swUniqueId: String,
         context: SimulatedContext
     ): Pair<ECKey, ECPoint> {
-        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)!!
+        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)
         val nonce = TaprootUtil.generateSchnorrNonce(ECKey().privKeyBytes)
         val privateKey = nonce.first.privKey.toByteArray().toHex()
         val editor = nonceKeyData.edit()
@@ -698,7 +698,7 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
         swUniqueId: String,
         context: SimulatedContext
     ): Pair<ECKey, ECPoint> {
-        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)!!
+        val nonceKeyData = context.getSharedPreferences("nonce_keys", 0)
         return TaprootUtil.generateSchnorrNonce(nonceKeyData.getString(swUniqueId, "")!!.hexToBytes())
     }
 

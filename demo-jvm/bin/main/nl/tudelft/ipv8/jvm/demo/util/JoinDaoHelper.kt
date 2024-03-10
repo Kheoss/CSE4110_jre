@@ -1,8 +1,14 @@
 package nl.tudelft.ipv8.jvm.demo.util
 
-import com.sun.tools.javac.util.Context
+
+import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
+import nl.tudelft.ipv8.jvm.demo.util.Log
+
+import nl.tudelft.ipv8.IPv8
 import nl.tudelft.ipv8.Peer
-import nl.tudelft.ipv8.android.IPv8Android
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
+import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainBlock
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainTransaction
@@ -16,20 +22,36 @@ import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity.Companion.SIGNATURE_AGREEMENT_BLOCK
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity.Companion.SIGNATURE_ASK_BLOCK
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerAndroid
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.*
 import org.bitcoinj.core.Coin
 import org.bitcoinj.core.ECKey
 import java.math.BigInteger
+import java.io.File
 
-class DAOJoinHelper {
+class JoinDaoHelper {
+    
+    private val network = BitcoinNetworkOptions.REG_TEST
+    private val seed = WalletManager.generateRandomDeterministicSeed(network)
+    private val config = WalletManagerConfiguration(
+                        network,
+                        // SerializedDeterministicKey(seed, seed.creationTime),
+                        seed,
+                        null
+                    )
+    private val walletDir = File("wallet")
+
+    private val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
+
+    var ipv8Instance: IPv8? = null
+
+
     private fun getTrustChainCommunity(): TrustChainCommunity {
-        return IPv8Android.getInstance().getOverlay()
+        return ipv8Instance?.getOverlay()
             ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
 
-    private val trustchain: TrustChainHelper by lazy {
-        TrustChainHelper(getTrustChainCommunity())
+    private fun getTrustchain(): TrustChainHelper {
+        return TrustChainHelper(getTrustChainCommunity())
     }
 
     /**
@@ -54,6 +76,7 @@ class DAOJoinHelper {
 
         val proposalIDSignature = SWUtil.randomUUID()
 
+        val trustchain = getTrustchain()
         var askSignatureBlockData =
             SWSignatureAskTransactionData(
                 blockData.SW_UNIQUE_ID,
@@ -100,8 +123,7 @@ class DAOJoinHelper {
      * @param sharedWalletData data of the shared wallet that you want to join.
      */
     private fun createBitcoinSharedWalletForJoining(sharedWalletData: SWJoinBlockTD): String {
-        val walletManager = WalletManagerAndroid.getInstance()
-
+      
         val oldTransaction = sharedWalletData.SW_TRANSACTION_SERIALIZED
         val bitcoinPublicKeys = ArrayList<String>()
         bitcoinPublicKeys.addAll(sharedWalletData.SW_BITCOIN_PKS)
@@ -130,12 +152,10 @@ class DAOJoinHelper {
         walletBlockData: TrustChainTransaction,
         blockData: SWSignatureAskBlockTD,
         responses: List<SWResponseSignatureBlockTD>,
-        context: Context
+        context: SimulatedContext
     ) {
         val oldWalletBlockData = SWJoinBlockTransactionData(walletBlockData)
         val newTransactionSerialized = blockData.SW_TRANSACTION_SERIALIZED
-
-        val walletManager = WalletManagerAndroid.getInstance()
 
         val signaturesOfOldOwners =
             responses.map {
@@ -177,11 +197,10 @@ class DAOJoinHelper {
         myPeer: Peer,
         oldBlockData: SWJoinBlockTransactionData,
         serializedTransaction: String,
-        context: Context
+        context: SimulatedContext
     ) {
         val newData = SWJoinBlockTransactionData(oldBlockData.jsonData)
-        val walletManager = WalletManagerAndroid.getInstance()
-
+        val trustchain = getTrustchain()
         newData.addBitcoinPk(walletManager.networkPublicECKeyHex())
         newData.addTrustChainPk(myPeer.publicKey.keyToBin().toHex())
         newData.setTransactionSerialized(serializedTransaction)
@@ -210,10 +229,12 @@ class DAOJoinHelper {
             joinBlock: SWJoinBlockTD,
             myPublicKey: ByteArray,
             votedInFavor: Boolean,
-            context: Context
+            context: SimulatedContext,
+            ipv8Instance: IPv8,
         ) {
-            val trustchain = TrustChainHelper(IPv8Android.getInstance().getOverlay() ?: return)
+            val trustchain = TrustChainHelper(ipv8Instance.getOverlay() ?: return)
             val blockData = SWSignatureAskTransactionData(block.transaction).getData()
+            val walletManager = WalletManager.getInstance();
 
             Log.i(
                 "Coin",
@@ -229,7 +250,6 @@ class DAOJoinHelper {
             }
             Log.i("Coin", "Signing join block transaction: $blockData")
 
-            val walletManager = WalletManagerAndroid.getInstance()
 
             val newTransactionSerialized = blockData.SW_TRANSACTION_SERIALIZED
             val signature =

@@ -16,8 +16,6 @@ dependencies {
     implementation 'io.github.microutils:kotlin-logging:1.7.7'
 
     implementation "app.cash.sqldelight:sqlite-driver:$sqldelight_version"
-    implementation project(':ipv8-android')
-    implementation project(':ipv8-android')
 }
 
 run {

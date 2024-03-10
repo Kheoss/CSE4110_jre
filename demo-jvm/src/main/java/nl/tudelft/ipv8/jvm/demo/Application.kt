@@ -29,6 +29,7 @@ import kotlin.math.roundToInt
 
 import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
 import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
+import nl.tudelft.ipv8.jvm.demo.util.JoinDaoHelper
 import nl.tudelft.ipv8.jvm.demo.CoinCommunity
 
 
@@ -47,6 +48,10 @@ import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 
 import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
 
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
+import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+
 class Application {
 
     private val cacheDir = File("cacheDir")
@@ -57,7 +62,8 @@ class Application {
     private val simContext = SimulatedContext()
     
     // Create dao helper
-    private val daoCreateHelper = CreateDaoHelper()
+    private var daoCreateHelper: CreateDaoHelper = CreateDaoHelper()
+    private var daoJoinHelper: JoinDaoHelper = JoinDaoHelper()
     private val coinCommunity = CoinCommunity()
    
     fun run() {
@@ -77,6 +83,22 @@ class Application {
         )
     }
 
+    private fun generateWalletManagerInstance(myPeer: Peer) : WalletManager{
+        val network = BitcoinNetworkOptions.REG_TEST
+         val seed = WalletManager.generateRandomDeterministicSeed(network)
+         val config = WalletManagerConfiguration(
+                            network,
+                            // SerializedDeterministicKey(seed, seed.creationTime),
+                            seed,
+                            null
+                        )
+         val walletDir = File("wallet-" + myPeer.publicKey)
+    
+         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
+    
+        return walletManager;
+    }
+
     private fun startIpv8() {
         val myKey = JavaCryptoProvider.generateKey()
         val myPeer = Peer(myKey)
@@ -89,14 +111,19 @@ class Application {
             ), walkerInterval = 1.0
         )
 
+        
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
-
-        WalletService.createGlobalWallet(cacheDir)
-
         
+        WalletService.createGlobalWallet(cacheDir)
+        
+        val walletManager = generateWalletManagerInstance(myPeer)
+     
+    
         scope.launch {
             daoCreateHelper.ipv8Instance = ipv8
+            daoJoinHelper.ipv8Instance = ipv8
+
             coinCommunity.ipv8Instance = ipv8
             coinCommunity.myPeer = myPeer       
             delay(15000)
@@ -108,7 +135,7 @@ class Application {
                 logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
                 delay(2000)
                 logger.error("ADD BTC")
-                addBTC(WalletManager.getInstance().protocolAddress().toString())
+                addBTC(walletManager.protocolAddress().toString())
                 logger.error("Wait 50 seconds")
                 
                 delay(5000)
