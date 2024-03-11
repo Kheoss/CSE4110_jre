@@ -54,7 +54,7 @@ import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
 
 class Application {
 
-    private val cacheDir = File("cacheDir")
+    private var cacheDir: File? = null
 
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
@@ -62,9 +62,9 @@ class Application {
     private val simContext = SimulatedContext()
     
     // Create dao helper
-    private var daoCreateHelper: CreateDaoHelper = CreateDaoHelper()
-    private var daoJoinHelper: JoinDaoHelper = JoinDaoHelper()
-    private val coinCommunity = CoinCommunity()
+    private var daoCreateHelper: CreateDaoHelper? = null
+    private var daoJoinHelper: JoinDaoHelper? = null
+    private var coinCommunity: CoinCommunity? = null
    
     fun run() {
         startIpv8()
@@ -85,16 +85,24 @@ class Application {
 
     private fun generateWalletManagerInstance(myPeer: Peer) : WalletManager{
         val network = BitcoinNetworkOptions.REG_TEST
-         val seed = WalletManager.generateRandomDeterministicSeed(network)
-         val config = WalletManagerConfiguration(
+        val seed = WalletManager.generateRandomDeterministicSeed(network)
+        val config = WalletManagerConfiguration(
                             network,
                             // SerializedDeterministicKey(seed, seed.creationTime),
                             seed,
                             null
                         )
-         val walletDir = File("wallet-" + myPeer.publicKey)
+//        val walletDir = File("wallet-" + myPeer.publicKey)
+
+        val walletDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/wallet-" + myPeer.publicKey)
+        walletDir.mkdir()
+        logger.error ("AAAAAAAAAAAAAAAAAAAAAA")
+//        logger.error
+//        println(walletDir.mkdir())
+
+
     
-         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
+        val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
     
         return walletManager;
     }
@@ -114,18 +122,25 @@ class Application {
         
         val ipv8 = IPv8(endpoint, config, myPeer)
         ipv8.start()
+
+        cacheDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/cacheDir-" + myPeer.publicKey)
+        cacheDir!!.mkdir()
         
-        WalletService.createGlobalWallet(cacheDir)
+        WalletService.createGlobalWallet(cacheDir!!)
         
         val walletManager = generateWalletManagerInstance(myPeer)
+
+        daoCreateHelper = CreateDaoHelper()
+        daoJoinHelper = JoinDaoHelper()
+        coinCommunity = CoinCommunity()
      
     
         scope.launch {
-            daoCreateHelper.ipv8Instance = ipv8
-            daoJoinHelper.ipv8Instance = ipv8
+            daoCreateHelper!!.ipv8Instance = ipv8
+            daoJoinHelper!!.ipv8Instance = ipv8
 
-            coinCommunity.ipv8Instance = ipv8
-            coinCommunity.myPeer = myPeer       
+            coinCommunity!!.ipv8Instance = ipv8
+            coinCommunity!!.myPeer = myPeer
             delay(15000)
            
 
@@ -139,6 +154,7 @@ class Application {
                 logger.error("Wait 50 seconds")
                 
                 delay(5000)
+                logger.error ("")
                 logger.error("CREATE A WALLET")
                 createDao(myPeer)
                 delay(5000)
@@ -204,7 +220,7 @@ class Application {
     }
 
     private fun printAllSharedWallets(){
-        val wallets = coinCommunity.discoverSharedWallets()
+        val wallets = coinCommunity!!.discoverSharedWallets()
         
         logger.error("Available wallets: " + wallets.size);
 
@@ -236,7 +252,7 @@ class Application {
 
     private fun createDao(myPeer: Peer){
         val newDAO =
-        daoCreateHelper.createBitcoinGenesisWallet(
+        daoCreateHelper!!.createBitcoinGenesisWallet(
             myPeer,
             50000,
             50,

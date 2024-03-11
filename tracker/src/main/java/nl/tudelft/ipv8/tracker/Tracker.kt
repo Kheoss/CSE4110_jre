@@ -62,6 +62,8 @@ class TrackerCommunity : Community() {
             .filter { it != peer }
         val introPeer = if (introPeers.isNotEmpty()) introPeers.random() else null
 
+        logger.debug(introPeers.toString())
+
         val packet = createIntroductionResponse(
             newPeer,
             payload.identifier,

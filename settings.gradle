@@ -1,2 +1,2 @@
-include ':ipv8', ':demo-android', ':demo-jvm', ':tracker'
+include ':ipv8', ':demo-android', ':demo-jvm', ':tracker', ':ipv8-jvm'
 rootProject.name = 'IPv8'
