@@ -8,7 +8,6 @@ import nl.tudelft.ipv8.messaging.Packet
 import nl.tudelft.ipv8.messaging.payload.IntroductionRequestPayload
 import nl.tudelft.ipv8.messaging.udp.UdpEndpoint
 import nl.tudelft.ipv8.util.addressIsLan
-import nl.tudelft.ipv8.util.sha1
 import nl.tudelft.ipv8.util.toHex
 import java.net.InetAddress
 import java.util.*
@@ -17,8 +16,8 @@ private val logger = KotlinLogging.logger {}
 
 @OptIn(ExperimentalUnsignedTypes::class)
 class TrackerCommunity : Community() {
-    override val serviceId: String = sha1(defaultCryptoProvider.generateKey().keyToBin()).toHex()
-
+//    override val serviceId: String = sha1(defaultCryptoProvider.generateKey().keyToBin()).toHex()
+    override val serviceId = "5ad767b05ae592a02488272ca2a86b847d4562e1"
     override fun onPacket(packet: Packet) {
         val sourceAddress = packet.source
         val data = packet.data
@@ -30,10 +29,16 @@ class TrackerCommunity : Community() {
 
         val msgId = data[prefix.size].toUByte().toInt()
 
+        logger.info { "packet" }
+        logger.info { packet.data }
+        logger.info { msgId }
+
         if (msgId == MessageId.INTRODUCTION_REQUEST) {
             val packetPrefix = data.copyOfRange(0, prefix.size)
             val (peer, payload) =
                 packet.getAuthPayload(IntroductionRequestPayload.Deserializer)
+
+            logger.info { "Received introduction req" }
             onGenericIntroductionRequest(peer, payload, packetPrefix)
         } else {
             logger.debug { "Tracker received unknown message $msgId" }
@@ -61,6 +66,8 @@ class TrackerCommunity : Community() {
         val introPeers = network.getPeersForService(prefix.toHex())
             .filter { it != peer }
         val introPeer = if (introPeers.isNotEmpty()) introPeers.random() else null
+
+        logger.debug(introPeers.toString())
 
         val packet = createIntroductionResponse(
             newPeer,

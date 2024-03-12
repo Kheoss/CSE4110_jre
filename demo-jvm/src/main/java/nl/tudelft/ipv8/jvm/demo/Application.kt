@@ -82,7 +82,7 @@ class Application {
                         )
 //        val walletDir = File("wallet-" + myPeer.publicKey)
 
-        val walletDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/wallet-" + myPeer.publicKey)
+        val walletDir = File("wallet-" + myPeer.publicKey)
         walletDir.mkdir()
     
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
@@ -140,24 +140,14 @@ class Application {
                 delay(5000)
                 logger.error ("")
                 logger.error("CREATE A WALLET")
-//                createDao(myPeer)
-//                delay(5000)
-                // printAllSharedWallets()
 
-//                 while (true) {
-//                printAllSharedWallets()
-//                delay(1000)
-//
-//                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
-//                delay(3000)
-//            }
+            }
            
         }
 
         while (ipv8!!.isStarted()) {
             Thread.sleep(1000)
-        }
-       
+        }     
     }
 
     fun interpretCommand(command: String) {
@@ -175,6 +165,7 @@ class Application {
         }
     }
 
+    
 
     private fun getUsers(trustChainCommunity: TrustChainCommunity): List<UserInfo> {
         return trustChainCommunity.database.getUsers()
@@ -260,7 +251,159 @@ class Application {
         WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
         return newDAO.getData().SW_UNIQUE_ID
     }
-}
+
+
+     /**
+     * Join a shared bitcoin wallet.
+     */
+    private fun joinSharedWalletClicked(block: TrustChainBlock, myPeer: Peer) {
+        val mostRecentSWBlock =
+            coinCommunity!!.fetchLatestSharedWalletBlock(block.calculateHash())
+                ?: block
+
+        // Add a proposal to trust chain to join a shared wallet
+        val proposeBlockData =
+            try {
+                daoJoinHelper??.proposeJoinWallet(myPeer,
+                    mostRecentSWBlock
+                ).getData()
+            } catch (t: Throwable) {
+                Log.e("Coin", "Join wallet proposal failed. ${t.message ?: "No further information"}.")
+                return
+            }
+
+    }
+
+
+     /**
+     * Collect the signatures of a join proposal
+     */
+    private fun collectJoinWalletResponses(blockData: SWSignatureAskBlockTD): List<SWResponseSignatureBlockTD>? {
+        val responses =
+            getCoinCommunity().fetchProposalResponses(
+                blockData.SW_UNIQUE_ID,
+                blockData.SW_UNIQUE_PROPOSAL_ID
+            )
+        Log.i(
+            "Coin",
+            "Waiting for signatures. ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+        setAlertText(
+            "Collecting signatures: ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+        if (responses.size >= blockData.SW_SIGNATURES_REQUIRED) {
+
+            return responses
+        }
+        return null
+    }
+
+  
+
+      /**
+     * Given a shared wallet proposal block, calculate the signature and respond with a trust chain block.
+     */
+    private fun joinAskBlockReceived(
+        block: TrustChainBlock,
+        myPublicKey: ByteArray,
+        votedInFavor: Boolean,
+    ) {
+        val context = simContext
+        val latestHash =
+            SWSignatureAskTransactionData(block.transaction).getData()
+                .SW_PREVIOUS_BLOCK_HASH
+        val mostRecentSWBlock =
+            fetchLatestSharedWalletBlock(latestHash.hexToBytes())
+                ?: throw IllegalStateException("Most recent DAO block not found")
+        val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
+        val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
+
+        joinDaoHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
+    
+        sendSignaturesNotitfication()
+    
+        // check whatever signatures are enough
+        // @todo this action should wait for joinAskBlockReceived
+
+        // @todo fetch this propose block
+        var proposeBlockData = null
+
+        var signatures: signatures = collectJoinWalletResponses(proposeBlockData)
+
+        if(signatures != null){
+            tryExecuteJoinProposalTransaction(myPeer, signatures, proposeBlockData)
+            sendSignaturesAndTransactionNotitfication()
+        }
+
+    }
+
+
+    /**
+     * CUSTOM MESSAGE
+     */
+
+     class MyMessage(val message: String) : Serializable {
+        override fun serialize(): ByteArray {
+            return message.toByteArray()
+        }
+    
+        companion object Deserializer : Deserializable<MyMessage> {
+            override fun deserialize(buffer: ByteArray, offset: Int): Pair<MyMessage, Int> {
+                return Pair(MyMessage(buffer.toString(Charsets.UTF_8)), buffer.size)
+            }
+        }
+    }
+   
+    // TO DO : DO WE NEED TO SYNC THE MESSAGE_ID WITH ALREADY EXISTING IDS ?
+    var MESSAGE_ID = 1
+    
+    fun broadcastVoted(msg: String) {
+        for (peer in getPeers()) {
+            val packet = serializePacket(MESSAGE_ID, MyMessage(msg))
+            send(peer.address, packet)
+        }
+    }
+
+    @Serializable
+    data class SignedData(val name: String, val age: Int)
+
+    //  END CUSTOM MESSAGE
+    private fun sendSignaturesNotitfication(){
+        val data = SignedData("voted", 0)
+        val jsonString = Json.encodeToString(User.serializer(), data)
+        broadcastVoted(jsonString)
+    }
+
+      //  END CUSTOM MESSAGE
+      private fun sendSignaturesAndTransactionNotitfication(){
+        val data = SignedData("votedAndUpdated", 0)
+        val jsonString = Json.encodeToString(User.serializer(), data)
+        broadcastVoted(jsonString)
+    }
+
+    private fun tryExecuteJoinProposalTransaction(myPeer: Peer, signatures: signatures, proposeBlockData: ){
+        try {
+
+            val mostRecentSWBlock =
+            coinCommunity!!.fetchLatestSharedWalletBlock(block.calculateHash())
+
+            daoJoinHelper.joinBitcoinWallet(
+            myPeer,
+            mostRecentSWBlock.transaction,
+            proposeBlockData,
+            signatures,
+            simContext
+        )
+            
+            WalletManager.getInstance().addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, context)
+        } catch (t: Throwable) {
+            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        }
+    }
+
+    
 
 fun main() {
     val app = Application()

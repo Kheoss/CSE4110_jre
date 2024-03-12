@@ -1,5 +1,6 @@
 package nl.tudelft.ipv8.jvm.demo
 
+
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
@@ -9,52 +10,32 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import nl.tudelft.ipv8.*
-import nl.tudelft.ipv8.jvm.demo.coin.*
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainSettings
 import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainSQLiteStore
+import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
+import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
+import nl.tudelft.ipv8.jvm.demo.util.*
 import nl.tudelft.ipv8.keyvault.JavaCryptoProvider
 import nl.tudelft.ipv8.messaging.EndpointAggregator
 import nl.tudelft.ipv8.messaging.udp.UdpEndpoint
-import nl.tudelft.ipv8.peerdiscovery.DiscoveryCommunity
-import nl.tudelft.ipv8.peerdiscovery.strategy.PeriodicSimilarity
-import nl.tudelft.ipv8.peerdiscovery.strategy.RandomChurn
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
-import java.net.InetAddress
-import java.util.*
-
-import kotlin.math.roundToInt
-
-
-import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
-import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
-import nl.tudelft.ipv8.jvm.demo.util.JoinDaoHelper
-import nl.tudelft.ipv8.jvm.demo.CoinCommunity
-
-
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
 import java.io.File
-
-import nl.tudelft.ipv8.jvm.demo.util.WalletService
-
-import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
-
-import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
-
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
-import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+import java.net.HttpURLConnection
+import java.net.InetAddress
+import java.net.URI
+import java.net.URL
+import java.util.*
+import java.util.concurrent.*
+import kotlin.math.roundToInt
 
 class Application {
 
-    private val cacheDir = File("cacheDir")
+    private var cacheDir: File? = null
 
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
@@ -62,11 +43,18 @@ class Application {
     private val simContext = SimulatedContext()
     
     // Create dao helper
-    private var daoCreateHelper: CreateDaoHelper = CreateDaoHelper()
-    private var daoJoinHelper: JoinDaoHelper = JoinDaoHelper()
-    private val coinCommunity = CoinCommunity()
-   
+    private var daoCreateHelper: CreateDaoHelper? = null
+    private var daoJoinHelper: JoinDaoHelper? = null
+    private var coinCommunity: CoinCommunity? = null
+
+    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+
+    private var ipv8: IPv8? = null
+    private val myKey = JavaCryptoProvider.generateKey()
+    private val myPeer = Peer(myKey)
+
     fun run() {
+        commandListener.connect()
         startIpv8()
     }
 
@@ -85,23 +73,26 @@ class Application {
 
     private fun generateWalletManagerInstance(myPeer: Peer) : WalletManager{
         val network = BitcoinNetworkOptions.REG_TEST
-         val seed = WalletManager.generateRandomDeterministicSeed(network)
-         val config = WalletManagerConfiguration(
+        val seed = WalletManager.generateRandomDeterministicSeed(network)
+        val config = WalletManagerConfiguration(
                             network,
                             // SerializedDeterministicKey(seed, seed.creationTime),
                             seed,
                             null
                         )
-         val walletDir = File("wallet-" + myPeer.publicKey)
+//        val walletDir = File("wallet-" + myPeer.publicKey)
+
+        val walletDir = File("wallet-" + myPeer.publicKey)
+        walletDir.mkdir()
     
-         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
+        val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
     
         return walletManager;
     }
 
     private fun startIpv8() {
-        val myKey = JavaCryptoProvider.generateKey()
-        val myPeer = Peer(myKey)
+
+
         val udpEndpoint = UdpEndpoint(8090, InetAddress.getByName("0.0.0.0"))
         val endpoint = EndpointAggregator(udpEndpoint, null)
 
@@ -112,54 +103,69 @@ class Application {
         )
 
         
-        val ipv8 = IPv8(endpoint, config, myPeer)
-        ipv8.start()
+        ipv8 = IPv8(endpoint, config, myPeer)
+        ipv8!!.start()
+
+        cacheDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/cacheDir-" + myPeer.publicKey)
+        cacheDir!!.mkdir()
         
-        WalletService.createGlobalWallet(cacheDir)
+        WalletService.createGlobalWallet(cacheDir!!)
         
         val walletManager = generateWalletManagerInstance(myPeer)
+
+        daoCreateHelper = CreateDaoHelper()
+        daoJoinHelper = JoinDaoHelper()
+        coinCommunity = CoinCommunity()
+
+
      
     
         scope.launch {
-            daoCreateHelper.ipv8Instance = ipv8
-            daoJoinHelper.ipv8Instance = ipv8
+            daoCreateHelper!!.ipv8Instance = ipv8
+            daoJoinHelper!!.ipv8Instance = ipv8
 
-            coinCommunity.ipv8Instance = ipv8
-            coinCommunity.myPeer = myPeer       
+            coinCommunity!!.ipv8Instance = ipv8
+            coinCommunity!!.myPeer = myPeer
             delay(15000)
            
 
                 printAllSharedWallets()
                 delay(5000)
 
-                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
+                logger.error("Users: " + getUsers(ipv8!!.getOverlay()!!).size)
                 delay(2000)
                 logger.error("ADD BTC")
                 addBTC(walletManager.protocolAddress().toString())
-                logger.error("Wait 50 seconds")
                 
                 delay(5000)
+                logger.error ("")
                 logger.error("CREATE A WALLET")
-                createDao(myPeer)
-                delay(5000)
-                // printAllSharedWallets()
 
-                 while (true) {
-                printAllSharedWallets()
-                delay(1000)
-
-                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
-                delay(3000)
             }
            
         }
 
-        while (ipv8.isStarted()) {
+        while (ipv8!!.isStarted()) {
             Thread.sleep(1000)
-        }
-       
+        }     
     }
 
+    fun interpretCommand(command: String) {
+        when(command) {
+            "1" -> printAllSharedWallets()
+            "2" -> logger.error("Users: " + getUsers(ipv8!!.getOverlay()!!).size)
+            "3" -> {
+                val id: String = createDao(myPeer)
+                commandListener.send("0 " + id)
+            }
+
+            else -> {
+                println("no such command")
+            }
+        }
+    }
+
+    
 
     private fun getUsers(trustChainCommunity: TrustChainCommunity): List<UserInfo> {
         return trustChainCommunity.database.getUsers()
@@ -204,7 +210,7 @@ class Application {
     }
 
     private fun printAllSharedWallets(){
-        val wallets = coinCommunity.discoverSharedWallets()
+        val wallets = coinCommunity!!.discoverSharedWallets()
         
         logger.error("Available wallets: " + wallets.size);
 
@@ -234,17 +240,170 @@ class Application {
     }
     
 
-    private fun createDao(myPeer: Peer){
+    private fun createDao(myPeer: Peer): String{
         val newDAO =
-        daoCreateHelper.createBitcoinGenesisWallet(
+        daoCreateHelper!!.createBitcoinGenesisWallet(
             myPeer,
             50000,
             50,
             simContext
         )
         WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
+        return newDAO.getData().SW_UNIQUE_ID
     }
-}
+
+
+     /**
+     * Join a shared bitcoin wallet.
+     */
+    private fun joinSharedWalletClicked(block: TrustChainBlock, myPeer: Peer) {
+        val mostRecentSWBlock =
+            coinCommunity!!.fetchLatestSharedWalletBlock(block.calculateHash())
+                ?: block
+
+        // Add a proposal to trust chain to join a shared wallet
+        val proposeBlockData =
+            try {
+                daoJoinHelper??.proposeJoinWallet(myPeer,
+                    mostRecentSWBlock
+                ).getData()
+            } catch (t: Throwable) {
+                Log.e("Coin", "Join wallet proposal failed. ${t.message ?: "No further information"}.")
+                return
+            }
+
+    }
+
+
+     /**
+     * Collect the signatures of a join proposal
+     */
+    private fun collectJoinWalletResponses(blockData: SWSignatureAskBlockTD): List<SWResponseSignatureBlockTD>? {
+        val responses =
+            getCoinCommunity().fetchProposalResponses(
+                blockData.SW_UNIQUE_ID,
+                blockData.SW_UNIQUE_PROPOSAL_ID
+            )
+        Log.i(
+            "Coin",
+            "Waiting for signatures. ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+        setAlertText(
+            "Collecting signatures: ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+        if (responses.size >= blockData.SW_SIGNATURES_REQUIRED) {
+
+            return responses
+        }
+        return null
+    }
+
+  
+
+      /**
+     * Given a shared wallet proposal block, calculate the signature and respond with a trust chain block.
+     */
+    private fun joinAskBlockReceived(
+        block: TrustChainBlock,
+        myPublicKey: ByteArray,
+        votedInFavor: Boolean,
+    ) {
+        val context = simContext
+        val latestHash =
+            SWSignatureAskTransactionData(block.transaction).getData()
+                .SW_PREVIOUS_BLOCK_HASH
+        val mostRecentSWBlock =
+            fetchLatestSharedWalletBlock(latestHash.hexToBytes())
+                ?: throw IllegalStateException("Most recent DAO block not found")
+        val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
+        val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
+
+        joinDaoHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
+    
+        sendSignaturesNotitfication()
+    
+        // check whatever signatures are enough
+        // @todo this action should wait for joinAskBlockReceived
+
+        // @todo fetch this propose block
+        var proposeBlockData = null
+
+        var signatures: signatures = collectJoinWalletResponses(proposeBlockData)
+
+        if(signatures != null){
+            tryExecuteJoinProposalTransaction(myPeer, signatures, proposeBlockData)
+            sendSignaturesAndTransactionNotitfication()
+        }
+
+    }
+
+
+    /**
+     * CUSTOM MESSAGE
+     */
+
+     class MyMessage(val message: String) : Serializable {
+        override fun serialize(): ByteArray {
+            return message.toByteArray()
+        }
+    
+        companion object Deserializer : Deserializable<MyMessage> {
+            override fun deserialize(buffer: ByteArray, offset: Int): Pair<MyMessage, Int> {
+                return Pair(MyMessage(buffer.toString(Charsets.UTF_8)), buffer.size)
+            }
+        }
+    }
+   
+    // TO DO : DO WE NEED TO SYNC THE MESSAGE_ID WITH ALREADY EXISTING IDS ?
+    var MESSAGE_ID = 1
+    
+    fun broadcastVoted(msg: String) {
+        for (peer in getPeers()) {
+            val packet = serializePacket(MESSAGE_ID, MyMessage(msg))
+            send(peer.address, packet)
+        }
+    }
+
+    @Serializable
+    data class SignedData(val name: String, val age: Int)
+
+    //  END CUSTOM MESSAGE
+    private fun sendSignaturesNotitfication(){
+        val data = SignedData("voted", 0)
+        val jsonString = Json.encodeToString(User.serializer(), data)
+        broadcastVoted(jsonString)
+    }
+
+      //  END CUSTOM MESSAGE
+      private fun sendSignaturesAndTransactionNotitfication(){
+        val data = SignedData("votedAndUpdated", 0)
+        val jsonString = Json.encodeToString(User.serializer(), data)
+        broadcastVoted(jsonString)
+    }
+
+    private fun tryExecuteJoinProposalTransaction(myPeer: Peer, signatures: signatures, proposeBlockData: ){
+        try {
+
+            val mostRecentSWBlock =
+            coinCommunity!!.fetchLatestSharedWalletBlock(block.calculateHash())
+
+            daoJoinHelper.joinBitcoinWallet(
+            myPeer,
+            mostRecentSWBlock.transaction,
+            proposeBlockData,
+            signatures,
+            simContext
+        )
+            
+            WalletManager.getInstance().addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, context)
+        } catch (t: Throwable) {
+            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        }
+    }
+
+    
 
 fun main() {
     val app = Application()
