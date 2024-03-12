@@ -1,5 +1,6 @@
 package nl.tudelft.ipv8.jvm.demo
 
+
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
@@ -9,48 +10,28 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import mu.KotlinLogging
 import nl.tudelft.ipv8.*
-import nl.tudelft.ipv8.jvm.demo.coin.*
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity
 import nl.tudelft.ipv8.attestation.trustchain.TrustChainSettings
 import nl.tudelft.ipv8.attestation.trustchain.store.TrustChainSQLiteStore
+import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
+import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
+import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
+import nl.tudelft.ipv8.jvm.demo.util.*
 import nl.tudelft.ipv8.keyvault.JavaCryptoProvider
 import nl.tudelft.ipv8.messaging.EndpointAggregator
 import nl.tudelft.ipv8.messaging.udp.UdpEndpoint
-import nl.tudelft.ipv8.peerdiscovery.DiscoveryCommunity
-import nl.tudelft.ipv8.peerdiscovery.strategy.PeriodicSimilarity
-import nl.tudelft.ipv8.peerdiscovery.strategy.RandomChurn
 import nl.tudelft.ipv8.peerdiscovery.strategy.RandomWalk
 import nl.tudelft.ipv8.sqldelight.Database
-import java.net.InetAddress
-import java.util.*
-
-import kotlin.math.roundToInt
-
-
-import nl.tudelft.ipv8.jvm.demo.util.SimulatedContext
-import nl.tudelft.ipv8.jvm.demo.util.CreateDaoHelper
-import nl.tudelft.ipv8.jvm.demo.util.JoinDaoHelper
-import nl.tudelft.ipv8.jvm.demo.CoinCommunity
-
-
-import java.net.HttpURLConnection
-import java.net.URL
-import java.util.concurrent.Callable
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
-import java.util.concurrent.TimeUnit
 import java.io.File
-
-import nl.tudelft.ipv8.jvm.demo.util.WalletService
-
-import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
-
-import nl.tudelft.ipv8.attestation.trustchain.store.UserInfo
-
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManager
-import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
-import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
+import java.net.HttpURLConnection
+import java.net.InetAddress
+import java.net.URI
+import java.net.URL
+import java.util.*
+import java.util.concurrent.*
+import kotlin.math.roundToInt
 
 class Application {
 
@@ -65,8 +46,15 @@ class Application {
     private var daoCreateHelper: CreateDaoHelper? = null
     private var daoJoinHelper: JoinDaoHelper? = null
     private var coinCommunity: CoinCommunity? = null
-   
+
+    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+
+    private var ipv8: IPv8? = null
+    private val myKey = JavaCryptoProvider.generateKey()
+    private val myPeer = Peer(myKey)
+
     fun run() {
+        commandListener.connect()
         startIpv8()
     }
 
@@ -96,11 +84,6 @@ class Application {
 
         val walletDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/wallet-" + myPeer.publicKey)
         walletDir.mkdir()
-        logger.error ("AAAAAAAAAAAAAAAAAAAAAA")
-//        logger.error
-//        println(walletDir.mkdir())
-
-
     
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
     
@@ -108,8 +91,8 @@ class Application {
     }
 
     private fun startIpv8() {
-        val myKey = JavaCryptoProvider.generateKey()
-        val myPeer = Peer(myKey)
+
+
         val udpEndpoint = UdpEndpoint(8090, InetAddress.getByName("0.0.0.0"))
         val endpoint = EndpointAggregator(udpEndpoint, null)
 
@@ -120,8 +103,8 @@ class Application {
         )
 
         
-        val ipv8 = IPv8(endpoint, config, myPeer)
-        ipv8.start()
+        ipv8 = IPv8(endpoint, config, myPeer)
+        ipv8!!.start()
 
         cacheDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/cacheDir-" + myPeer.publicKey)
         cacheDir!!.mkdir()
@@ -133,6 +116,8 @@ class Application {
         daoCreateHelper = CreateDaoHelper()
         daoJoinHelper = JoinDaoHelper()
         coinCommunity = CoinCommunity()
+
+
      
     
         scope.launch {
@@ -147,33 +132,47 @@ class Application {
                 printAllSharedWallets()
                 delay(5000)
 
-                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
+                logger.error("Users: " + getUsers(ipv8!!.getOverlay()!!).size)
                 delay(2000)
                 logger.error("ADD BTC")
                 addBTC(walletManager.protocolAddress().toString())
-                logger.error("Wait 50 seconds")
                 
                 delay(5000)
                 logger.error ("")
                 logger.error("CREATE A WALLET")
-                createDao(myPeer)
-                delay(5000)
+//                createDao(myPeer)
+//                delay(5000)
                 // printAllSharedWallets()
 
-                 while (true) {
-                printAllSharedWallets()
-                delay(1000)
-
-                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
-                delay(3000)
-            }
+//                 while (true) {
+//                printAllSharedWallets()
+//                delay(1000)
+//
+//                logger.error("Users: " + getUsers(ipv8.getOverlay()!!).size)
+//                delay(3000)
+//            }
            
         }
 
-        while (ipv8.isStarted()) {
+        while (ipv8!!.isStarted()) {
             Thread.sleep(1000)
         }
        
+    }
+
+    fun interpretCommand(command: String) {
+        when(command) {
+            "1" -> printAllSharedWallets()
+            "2" -> logger.error("Users: " + getUsers(ipv8!!.getOverlay()!!).size)
+            "3" -> {
+                val id: String = createDao(myPeer)
+                commandListener.send("0 " + id)
+            }
+
+            else -> {
+                println("no such command")
+            }
+        }
     }
 
 
@@ -250,7 +249,7 @@ class Application {
     }
     
 
-    private fun createDao(myPeer: Peer){
+    private fun createDao(myPeer: Peer): String{
         val newDAO =
         daoCreateHelper!!.createBitcoinGenesisWallet(
             myPeer,
@@ -259,6 +258,7 @@ class Application {
             simContext
         )
         WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
+        return newDAO.getData().SW_UNIQUE_ID
     }
 }
 

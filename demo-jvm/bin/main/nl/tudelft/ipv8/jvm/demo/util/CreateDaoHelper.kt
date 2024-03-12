@@ -73,7 +73,7 @@ class CreateDaoHelper {
      * 1.2 Finishes the last step of creating a genesis shared bitcoin wallet.
      * Posts a self-signed trust chain block containing the shared wallet data.
      */
-        private fun broadcastCreatedSharedWallet(
+    private fun broadcastCreatedSharedWallet(
         myPeer: Peer,
         transactionSerialized: String,
         entranceFee: Long,
