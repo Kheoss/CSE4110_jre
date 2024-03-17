@@ -32,9 +32,14 @@ function postPrintPeers(req, res) {
     res.sendStatus(200);
 }
 
+function postJoinWallet(req, res) {
+    const client = clients[req.query.clientId];
+}
+
 router.get("/clients", getClients);
 router.post("/printWallets", postPrintWallets);
 router.post("/printPeers", postPrintPeers);
 router.post("/createWallet", postCreateWallet);
+router.post("/joinWallet", postJoinWallet)
 
 export default router;
