@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    gap: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 50px;
+    flex-wrap: wrap;
+
+}

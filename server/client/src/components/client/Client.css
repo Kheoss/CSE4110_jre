@@ -1,0 +1,14 @@
+.container-tile{
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    border-radius: 10px;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 5px;
+}
+
+.wallets{
+    display: flex;
+    flex-direction: column;
+}
