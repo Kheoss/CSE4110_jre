@@ -23,7 +23,12 @@ function ClientList() {
       {/* <Client id={3} wallets={["1", "2"]} /> */}
       {clients &&
         clients.map((x) => (
-          <Client id={x.id} wallets={x.wallet} key={x.id} joinedWallets={[]} />
+          <Client
+            id={x.id}
+            wallets={x.wallet}
+            key={x.id}
+            joinedWallets={x.joinedWallets}
+          />
         ))}
     </div>
   );

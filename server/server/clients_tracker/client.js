@@ -36,7 +36,7 @@ class Client {
           break;
         case operations.JOIN_WALLET:
           const join_params = JSON.parse(msg.params);
-          this.joinedWallets.push(join_params);
+          this.joinedWallets.push(join_params.id);
       }
     } catch (error) {
       console.log(error);
