@@ -34,6 +34,9 @@ function postPrintPeers(req, res) {
 
 function postJoinWallet(req, res) {
     const client = clients[req.query.clientId];
+    const walletId = req.body.walletId
+    client.send(operations.JOIN_WALLET, {id: walletId});
+    res.sendStatus(200);
 }
 
 router.get("/clients", getClients);

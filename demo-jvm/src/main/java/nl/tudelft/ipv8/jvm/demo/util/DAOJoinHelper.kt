@@ -30,6 +30,7 @@ class DAOJoinHelper {
         TrustChainHelper(getTrustChainCommunity())
     }
 
+
     /**
      * 2.1 Send a proposal on the trust chain to join a shared wallet and to collect signatures.
      * The proposal is a serialized bitcoin join transaction.

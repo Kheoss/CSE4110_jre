@@ -7,3 +7,4 @@ build
 .externalNativeBuild
 .cxx
 /.idea/
+demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/coin/wallet-*

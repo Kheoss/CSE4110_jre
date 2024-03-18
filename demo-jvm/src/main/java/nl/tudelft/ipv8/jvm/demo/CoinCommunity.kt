@@ -19,7 +19,7 @@ class CoinCommunity : Community() {
             ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
 
-    private val trustChainHelper: TrustChainHelper by lazy {
+    val trustChainHelper: TrustChainHelper by lazy {
         TrustChainHelper(getTrustChainCommunity())
     }
 
@@ -46,6 +46,8 @@ class CoinCommunity : Community() {
             context
         )
     }
+
+
 
     /**
      * 2.1 Send a proposal on the trust chain to join a shared wallet and to collect signatures.
@@ -141,6 +143,15 @@ class CoinCommunity : Community() {
         return swBlocks
             .distinctBy { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID }
             .map { fetchLatestSharedWalletBlock(it, swBlocks) ?: it }
+    }
+
+    fun getSharedWalletBySWID(id: String): TrustChainBlock? {
+        val swBlocks = getTrustChainCommunity().database.getBlocksWithType(JOIN_BLOCK)
+        return swBlocks
+            .distinctBy { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID }
+            .map { fetchLatestSharedWalletBlock(it, swBlocks) ?: it }
+            .filter { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID == id }
+            .maxByOrNull { it.timestamp.time }
     }
 
     /**

@@ -36,11 +36,16 @@ class SimpleSharedPreferences : SharedPreferences {
 }
 
 class SimulatedContext {
+    val sharedPreferences = mutableMapOf<String, SimpleSharedPreferences>()
     fun getSharedPreferences(name: String, mode: Int): SharedPreferences {
-        if(name=="da" && mode == 0){
-            //do something
+
+        return if(sharedPreferences.containsKey(name)) {
+            sharedPreferences[name]!!
+        } else {
+            val sharedPreference = SimpleSharedPreferences()
+            sharedPreferences[name] = sharedPreference
+            sharedPreference
         }
-        return SimpleSharedPreferences()
     }
 }
 

@@ -15,7 +15,6 @@ function Client({
             headers: { 'Content-Type': 'application/json' }
         };
         fetch('/api/printPeers?clientId=' + id, requestOptions)
-            .then(response => response.json())
     }
 
     function printWallets() {
@@ -24,7 +23,6 @@ function Client({
             headers: { 'Content-Type': 'application/json' }
         };
         fetch('/api/printWallets?clientId=' + id, requestOptions)
-            .then(response => response.json())
     }
 
     function createWallet() {
@@ -33,11 +31,16 @@ function Client({
             headers: { 'Content-Type': 'application/json' }
         };
         fetch('/api/createWallet?clientId=' + id, requestOptions)
-            .then(response => response.json())
     }
 
     function joinWallet() {
-        console.log("join");
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({walletId: joinText})
+        };
+        fetch('/api/joinWallet?clientId=' + id, requestOptions)
+
         setJoinText("");
     }
 

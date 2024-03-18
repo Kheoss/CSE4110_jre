@@ -9,6 +9,7 @@ app.listen(PORT, () => {
     console.log(`Server listening on ${PORT}`);
 });
 
+app.use(express.json({ extended: false }));
 app.use("/api", router);
 
 export default app;
