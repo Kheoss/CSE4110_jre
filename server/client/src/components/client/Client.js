@@ -1,82 +1,68 @@
-import { useState } from 'react';
-import './Client.css';
+import { useState } from "react";
+import "./Client.css";
 
+function Client({ id, wallets }) {
+  const [joinText, setJoinText] = useState("");
 
-function Client({
-    id,
-    wallets
-}) {
+  function printUsers() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/printPeers?clientId=" + id, requestOptions);
+  }
 
-    const [joinText, setJoinText] = useState("");
+  function printWallets() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/printWallets?clientId=" + id, requestOptions);
+  }
 
-    function printUsers() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        fetch('/api/printPeers?clientId=' + id, requestOptions)
-            .then(response => response.json())
-    }
+  function createWallet() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/createWallet?clientId=" + id, requestOptions);
+  }
 
-    function printWallets() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        fetch('/api/printWallets?clientId=' + id, requestOptions)
-            .then(response => response.json())
-    }
+  function joinWallet() {
+    const requestOptions = {
+      method: "POST",
+      body: JSON.stringify({ walletId: joinText }),
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch("/api/sendJoinProposalWallet?clientId=" + id, requestOptions);
+    console.log("join");
+    setJoinText("");
+  }
 
-    function createWallet() {
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
-        };
-        fetch('/api/createWallet?clientId=' + id, requestOptions)
-            .then(response => response.json())
-    }
+  return (
+    <div className="container-tile">
+      <span>Client {id}</span>
 
-    function joinWallet() {
-        console.log("join");
-        setJoinText("");
-    }
+      <div className="wallets">
+        <span>Wallets</span>
+        {wallets.map((x) => (
+          <span key={x}>{x}</span>
+        ))}
+      </div>
 
-    return (
-        <div className="container-tile">
-            <span>
-                Client {id}
-            </span>
+      <div>
+        <button onClick={() => printUsers()}>Print users</button>
+        <button onClick={() => printWallets()}>Print wallets</button>
 
-            <div className="wallets">
-                <span>
-                    Wallets
-                </span>
-                {wallets.map(x => 
-                    <span key = {x}>
-                        {x}
-                    </span>
-                )}
-            </div>
-                    
-            <div>
-                <button onClick = {() => printUsers()}>
-                    Print users
-                </button>
-                <button onClick = {() => printWallets()}>
-                    Print wallets
-                </button>
+        <button onClick={() => createWallet()}>Create wallet</button>
+      </div>
 
-                <button onClick = {() => createWallet()}>
-                    Create wallet
-                </button>
-            </div>
-
-            <div>
-                <input value = {joinText} onChange={e => setJoinText(e.target.value)} />
-                <button onClick = {() => joinWallet()}> Join </button>
-            </div>
-        </div>
-    )
+      <div>
+        <input value={joinText} onChange={(e) => setJoinText(e.target.value)} />
+        <button onClick={() => joinWallet()}> Send JOIN proposal </button>
+      </div>
+    </div>
+  );
 }
 
 export default Client;
