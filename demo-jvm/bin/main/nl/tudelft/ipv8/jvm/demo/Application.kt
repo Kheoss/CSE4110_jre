@@ -57,7 +57,7 @@ class Application {
         val message: Message? = Klaxon().parse<Message>(command);
         if (message != null) {
             when(Operation.fromInt(message.operation)) {
-                Operation.PRINT_ALL_WALLETS -> printAllSharedWallets()
+                Operation.PRINT_ALL_WALLETS -> logger.error ("joined wallets: " + getCoinCommunity().fetchLatestJoinedSharedWalletBlocks().map { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID  })
                 Operation.PRINT_USER_COUNT -> logger.error("Users: " + getCoinCommunity().getUsers().size)
                 Operation.CREATE_DAO -> {
                     val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 50, simContext)
@@ -254,12 +254,12 @@ class Application {
                 Log.i("Coin", "${databaseProposals.size} proposals found in database!")
                 updateProposals(databaseProposals)
                 crawlProposalsAndUpdateIfNewFound()
-                filterByNotVoted()
+                val toVote = filterByNotVoted()
 
-                Log.i("Proposal", proposals.toString());
+                Log.i("Proposal", toVote.toString());
 
                 val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
-                for (b in proposals) {
+                for (b in toVote) {
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
 
@@ -272,8 +272,8 @@ class Application {
         }
     }
 
-    private fun filterByNotVoted() {
-        proposals.filter { block -> block.type == CoinCommunity.SIGNATURE_ASK_BLOCK }
+    private fun filterByNotVoted(): List<TrustChainBlock> {
+        return proposals.filter { block -> block.type == CoinCommunity.SIGNATURE_ASK_BLOCK }
             .filter { block ->
                 val data = SWTransferFundsAskTransactionData(block.transaction).getData()
                 // Get favor votes
