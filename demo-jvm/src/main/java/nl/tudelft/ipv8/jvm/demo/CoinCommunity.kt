@@ -30,25 +30,25 @@ class CoinCommunity : Community() {
     private val daoTransferFundsHelper = DAOTransferFundsHelper()
 
 
- 
-
     init {
        messageHandlers[MessageId.MESSAGE_ID] = ::onNotificationMessage
     }
 
     private fun onNotificationMessage(packet: Packet) {
-        val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
-        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        Log.i("MESSAGE", "RECEIVED GREETING")
+        // val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
+        // Log.i("DemoCommunity", peer.mid + ": " + payload.message)
+        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
     }
 
     fun broadcastGreeting() {
         for (peer in getPeers()) {
+            // Log.i("MESSAGE", "SENT GREETING")
             val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage("Hello!"))
-            send(peer.address, packet)
+            send(peer, packet)
         }
     }
 
@@ -190,7 +190,7 @@ class CoinCommunity : Community() {
                 .getChainByUser(peer.publicKey.keyToBin())
         } catch (t: Throwable) {
             val message = t.message ?: "No further information"
-            Log.e("Coin", "Crawling failed for: ${peer.publicKey}. $message.")
+            // Log.e("Coin", "Crawling failed for: ${peer.publicKey}. $message.")
         }
 
         return ArrayList()
@@ -226,7 +226,7 @@ class CoinCommunity : Community() {
         addToWalletsList(wallets, discoveredWallets)
 
         val allUsers = getPeers()
-        Log.i("Coin", "Found ${allUsers.size} peers, crawling")
+        // Log.i("Coin", "Found ${allUsers.size} peers, crawling")
 
         for (peer in allUsers) {
             val newWallets = crawlAvailableSharedWallets(peer)

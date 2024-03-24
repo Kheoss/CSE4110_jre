@@ -75,7 +75,7 @@ class DemoApplication : Application() {
 
         trustchain.addListener(BLOCK_TYPE, object : BlockListener {
             override fun onBlockReceived(block: TrustChainBlock) {
-                Log.d("TrustChainDemo", "onBlockReceived: ${block.blockId} ${block.transaction}")
+                // Log.d("TrustChainDemo", "onBlockReceived: ${block.blockId} ${block.transaction}")
             }
         })
     }

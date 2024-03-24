@@ -1,9 +1,15 @@
 class Wallet {
-    id;
+  id;
+  members;
 
-    constructor(id) {
-        this.id = id;
-    }
+  constructor(id) {
+    this.id = id;
+    this.members = 1;
+  }
+
+  addMember = () => {
+    this.members++;
+  };
 }
 
-export default Wallet
+export default Wallet;

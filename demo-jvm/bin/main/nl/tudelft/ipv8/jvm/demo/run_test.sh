@@ -9,7 +9,7 @@ num_instances=$1
 
 for ((i=1; i<=num_instances; i++))
 do
-   ./gradlew :demo-jvm:run &
+   ./gradlew :demo-jvm:run -Dorg.slf4j.simpleLogger.defaultLogLevel=error &
 done
 
 wait

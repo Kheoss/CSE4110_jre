@@ -1,5 +1,5 @@
 import Client from "./client.js";
 
-const clients = [];
+export const clients = [];
 
-export default clients;
+export const wallets = [];

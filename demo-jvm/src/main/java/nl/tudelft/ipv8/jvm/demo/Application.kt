@@ -44,11 +44,15 @@ class Application {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
     private val simContext = SimulatedContext()
-    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+    //DOCKER CONFIG
+    private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
+
+    // private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
 
     fun run() {
+        logger.error ("start")
         commandListener.connect()
         startIpv8()
     }
@@ -60,7 +64,7 @@ class Application {
                 Operation.PRINT_ALL_WALLETS -> logger.error ("joined wallets: " + getCoinCommunity().fetchLatestJoinedSharedWalletBlocks().map { SWJoinBlockTransactionData(it.transaction).getData().SW_UNIQUE_ID  })
                 Operation.PRINT_USER_COUNT -> logger.error("Users: " + getCoinCommunity().getUsers().size)
                 Operation.CREATE_DAO -> {
-                    val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 50, simContext)
+                    val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 100, simContext)
                     WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
                     val id: String = newDAO.getData().SW_UNIQUE_ID
                     commandListener.send(
@@ -233,6 +237,7 @@ class Application {
     }
 
     private fun startIpv8() {
+        Log.e("schimbat", "DADADADA")
         val myKey = JavaCryptoProvider.generateKey()
 
         IPv8Network.Factory().setPrivateKey(myKey).init();
@@ -246,26 +251,19 @@ class Application {
 
         scope.launch {
             while (true) {
-//                for ((_, overlay) in IPv8Network.getInstance().overlays) {
-//                    printPeersInfo(overlay)
-//                }
-
-//                logger.info("===")
                 val databaseProposals = getCoinCommunity().fetchProposalBlocks()
-                Log.i("Coin", "${databaseProposals.size} proposals found in database!")
+                // Log.i("Coin", "${databaseProposals.size} proposals found in database!")
                 updateProposals(databaseProposals)
                 crawlProposalsAndUpdateIfNewFound()
                 val toVote = filterByNotVoted()
-
-                Log.i("Proposal", toVote.toString());
 
                 val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
                 for (b in toVote) {
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
 
-                delay(5000)
-                getCoinCommunity().broadcastGreeting()
+                // getCoinCommunity().broadcastGreeting()
+                delay(10)
             }
         }
 

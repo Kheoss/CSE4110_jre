@@ -1,9 +1,17 @@
+plugins {
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Use the latest version
+}
+
 apply plugin: 'application'
 
 apply plugin: 'kotlin'
 
 mainClassName = 'nl.tudelft.ipv8.jvm.demo.ApplicationKt'
 
+
+shadowJar {
+    exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+}
 dependencies {
     implementation project(':ipv8-jvm')
 
@@ -31,4 +39,19 @@ run {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+jar {
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    manifest {
+        attributes(
+            'Main-Class': mainClassName
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    // Include all resources and compiled classes
+    from sourceSets.main.output
 }
