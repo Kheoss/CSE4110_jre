@@ -10,6 +10,8 @@ import nl.tudelft.ipv8.jvm.demo.sharedWallet.*
 import nl.tudelft.ipv8.jvm.demo.util.*
 import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
+import nl.tudelft.ipv8.jvm.demo.util.NotificationMessage
+import nl.tudelft.ipv8.messaging.Packet
 
 class CoinCommunity : Community() {
     override val serviceId = "02313685c1912a141279f8248fc8db5899c5df55"
@@ -26,6 +28,29 @@ class CoinCommunity : Community() {
     private val daoCreateHelper = DAOCreateHelper()
     private val daoJoinHelper = DAOJoinHelper()
     private val daoTransferFundsHelper = DAOTransferFundsHelper()
+
+
+ 
+
+    init {
+       messageHandlers[MessageId.MESSAGE_ID] = ::onNotificationMessage
+    }
+
+    private fun onNotificationMessage(packet: Packet) {
+        val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
+        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+        Log.e("DemoCommunity", peer.mid + ": " + payload.message)
+    }
+
+    fun broadcastGreeting() {
+        for (peer in getPeers()) {
+            val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage("Hello!"))
+            send(peer.address, packet)
+        }
+    }
 
     /**
      * Create a bitcoin genesis wallet and broadcast the result on trust chain.
@@ -461,7 +486,9 @@ class CoinCommunity : Community() {
         return requiredVotes <= totalVoters.size - againstSignatures.size
     }
 
-
+    object MessageId {
+        const val MESSAGE_ID = 1206
+    }
 
     companion object {
         // Default maximum wait timeout for bitcoin transaction broadcasts in seconds

@@ -148,6 +148,7 @@ class Application {
                 signatures,
                 simContext
             )
+            
             // Add new nonceKey after joining a DAO
             WalletManager.getInstance()
                 .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
@@ -189,7 +190,7 @@ class Application {
         )
 //        val walletDir = File("wallet-" + myPeer.publicKey)
 
-        val walletDir = File("/home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/coin//wallet-" + myPeer.publicKey)
+        val walletDir = File("/home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets//wallet-" + myPeer.publicKey)
         walletDir.mkdir()
 
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
@@ -264,6 +265,7 @@ class Application {
                 }
 
                 delay(5000)
+                getCoinCommunity().broadcastGreeting()
             }
         }
 
