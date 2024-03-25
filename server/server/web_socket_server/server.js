@@ -38,7 +38,7 @@ function selectHalfRandomly(arr) {
   shuffleArray(arr);
   return arr.slice(0, arr.length / 2);
 }
-const PEERS_ON_TRIAL = 6;
+const PEERS_ON_TRIAL = 2;
 let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
 let peerToJoinWallet = 0;
 
@@ -62,6 +62,8 @@ const startSimulation = async () => {
 
 const nextClientJoin = () => {
   peerToJoinWallet++;
+  console.log(otherClients.length);
+  console.log(Math.floor(Math.random() * otherClients.length));
   const nextClient = otherClients[Math.floor(Math.random() * otherClients.length)];
   individualTimer = Date.now();
   nextClient.send(operations.JOIN_WALLET, { id: walletId });

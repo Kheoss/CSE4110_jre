@@ -45,9 +45,9 @@ class Application {
     private val logger = KotlinLogging.logger {}
     private val simContext = SimulatedContext()
     //DOCKER CONFIG
-    private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
+    // private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
 
-    // private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
 
@@ -136,29 +136,29 @@ class Application {
                 return
             }
 
-        // Wait and collect signatures
-        var signatures: List<SWResponseSignatureBlockTD>? = null
-        while (signatures == null) {
-            Thread.sleep(1000)
-            signatures = collectJoinWalletResponses(proposeBlockData)
-        }
+        // // Wait and collect signatures
+        // var signatures: List<SWResponseSignatureBlockTD>? = null
+        // while (signatures == null) {
+        //     Thread.sleep(1000)
+        //     signatures = collectJoinWalletResponses(proposeBlockData)
+        // }
 
-        // Create a new shared wallet using the signatures of the others.
-        // Broadcast the new shared bitcoin wallet on trust chain.
-        try {
-            getCoinCommunity().joinBitcoinWallet(
-                mostRecentSWBlock.transaction,
-                proposeBlockData,
-                signatures,
-                simContext
-            )
+        // // Create a new shared wallet using the signatures of the others.
+        // // Broadcast the new shared bitcoin wallet on trust chain.
+        // try {
+        //     getCoinCommunity().joinBitcoinWallet(
+        //         mostRecentSWBlock.transaction,
+        //         proposeBlockData,
+        //         signatures,
+        //         simContext
+        //     )
             
-            // Add new nonceKey after joining a DAO
-            WalletManager.getInstance()
-                .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-        } catch (t: Throwable) {
-            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
-        }
+        //     // Add new nonceKey after joining a DAO
+        //     WalletManager.getInstance()
+        //         .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
+        // } catch (t: Throwable) {
+        //     Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        // }
 
         // Update wallets UI list
     }
@@ -262,8 +262,7 @@ class Application {
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
 
-                // getCoinCommunity().broadcastGreeting()
-                delay(10)
+                delay(10000)
             }
         }
 
@@ -341,6 +340,7 @@ class Application {
                     "Coin",
                     "Crawl result: ${crawlResult.size} proposals found (from ${peer.address})"
                 )
+            
                 if (crawlResult.isNotEmpty()) {
                     updateProposals(crawlResult)
                 }

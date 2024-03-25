@@ -11,5 +11,5 @@ COPY demo-jvm-all.jar /usr/src/myapp/demo-jvm-all.jar
 EXPOSE 8080
 
 # Run your-application.jar when the container launches
-CMD ["java", "-jar", "demo-jvm-all.jar"]
+CMD ["java", "-jar", "demo-jvm-all.jar", "-Dorg.slf4j.simpleLogger.defaultLogLevel=error"]
 

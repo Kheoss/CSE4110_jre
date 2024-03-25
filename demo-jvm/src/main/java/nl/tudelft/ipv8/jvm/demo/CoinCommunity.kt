@@ -35,21 +35,18 @@ class CoinCommunity : Community() {
     }
 
     private fun onNotificationMessage(packet: Packet) {
-        Log.i("MESSAGE", "RECEIVED GREETING")
-        // val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
-        // Log.i("DemoCommunity", peer.mid + ": " + payload.message)
+        val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
+        // Log.i("MESSAGE", "RECEIVED GREETING")
+        Log.i("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
     }
 
-    fun broadcastGreeting() {
-        for (peer in getPeers()) {
-            // Log.i("MESSAGE", "SENT GREETING")
-            val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage("Hello!"))
-            send(peer, packet)
-        }
+    fun broadcastGreeting(peer: Peer, message: String) {
+        val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage(message))
+        send(peer, packet)
     }
 
     /**
@@ -389,6 +386,58 @@ class CoinCommunity : Community() {
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 
         DAOJoinHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
+
+        // CHECK FOR ENOUGH
+
+        // @TODO : delete this delay
+        // delay(5000)
+
+        // @TODO : make the transaction if enough votes.
+        val latestAskForSignaturesBlock =
+            SWSignatureAskTransactionData(block.transaction).getData()
+        var signatures: List<SWResponseSignatureBlockTD>? = collectJoinWalletResponses(latestAskForSignaturesBlock);
+        if (signatures != null) {
+           Log.i("SIGNATURES ALIVE")
+            //make the transaction
+            val newMostRecentSWBlock =
+            fetchLatestSharedWalletBlock(block.calculateHash())
+                ?: block
+
+            joinBitcoinWallet(
+                newMostRecentSWBlock.transaction,
+                latestAskForSignaturesBlock,
+                signatures,
+                context
+            )
+            // @TODO: Do we need to add this to the wallet?
+            // WalletManager.getInstance()
+            //     .addNewNonceKey(latestAskForSignaturesBlock.SW_UNIQUE_ID, simContext)
+            // @TODO : consider add notification (I've made the transaction)
+            // broadcastGreeting(peer, "Crawl result: ${crawlResult.size} proposals")
+        }
+
+
+     
+        // getCoinCommunity().broadcastGreeting(peer, "Crawl result: ${crawlResult.size} proposals")
+
+    }
+
+    fun collectJoinWalletResponses(blockData: SWSignatureAskBlockTD): List<SWResponseSignatureBlockTD>? {
+        val responses = fetchProposalResponses(
+                blockData.SW_UNIQUE_ID,
+                blockData.SW_UNIQUE_PROPOSAL_ID
+            )
+
+        Log.i(
+            "Coin",
+            "Waiting for signatures. ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+
+        if (responses.size >= blockData.SW_SIGNATURES_REQUIRED) {
+            return responses
+        }
+        return null
     }
 
     /**
@@ -487,7 +536,7 @@ class CoinCommunity : Community() {
     }
 
     object MessageId {
-        const val MESSAGE_ID = 1206
+        const val MESSAGE_ID = 1
     }
 
     companion object {
