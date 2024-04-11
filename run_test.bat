@@ -1,18 +1,16 @@
 @echo off
-setlocal
+setlocal EnableDelayedExpansion
 
-:: Check if a command-line argument is provided
+:: Check if the correct number of arguments is passed
 if "%~1"=="" (
-    echo Usage: %0 [number_of_instances]
-    exit /b 1
+    echo Usage: %0 [number of instances]
+    exit /b
 )
 
-:: Set the number of instances to the first command-line argument
-set /a "num_instances=%~1"
-
-:: Loop to start the command multiple times
-for /L %%i in (1,1,%num_instances%) do (
-    start /B cmd /c gradlew :demo-jvm:run
+:: Start multiple instances of the Java application
+for /L %%i in (1,1,%1) do (
+    start /B java -jar KubernetsTest/demo-jvm-all.jar
+    :: Introduce a small delay to ensure the process has started
+    ping 127.0.0.1 -n 2 > nul
 )
 
-endlocal

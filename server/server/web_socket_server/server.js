@@ -65,7 +65,7 @@ function selectHalfRandomly(arr) {
   shuffleArray(arr);
   return arr.slice(0, arr.length / 2);
 }
-const PEERS_ON_TRIAL = 100;
+const PEERS_ON_TRIAL = 25;
 let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
 let peerToJoinWallet = 0;
 
@@ -78,7 +78,9 @@ let peerToReceiveNotification = (PEERS_ON_TRIAL - 1) * PEERS_ON_TRIAL;
 let individualTimer;
 const startSimulation = async () => {
   // chose half of the clients to generate wallets.
-  const ans = await askQuestion("Are you sure you want to START the simulation? ");
+  const ans = await askQuestion(
+    "Are you sure you want to START the simulation? "
+  );
   console.log("START SIMULATION");
   timer = Date.now();
   const clientsToGenerateWallets = selectHalfRandomly(clients);
@@ -94,7 +96,8 @@ const nextClientJoin = () => {
   peerToJoinWallet++;
   console.log(otherClients.length);
   console.log(Math.floor(Math.random() * otherClients.length));
-  const nextClient = otherClients[Math.floor(Math.random() * otherClients.length)];
+  const nextClient =
+    otherClients[Math.floor(Math.random() * otherClients.length)];
   individualTimer = Date.now();
   nextClient.send(operations.JOIN_WALLET, { id: walletId });
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
