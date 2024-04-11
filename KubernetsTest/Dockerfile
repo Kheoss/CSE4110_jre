@@ -5,7 +5,7 @@ FROM openjdk:17
 WORKDIR /usr/src/myapp
 
 # Copy the .jar file into the container at /usr/src/myapp
-COPY demo-jvm-all.jar /usr/src/myapp/demo-jvm-all.jar
+COPY demo-jvm-new-method.jar /usr/src/myapp/demo-jvm-all.jar
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080

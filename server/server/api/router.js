@@ -22,6 +22,11 @@ function postCreateWallet(req, res) {
   res.sendStatus(200);
 }
 
+function ping(req, res) {
+  console.log("ping");
+  res.sendStatus(200);
+}
+
 function postPrintWallets(req, res) {
   const client = clients[req.query.clientId];
   client.send(operations.PRINT_ALL_WALLETS, {});
@@ -80,5 +85,6 @@ router.post("/printPeers", postPrintPeers);
 router.post("/createWallet", postCreateWallet);
 router.post("/joinWallet", postJoinWallet);
 router.post("/allJoin", postAllJoin);
+router.post("/ping", ping);
 
 export default router;

@@ -24,7 +24,34 @@ function askQuestion(query) {
  * ALL JOIN ONE WALLET:
  *
  * 6 -> 63069
+ *
+ *
+ * ALL JOIN ONE WALLET - NEW METHOD
+ *
+ * 6 -> 4089
  */
+
+/**
+ * Message transfer without gossip:
+ * 2  peers: 672ms
+ * 5  peers: 1477ms | 156KB peek
+ * 10 peers: 3666ms | 545KB peek
+ * 15 peers: 6320ms | 1.22MB  = 1220 KB peek
+ * 17 peers: crash
+ *
+ * Message transfer with gossip:
+ *
+ * 5  peers: 1465ms | 74kb peek
+ * 10 peers: 3213ms | 135KB peek
+ * 15 peers: 5178ms | 228KB peek
+ * 17 peers: crash
+ *
+ *
+ * IDEAS FOR SHARDING:
+ * Separate the blockchain into 4 parts: proposals/votes for joining, joining,
+ * Achiving system.
+ */
+
 const wss = new WebSocketServer({ port: 7071 });
 
 function shuffleArray(array) {
@@ -38,13 +65,15 @@ function selectHalfRandomly(arr) {
   shuffleArray(arr);
   return arr.slice(0, arr.length / 2);
 }
-const PEERS_ON_TRIAL = 2;
+const PEERS_ON_TRIAL = 100;
 let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
 let peerToJoinWallet = 0;
 
 let timer;
 let otherClients = [];
 let walletId = "";
+
+let peerToReceiveNotification = (PEERS_ON_TRIAL - 1) * PEERS_ON_TRIAL;
 
 let individualTimer;
 const startSimulation = async () => {
@@ -54,9 +83,10 @@ const startSimulation = async () => {
   timer = Date.now();
   const clientsToGenerateWallets = selectHalfRandomly(clients);
 
-  for (let client of clientsToGenerateWallets) {
-    client.send(operations.CREATE_DAO, {});
-    break;
+  console.log("SEND NOTIFICATION TO ALL CLIENTS: " + clients.length);
+  for (let client of clients) {
+    client.send(operations.START_SIMULATION, { id: client.id.toString() });
+    // break;
   }
 };
 
@@ -85,6 +115,13 @@ const newDaoCreated = (client) => {
   //   }
 };
 
+const receivePing = (client) => {
+  peerToReceiveNotification--;
+  if (peerToReceiveNotification == 0) {
+    console.log("TIME ON TRIAL: " + (Date.now() - timer));
+  }
+};
+
 const onJoinSucceed = (client) => {
   //   console.log("wallets to be created:" + walletsToBeCreated);
   //   console.log("peers to join: " + peerToJoinWallet);
@@ -104,18 +141,25 @@ const onJoinSucceed = (client) => {
 
 wss.on("connection", (ws) => {
   console.log("connected");
-  const client = new Client(clients.length, ws, newDaoCreated, onJoinSucceed);
+  const client = new Client(
+    clients.length,
+    ws,
+    newDaoCreated,
+    onJoinSucceed,
+    receivePing
+  );
   clients.push(client);
 
   if (clients.length == PEERS_ON_TRIAL) {
     // start simulation
-    setTimeout(() => {
-      startSimulation();
-    }, 15000);
+    // console.log("START?");
+    // setTimeout(() => {
+    startSimulation();
+    // }, 1000);
   }
 
   ws.on("message", function message(data) {
-    console.log(data);
+    // console.log(data);
     client.interpret(data);
   });
 

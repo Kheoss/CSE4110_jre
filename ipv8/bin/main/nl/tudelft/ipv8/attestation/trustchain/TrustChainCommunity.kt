@@ -27,8 +27,8 @@ open class TrustChainCommunity(
     val database: TrustChainStore,
     private val crawler: TrustChainCrawler = TrustChainCrawler()
 ) : Community() {
-   override val serviceId = "5ad767b05ae592a02488272ca2a86b847d4562e1"
-    // override val serviceId = "5ad767b05ae592a02488272ca2a86b847d4562e2"
+//    override val serviceId = "5ad767b05ae592a02488272ca2a86b847d4562e1"
+    override val serviceId = "5ad767b05ae592a02488272ca2a86b847d4562e2"
 
     private val relayedBroadcasts = mutableSetOf<String>()
     private val listenersMap: MutableMap<String?, MutableList<BlockListener>> = mutableMapOf()
