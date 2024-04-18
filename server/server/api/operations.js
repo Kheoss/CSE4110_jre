@@ -6,4 +6,5 @@ export default {
   JOIN_WALLET: 5,
   NOTIFICATION: 6,
   START_SIMULATION: 7,
+  SYNC_COMPLETE: 8,
 };

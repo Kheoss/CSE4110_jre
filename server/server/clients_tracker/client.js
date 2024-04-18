@@ -7,7 +7,7 @@ class Client {
   joinedWallets;
   timer;
   last_join_time;
-  constructor(id, ws, newDaoCreated, onJoinSucceed, receivePing) {
+  constructor(id, ws, newDaoCreated, onJoinSucceed, receivePing, onSync) {
     this.id = id;
     this.ws = ws;
     this.wallet = [];
@@ -17,6 +17,7 @@ class Client {
     this.newDaoCreated = newDaoCreated;
     this.onJoinSucceed = onJoinSucceed;
     this.receivePing = receivePing;
+    this.onSync = onSync;
   }
 
   send(op, msg) {
@@ -52,6 +53,10 @@ class Client {
         case operations.NOTIFICATION:
           const notificationParams = JSON.parse(msg.params);
           this.receivePing(this);
+          break;
+
+        case operations.SYNC_COMPLETE:
+          this.onSync(this);
           break;
       }
     } catch (error) {

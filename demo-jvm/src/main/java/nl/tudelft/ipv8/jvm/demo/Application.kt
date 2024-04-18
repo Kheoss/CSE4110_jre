@@ -45,9 +45,9 @@ class Application {
     private val logger = KotlinLogging.logger {}
     private val simContext = SimulatedContext()
     //DOCKER CONFIG
-    private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
+    // private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
 
-    // private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
 
@@ -196,6 +196,7 @@ class Application {
 
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
 
+        walletManager.setCommandListenerWalletManager(commandListener);
         getCoinCommunity().setCommandListenerForCoin(commandListener);
 
         return walletManager;
@@ -206,7 +207,7 @@ class Application {
             Executors.newCachedThreadPool(Executors.defaultThreadFactory())
         val future: Future<Boolean>
 
-        val url = "http://localhost:443/addBTC?address=$address"
+        val url = "https://taproot.tribler.org/addBTC?address=$address"
 
         future =
             executor.submit(
@@ -241,21 +242,21 @@ class Application {
         generateWalletManagerInstance(getCoinCommunity().myPeer)
         // addBTC(WalletManager.getInstance().protocolAddress().toString())
 
-        // scope.launch {
-        //     while(true){
-        //         val databaseProposals = getCoinCommunity().fetchProposalBlocks()
-        //         updateProposals(databaseProposals)
-        //         crawlProposalsAndUpdateIfNewFound()
-        //         val toVote = filterByNotVoted()
+        scope.launch {
+            while(true){
+                val databaseProposals = getCoinCommunity().fetchProposalBlocks()
+                updateProposals(databaseProposals)
+                crawlProposalsAndUpdateIfNewFound()
+                val toVote = filterByNotVoted()
                 
-        //         val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
-        //         for (b in toVote) {
-        //             getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
-        //         }
+                val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
+                for (b in toVote) {
+                    getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
+                }
 
-        //         delay(1000)
-        //     }
-        //     }
+                delay(1000)
+            }
+            }
 
         while (IPv8Network.getInstance().isStarted()) {
             Thread.sleep(1000)

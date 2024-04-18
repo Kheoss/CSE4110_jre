@@ -1,1 +1,165 @@
 [main] ERROR nl.tudelft.ipv8.jvm.demo.Application - start
+[main] INFO nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Opened UDP socket on port 8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8090
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8090
+[main] INFO nl.tudelft.ipv8.Community - Loading DiscoveryCommunity for peer 98dee5b31a532f300dfae65f6d7b79a011920126
+[main] INFO nl.tudelft.ipv8.Community - Loading TrustChainCommunity for peer 98dee5b31a532f300dfae65f6d7b79a011920126
+[main] INFO nl.tudelft.ipv8.Community - Loading CoinCommunity for peer 98dee5b31a532f300dfae65f6d7b79a011920126
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 86.55 ms
+[main] INFO org.bitcoinj.core.Context - Creating bitcoinj 0.15.10 context.
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 21.43 ms
+[ STARTING] INFO org.bitcoinj.kits.WalletAppKit - Starting up with directory = /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-98dee5b31a532f300dfae65f6d7b79a011920126
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 1 keys needed for M/0H/0 = 1 issued + 0 lookahead size + 0 lookahead threshold - 0 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 756.1 μs
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/0 = 1 issued + 100 lookahead size + 33 lookahead threshold - 1 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 40.96 ms
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/1 = 0 issued + 100 lookahead size + 33 lookahead threshold - 0 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 28.27 ms
+[ STARTING] INFO org.bitcoinj.store.SPVBlockStore - Creating new SPV block chain file /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-98dee5b31a532f300dfae65f6d7b79a011920126/forwarding-service-regtest.spvchain
+[ STARTING] INFO org.bitcoinj.core.AbstractBlockChain - chain head is at height 0:
+ block: 
+   hash: 0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206
+   version: 1
+   previous block: 0000000000000000000000000000000000000000000000000000000000000000
+   time: 1296688602 (2011-02-02T23:16:42Z)
+   difficulty target (nBits): 545259519
+   nonce: 2
+
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Starting ...
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Localhost peer not detected.
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [131.180.27.224]:18444     (0 connected, 1 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.net.NioClientManager - Connected to /131.180.27.224:18444
+[NioClientManager] INFO org.bitcoinj.core.Peer - Announcing to /131.180.27.224:18444 as: /bitcoinj:0.15.10/
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[131.180.27.224]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-18 19:09:24, height=82619}
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Peer{[131.180.27.224]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-18 19:09:24, height=82619}: New peer      (1 connected, 0 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[131.180.27.224]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-18 19:09:24, height=82619}: Sending Bloom filter and querying mempool
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Setting download peer: Peer{[131.180.27.224]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-18 19:09:24, height=82619}
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Downloading block chain of size 82619. This may take a while.
+[pool-2-thread-1] ERROR nl.tudelft.ipv8.jvm.demo.Application - Coin
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 1% done with 81792 blocks to go, block date 2022-10-08T16:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 2% done with 80966 blocks to go, block date 2022-10-13T17:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 3% done with 80140 blocks to go, block date 2022-10-18T04:50:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 4% done with 79314 blocks to go, block date 2022-10-23T19:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 5% done with 78488 blocks to go, block date 2022-10-29T12:50:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 6% done with 77661 blocks to go, block date 2022-11-04T06:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 7% done with 76835 blocks to go, block date 2022-11-10T00:20:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 8% done with 76009 blocks to go, block date 2022-11-15T18:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 9% done with 75183 blocks to go, block date 2022-11-21T11:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 10% done with 74357 blocks to go, block date 2022-11-27T05:20:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 11% done with 73530 blocks to go, block date 2022-12-02T23:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 12% done with 72704 blocks to go, block date 2022-12-08T16:50:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 13% done with 71878 blocks to go, block date 2022-12-13T23:50:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 14% done with 71052 blocks to go, block date 2022-12-19T17:30:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 15% done with 70226 blocks to go, block date 2022-12-25T11:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 16% done with 69399 blocks to go, block date 2022-12-31T05:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 17% done with 68573 blocks to go, block date 2023-01-05T22:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 18% done with 67747 blocks to go, block date 2023-01-11T15:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 19% done with 66921 blocks to go, block date 2023-01-17T09:20:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 20% done with 66095 blocks to go, block date 2023-01-23T03:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 21% done with 65269 blocks to go, block date 2023-01-28T20:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 22% done with 64442 blocks to go, block date 2023-02-03T11:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 23% done with 63616 blocks to go, block date 2023-02-09T04:50:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 24% done with 62790 blocks to go, block date 2023-02-14T22:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 25% done with 61964 blocks to go, block date 2023-02-20T15:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 26% done with 61138 blocks to go, block date 2023-02-26T09:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 27% done with 60311 blocks to go, block date 2023-03-03T19:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 28% done with 59485 blocks to go, block date 2023-03-09T12:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 29% done with 58659 blocks to go, block date 2023-03-15T06:20:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 30% done with 57833 blocks to go, block date 2023-03-21T00:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 31% done with 57007 blocks to go, block date 2023-03-26T17:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 32% done with 56180 blocks to go, block date 2023-04-01T11:30:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 33% done with 55354 blocks to go, block date 2023-04-07T05:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 34% done with 54528 blocks to go, block date 2023-04-12T22:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 35% done with 53702 blocks to go, block date 2023-04-18T16:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 36% done with 52876 blocks to go, block date 2023-04-24T10:10:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 37% done with 52049 blocks to go, block date 2023-04-30T04:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 38% done with 51223 blocks to go, block date 2023-05-05T21:40:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 39% done with 50397 blocks to go, block date 2023-05-11T15:20:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 40% done with 49571 blocks to go, block date 2023-05-17T09:00:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 41% done with 48745 blocks to go, block date 2023-05-23T02:40:01Z
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 34000 blocks/sec, 0 tx/sec, 0 pre-filtered tx/sec, avg/last 267.03/2656.25 kilobytes per sec, chain/common height 34000/82619 (warming up 14 more seconds)
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 42% done with 47919 blocks to go, block date 2023-05-28T20:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 43% done with 47092 blocks to go, block date 2023-06-03T14:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 44% done with 46266 blocks to go, block date 2023-06-09T07:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 45% done with 45440 blocks to go, block date 2023-06-15T01:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 46% done with 44614 blocks to go, block date 2023-06-20T19:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 47% done with 43788 blocks to go, block date 2023-06-26T12:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 48% done with 42961 blocks to go, block date 2023-07-02T06:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 49% done with 42135 blocks to go, block date 2023-07-08T00:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 50% done with 41309 blocks to go, block date 2023-07-13T17:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 51% done with 40483 blocks to go, block date 2023-07-19T11:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 52% done with 39657 blocks to go, block date 2023-07-25T05:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 53% done with 38830 blocks to go, block date 2023-07-30T22:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 54% done with 38004 blocks to go, block date 2023-08-05T16:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 55% done with 37178 blocks to go, block date 2023-08-11T10:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 56% done with 36352 blocks to go, block date 2023-08-17T03:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 57% done with 35526 blocks to go, block date 2023-08-22T21:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 58% done with 34699 blocks to go, block date 2023-08-28T15:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 59% done with 33873 blocks to go, block date 2023-09-03T09:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 60% done with 33047 blocks to go, block date 2023-09-09T02:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 61% done with 32221 blocks to go, block date 2023-09-14T20:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 62% done with 31395 blocks to go, block date 2023-09-20T14:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 63% done with 30569 blocks to go, block date 2023-09-26T07:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 64% done with 29742 blocks to go, block date 2023-10-02T01:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 65% done with 28916 blocks to go, block date 2023-10-07T19:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 66% done with 28090 blocks to go, block date 2023-10-13T12:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 67% done with 27264 blocks to go, block date 2023-10-19T06:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 68% done with 26438 blocks to go, block date 2023-10-25T00:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 69% done with 25611 blocks to go, block date 2023-10-30T18:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 70% done with 24785 blocks to go, block date 2023-11-05T11:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 71% done with 23959 blocks to go, block date 2023-11-11T05:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 72% done with 23133 blocks to go, block date 2023-11-16T23:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 73% done with 22307 blocks to go, block date 2023-11-22T16:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 74% done with 21480 blocks to go, block date 2023-11-28T10:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 75% done with 20654 blocks to go, block date 2023-12-04T04:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 76% done with 19828 blocks to go, block date 2023-12-09T21:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 77% done with 19002 blocks to go, block date 2023-12-15T15:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 78% done with 18176 blocks to go, block date 2023-12-21T09:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 79% done with 17349 blocks to go, block date 2023-12-27T03:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 80% done with 16523 blocks to go, block date 2024-01-01T20:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 81% done with 15697 blocks to go, block date 2024-01-07T14:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 82% done with 14871 blocks to go, block date 2024-01-13T08:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 83% done with 14045 blocks to go, block date 2024-01-19T01:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 84% done with 13219 blocks to go, block date 2024-01-24T19:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 85% done with 12392 blocks to go, block date 2024-01-30T13:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 86% done with 11566 blocks to go, block date 2024-02-05T06:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 87% done with 10740 blocks to go, block date 2024-02-11T00:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 88% done with 9914 blocks to go, block date 2024-02-16T11:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 89% done with 9088 blocks to go, block date 2024-02-21T18:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 90% done with 8261 blocks to go, block date 2024-02-27T01:20:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 91% done with 7435 blocks to go, block date 2024-03-03T17:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 92% done with 6609 blocks to go, block date 2024-03-09T00:50:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 93% done with 5783 blocks to go, block date 2024-03-14T06:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 94% done with 4957 blocks to go, block date 2024-03-18T14:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 95% done with 4130 blocks to go, block date 2024-03-24T08:00:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 96% done with 3304 blocks to go, block date 2024-03-26T22:50:00Z
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 46000 blocks/sec, 0 tx/sec, 0 pre-filtered tx/sec, avg/last 626.25/3593.75 kilobytes per sec, chain/common height 80000/82619 (warming up 13 more seconds)
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 97% done with 2478 blocks to go, block date 2024-04-01T12:10:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 98% done with 1652 blocks to go, block date 2024-04-07T05:40:00Z
+[NioClientManager] INFO org.bitcoinj.core.Peer - Passed the fast catchup time (2024-04-11T19:09:24Z) at height 81624, discarding 377 headers and requesting full blocks
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 99% done with 826 blocks to go, block date 2024-04-12T23:20:00Z
+[NioClientManager] WARN org.bitcoinj.core.AbstractBlockChain - Block does not connect: 5ea2ba34213d1b87a61382b04e6ce0b0612412e29c6c91eeefcfd554a2efb2f7 prev 08fd7fe4ec6fee2ce181d888303c8654753dba14a652287c3d086ef68382b0b2
+[NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected orphan 5ea2ba34213d1b87a61382b04e6ce0b0612412e29c6c91eeefcfd554a2efb2f7
+[NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected 1 orphan blocks.
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 100% done with 0 blocks to go, block date 2024-04-18T16:50:00Z
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 2618 blocks/sec, 0 tx/sec, 995 pre-filtered tx/sec, avg/last 646.55/204.53 kilobytes per sec, chain/common height 82619/82620 (warming up 12 more seconds)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 82619, date 2024-04-18T17:00:00Z, hash 5ea2ba34213d1b87a61382b04e6ce0b0612412e29c6c91eeefcfd554a2efb2f7
+[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 111.1 ms

@@ -1,36 +1,36 @@
 [main] ERROR nl.tudelft.ipv8.jvm.demo.Application - start
-[main] INFO nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Opened UDP socket on port 8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8090
-[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8090
-[main] INFO nl.tudelft.ipv8.Community - Loading DiscoveryCommunity for peer 1a0479716064024e963b5d3e64de4beee3ffb24d
-[main] INFO nl.tudelft.ipv8.Community - Loading TrustChainCommunity for peer 1a0479716064024e963b5d3e64de4beee3ffb24d
-[main] INFO nl.tudelft.ipv8.Community - Loading CoinCommunity for peer 1a0479716064024e963b5d3e64de4beee3ffb24d
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 80.86 ms
+[main] INFO nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Opened UDP socket on port 8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8094
+[DefaultDispatcher-worker-1] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8094
+[main] INFO nl.tudelft.ipv8.Community - Loading DiscoveryCommunity for peer 70a13fb77bdc32d89c997b182bfc02214a418edc
+[main] INFO nl.tudelft.ipv8.Community - Loading TrustChainCommunity for peer 70a13fb77bdc32d89c997b182bfc02214a418edc
+[main] INFO nl.tudelft.ipv8.Community - Loading CoinCommunity for peer 70a13fb77bdc32d89c997b182bfc02214a418edc
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 230.9 ms
 [main] INFO org.bitcoinj.core.Context - Creating bitcoinj 0.15.10 context.
-[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 12.63 ms
-[ STARTING] INFO org.bitcoinj.kits.WalletAppKit - Starting up with directory = /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-1a0479716064024e963b5d3e64de4beee3ffb24d
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 37.03 ms
+[ STARTING] INFO org.bitcoinj.kits.WalletAppKit - Starting up with directory = /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-70a13fb77bdc32d89c997b182bfc02214a418edc
 [ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 1 keys needed for M/0H/0 = 1 issued + 0 lookahead size + 0 lookahead threshold - 0 num children
-[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 1.164 ms
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 1.923 ms
 [ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/0 = 1 issued + 100 lookahead size + 33 lookahead threshold - 1 num children
-[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 49.88 ms
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 101.2 ms
 [ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/1 = 0 issued + 100 lookahead size + 33 lookahead threshold - 0 num children
-[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 33.62 ms
-[ STARTING] INFO org.bitcoinj.store.SPVBlockStore - Creating new SPV block chain file /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-1a0479716064024e963b5d3e64de4beee3ffb24d/forwarding-service-regtest.spvchain
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 75.78 ms
+[ STARTING] INFO org.bitcoinj.store.SPVBlockStore - Creating new SPV block chain file /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-70a13fb77bdc32d89c997b182bfc02214a418edc/forwarding-service-regtest.spvchain
 [ STARTING] INFO org.bitcoinj.core.AbstractBlockChain - chain head is at height 0:
  block: 
    hash: 0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206
@@ -55,7 +55,7 @@ java.net.ConnectException: Connection refused
 	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 [NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 12.96 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 20.87 μs and returned 0 items from 0 discoverers
 [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 1501 ms before next connect attempt to [127.0.0.1]:18444
 [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
 [NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
@@ -70,12 +70,14 @@ java.net.ConnectException: Connection refused
 	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 [NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 11.30 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 3376 ms before next connect attempt to [127.0.0.1]:18444
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 6.069 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 3375 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
 [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
+[NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/s[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
 [NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
 java.net.ConnectException: Connection refused
 	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
@@ -88,29 +90,316 @@ java.net.ConnectException: Connection refused
 	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 [NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 12.25 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 8.829 μs and returned 0 items from 0 discoverers
 [PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 7594 ms before next connect attempt to [127.0.0.1]:18444
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444:[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 6.122 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO o[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated pa[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 11.88 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 5.317 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO o[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: P[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGro[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGro[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 6.184 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms [PeerGroup Thread] INFO org.bitcoinj.core.PeerGro[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 12.18 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10000 ms [DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 6622 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 4027 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 1505 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 2 pending, 1 max)
+[NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.bitcoinj.net.NioClientManager.handleKey(NioClientManager.java:64)
+	at org.bitcoinj.net.NioClientManager.run(NioClientManager.java:122)
+	at com.google.common.util.concurrent.AbstractExecutionThreadService$1$2.run(AbstractExecutionThreadService.java:67)
+	at com.google.common.util.concurrent.Callables$4.run(Callables.java:121)
+	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 3 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 2 pending, 1 max)
+[NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.bitcoinj.net.NioClientManager.handleKey(NioClientManager.java:64)
+	at org.bitcoinj.net.NioClientManager.run(NioClientManager.java:122)
+	at com.google.common.util.concurrent.AbstractExecutionThreadService$1$2.run(AbstractExecutionThreadService.java:67)
+	at com.google.common.util.concurrent.Callables$4.run(Callables.java:121)
+	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 11.65 μs and returned 0 items from 0 discoverers
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 1 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 17086 ms before next connect attempt to [127.0.0.1]:18444
+[NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.bitcoinj.net.NioClientManager.handleKey(NioClientManager.java:64)
+	at org.bitcoinj.net.NioClientManager.run(NioClientManager.java:122)
+	at com.google.common.util.concurrent.AbstractExecutionThreadService$1$2.run(AbstractExecutionThreadService.java:67)
+	at com.google.common.util.concurrent.Callables$4.run(Callables.java:121)
+	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.228 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 25628 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 13.08 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms before next connect attempt to [127.0.0.1]:18444
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.403 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO o[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
 [AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 12.18 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms before next connect attempt to [127.0.0.1]:18444
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 44.29 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10002 ms before next connect attempt to [127.0.0.1]:18444
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 15.55 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms before next connect attempt to [127.0.0.1]:18444
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 21.77 μs and returned 0 items from 0 discoverers
-[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 10001 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 10.51 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 57665 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 8.568 μs and returned 0 items from 0 discoverers
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 57664 ms before next connect attempt to [127.0.[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGro[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 13.17 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 65866 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8093
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8093
+[DefaultDispatcher-worker-13] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/java.net.DatagramSocket.send(DatagramSocket.java:664)
+	at nl.tudelft.ipv8.messaging.udp.UdpEndpoint$send$2.invokeSuspend(UdpEndpoint.kt:85)
+	at kotlin.coroutines.[DefaultDispatcher-worker-11] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/java.net.DatagramSocket.send(DatagramSocket.java:664)
+	at nl.tudelft.ipv8.messaging.udp.UdpEndpoint$send$2.invokeSuspend(UdpEndpoint.kt:85)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.internal.LimitedDispatcher.run(Limited[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-14] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
+[DefaultDispatcher-worker-14] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8090
+[DefaultDispatcher-worker-14] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8090
+[DefaultDispatcher-worker[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.0.161:8091
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN add[DefaultDispatcher-worker-6] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/java.net.DatagramSocket.send(DatagramSocket.java:664)
+	at nl.tudelft.ipv8.messaging.udp.UdpEndpoint$send$2.invokeSuspend(UdpEndpoint.kt:85)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.internal.LimitedDispatcher.run(LimitedDispatcher.kt:42)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:95)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:570)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:750)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:677)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:664)
+[DefaultDispatcher-worker-16] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/java.net.DatagramSocket.send(DatagramSocket.java:664)
+	at nl.tudelft.ipv8.messaging.udp.UdpEndpoint$send$2.invokeSuspend(UdpEndpoint.kt:85)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.internal.LimitedDispatcher.run(LimitedDispatcher.kt:42)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:95)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:570)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:750)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:677)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:664)
+[DefaultDispatcher-worker-4] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/j[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8092
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8092
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8092
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8092
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8092
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.messaging.Endpoi[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 2 pending, 1 max)
+[NioClientManager] WARN org.bitcoinj.net.NioC[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 10.96 μs and returned 0 items from 0 discoverers
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 437893 ms before next connect attempt to [127.0.0.1]:18444
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 10.39 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600000 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.622 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 599999 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+rent.AbstractExecutionThreadService$1$2.run(AbstractExecutionThreadService.java:67)
+	at com.google.common.util.concurrent.Callables$4.run(Callables.java:121)
+	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 129746 ms before next connect attempt to [127.0.0.1]:18444
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 1 pending, 1 max)
+[NioClientManager] WARN org.bitcoinj.net.NioClientManager - Failed to connect with exception: java.net.ConnectException: Connection refused
+java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:672)
+	at java.base/sun.nio.ch.SocketChannelImpl.finishConnect(SocketChannelImpl.java:946)
+	at org.bitcoinj.net.NioClientManager.handleKey(NioClientManager.java:64)
+	at org.bitcoinj.net.NioClientManager.run(NioClientManager.java:122)
+	at com.google.common.util.concurrent.AbstractExecutionThreadService$1$2.run(AbstractExecutionThreadService.java:67)
+	at com.google.common.util.concurrent.Callables$4.run(Callables.java:121)
+	at org.bitcoinj.utils.ContextPropagatingThreadFactory$1.run(ContextPropagatingThreadFactory.java:51)
+	at java.base/java.lang.Thread.run(Thread.java:842)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 9.519 μs and returned 0 items from 0 discoverers
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 29[DefaultDispatcher-worker-1] ERROR nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Sending DatagramPacket failed
+java.net.SocketException: Can't send to port 0
+	at java.base/sun.nio.ch.DatagramChannelImpl.send(DatagramChannelImpl.java:820)
+	at java.base/sun.nio.ch.DatagramChannelImpl.blockingSend(DatagramChannelImpl.java:853)
+	at java.base/sun.nio.ch.DatagramSocketAdaptor.send(DatagramSocketAdaptor.java:218)
+	at java.base/java.net.DatagramSocket.send(DatagramSocket.java:664)
+	at nl.tudelft.ipv8.messaging.udp.UdpEndpoint$send$2.invokeSuspend(UdpEndpoint.kt:85)
+	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:106)
+	at kotlinx.coroutines.internal.LimitedDispatcher.run(LimitedDispatcher.kt:42)
+	at kotlinx.coroutines.scheduling.TaskImpl.run(Tasks.kt:95)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler.runSafely(CoroutineScheduler.kt:570)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.executeTask(CoroutineScheduler.kt:750)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.runWorker(CoroutineScheduler.kt:677)
+	at kotlinx.coroutines.scheduling.CoroutineScheduler$Worker.run(CoroutineScheduler.kt:664)
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+rGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 9.603 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600000 ms before next connect attempt to [127.0.0.1]:18444
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 9.015 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600000 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+tion.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-2] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+ler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 16.93 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600000 ms before next connect attempt to [127.0.0.1]:18444
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.501 μs and returned 0 items from 0 discoverers
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600001 ms before next connect attempt to [127.0.0.1]:18444
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerSocketHandler - [127.0.0.1]:18444: Timed out
+[AbstractTimeoutHandler timeouts] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 10.46 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 600001 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.885 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 599999 ms before next connect attempt to [127.0.0.1]:18444
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 7.795 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 599998 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-1] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key

@@ -3,6 +3,13 @@ import Client from "../clients_tracker/client.js";
 import { clients, wallets } from "../clients_tracker/clientsList.js";
 import operations from "../api/operations.js";
 import * as readline from "readline";
+import TableManager from "./tableManager.js";
+import { table } from "console";
+
+const PEERS_ON_TRIAL = 5;
+let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
+let peerToJoinWallet = 0;
+
 function askQuestion(query) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -17,43 +24,11 @@ function askQuestion(query) {
   );
 }
 
-/**
- * ALL JOIN ALL WALLETS:
- * 6-> 57150
- *
- * ALL JOIN ONE WALLET:
- *
- * 6 -> 63069
- *
- *
- * ALL JOIN ONE WALLET - NEW METHOD
- *
- * 6 -> 4089
- */
-
-/**
- * Message transfer without gossip:
- * 2  peers: 672ms
- * 5  peers: 1477ms | 156KB peek
- * 10 peers: 3666ms | 545KB peek
- * 15 peers: 6320ms | 1.22MB  = 1220 KB peek
- * 17 peers: crash
- *
- * Message transfer with gossip:
- *
- * 5  peers: 1465ms | 74kb peek
- * 10 peers: 3213ms | 135KB peek
- * 15 peers: 5178ms | 228KB peek
- * 17 peers: crash
- *
- *
- * IDEAS FOR SHARDING:
- * Separate the blockchain into 4 parts: proposals/votes for joining, joining,
- * Achiving system.
- */
-
 const wss = new WebSocketServer({ port: 7071 });
 
+const tableManager = new TableManager(PEERS_ON_TRIAL);
+
+tableManager.start(1000);
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -65,9 +40,6 @@ function selectHalfRandomly(arr) {
   shuffleArray(arr);
   return arr.slice(0, arr.length / 2);
 }
-const PEERS_ON_TRIAL = 100;
-let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
-let peerToJoinWallet = 0;
 
 let timer;
 let otherClients = [];
@@ -85,8 +57,8 @@ const startSimulation = async () => {
 
   console.log("SEND NOTIFICATION TO ALL CLIENTS: " + clients.length);
   for (let client of clients) {
-    client.send(operations.START_SIMULATION, { id: client.id.toString() });
-    // break;
+    client.send(operations.CREATE_DAO, { id: client.id.toString() });
+    break;
   }
 };
 
@@ -103,12 +75,13 @@ const nextClientJoin = () => {
 const newDaoCreated = (client) => {
   // chose half of the clients to join my wallet
   console.log("WALLET CREATED BY: " + client.id);
+  tableManager.setPeerJoinedWallet(client.id);
   walletsToBeCreated--;
 
   otherClients = clients.filter((x) => x.id != client.id);
 
   walletId = client.wallet[0].id;
-  nextClientJoin();
+  // nextClientJoin();
   //   peerToJoinWallet += otherClients.length;
   //   for (let otherClient of otherClients) {
   //     otherClient.send(operations.JOIN_WALLET, { id: walletId });
@@ -123,8 +96,6 @@ const receivePing = (client) => {
 };
 
 const onJoinSucceed = (client) => {
-  //   console.log("wallets to be created:" + walletsToBeCreated);
-  //   console.log("peers to join: " + peerToJoinWallet);
   peerToJoinWallet--;
   console.log("[JOINED] CLIENT " + client.id);
   console.log("TIME TO JOIN: " + (individualTimer - Date.now()));
@@ -138,7 +109,9 @@ const onJoinSucceed = (client) => {
 
   nextClientJoin();
 };
-
+const onSync = (client) => {
+  tableManager.setPeerSynced(client.id);
+};
 wss.on("connection", (ws) => {
   console.log("connected");
   const client = new Client(
@@ -146,9 +119,12 @@ wss.on("connection", (ws) => {
     ws,
     newDaoCreated,
     onJoinSucceed,
-    receivePing
+    receivePing,
+    onSync
   );
   clients.push(client);
+
+  tableManager.setPeerActive(client.id);
 
   if (clients.length == PEERS_ON_TRIAL) {
     // start simulation
@@ -165,6 +141,8 @@ wss.on("connection", (ws) => {
 
   ws.on("close", function close() {
     clients.splice(client.id, 1);
+
+    tableManager.setPeerInactive(client.id);
     console.log("closed");
   });
 });

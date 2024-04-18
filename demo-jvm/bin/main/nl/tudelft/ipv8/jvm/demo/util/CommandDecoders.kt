@@ -9,7 +9,8 @@ enum class Operation(val op: Int){
     SEND_NEW_DAO_ID(4),
     JOIN_WALLET(5),
     NOTIFICATION(6),
-    START_SIMULATION(7);
+    START_SIMULATION(7),
+    SYNC_COMPLETE(8);
     companion object {
         fun fromInt(value: Int) = entries.first { it.op == value }
     }
