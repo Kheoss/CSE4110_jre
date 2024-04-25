@@ -114,6 +114,11 @@ const onJoinSucceed = (client) => {
 const onSync = (client) => {
   tableManager.setPeerSynced(client.id);
 };
+
+const onReceiveBalance = (client, balance) => {
+  tableManager.setBalance(client.id, balance);
+}
+
 wss.on("connection", (ws) => {
   console.log("connected");
   const client = new Client(
@@ -122,7 +127,8 @@ wss.on("connection", (ws) => {
     newDaoCreated,
     onJoinSucceed,
     receivePing,
-    onSync
+    onSync,
+    onReceiveBalance
   );
   clients.push(client);
 

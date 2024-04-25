@@ -207,7 +207,7 @@ class Application : CallbackInterface {
         )
 //        val walletDir = File("wallet-" + myPeer.publicKey)
 
-        val walletDir = File("/home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets//wallet-" + myPeer.publicKey)
+        val walletDir = File("/home/matei/uni/blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-" + myPeer.publicKey)
         walletDir.mkdir()
 
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
@@ -271,6 +271,17 @@ class Application : CallbackInterface {
                 for (b in toVote) {
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
+                Log.i("Coin", "Balance: ${WalletManager.getInstance().kit.wallet().balance}")
+
+                commandListener.send(
+                    Klaxon().toJsonString(
+                        Message(
+                            Operation.BALANCE.op, Klaxon().toJsonString(
+                                Balance(WalletManager.getInstance().kit.wallet().balance.value.toInt())
+                            )
+                        )
+                    )
+                )
 
                 delay(1000)
             }

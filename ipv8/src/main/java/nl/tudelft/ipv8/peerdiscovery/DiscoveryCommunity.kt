@@ -17,7 +17,8 @@ private val logger = KotlinLogging.logger {}
 
 class DiscoveryCommunity : Community(), PingOverlay {
 //    override val serviceId = "7e313685c1912a141279f8248fc8db5899c5df5a"
-    override val serviceId = "7e313685c1912a141279f8248fc8db5899c5df5b"
+//    override val serviceId = "7e313685c1912a141279f8248fc8db5899c5df5b"
+    override val serviceId = "7e313685c1912a141279f8248fc8db5899c5df5c"
 
     private val pingRequestCache: MutableMap<Int, PingRequest> = mutableMapOf()
 

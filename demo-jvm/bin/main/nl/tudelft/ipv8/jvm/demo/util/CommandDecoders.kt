@@ -10,7 +10,8 @@ enum class Operation(val op: Int){
     JOIN_WALLET(5),
     NOTIFICATION(6),
     START_SIMULATION(7),
-    SYNC_COMPLETE(8);
+    SYNC_COMPLETE(8),
+    BALANCE(9);
     companion object {
         fun fromInt(value: Int) = entries.first { it.op == value }
     }
@@ -20,3 +21,5 @@ data class Message(
     @Json(name = "params") val params: String)
 
 data class ParamsDAOIdResponse(val id: String)
+
+data class Balance(val balance: Int)

@@ -7,4 +7,5 @@ export default {
   NOTIFICATION: 6,
   START_SIMULATION: 7,
   SYNC_COMPLETE: 8,
+  BALANCE: 9,
 };

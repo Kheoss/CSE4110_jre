@@ -31,6 +31,7 @@ export default class TableManager {
     this.activityMatrix = [
       this.initiateProcessStatusColumn(),
       this.initiateSyncStatusColumn(),
+      this.initiateBalanceColumn(),
       this.initiateJoinedStatusColumn(),
     ];
   }
@@ -60,8 +61,14 @@ export default class TableManager {
     return data;
   }
 
+  initiateBalanceColumn() {
+    let data = ["BALANCE"];
+    for (let i = 0; i < this.numberOfInstances; i++) data.push(chalk.red(0));
+    return data;
+  }
+
   setPeerJoinedWallet(peerId) {
-    this.activityMatrix[2][peerId + 1] = chalk.green("YES");
+    this.activityMatrix[3][peerId + 1] = chalk.green("YES");
     this.updateTable();
   }
 
@@ -80,6 +87,17 @@ export default class TableManager {
     this.activityMatrix[1][peerId + 1] = chalk.green("YES");
     this.updateTable();
   }
+
+  setBalance(peerId, balance) {
+    if (balance === 0) {
+      this.activityMatrix[2][peerId + 1] = chalk.red(0);
+    }
+    else {
+      this.activityMatrix[2][peerId + 1] = chalk.green(balance);
+    }
+    this.updateTable();
+  }
+
 
   setPeerDesynced(peerId) {
     this.activityMatrix[1][peerId + 1] = chalk.red("NO");

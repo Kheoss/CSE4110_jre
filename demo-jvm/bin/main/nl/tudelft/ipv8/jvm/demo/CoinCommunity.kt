@@ -17,7 +17,8 @@ import kotlin.random.Random
 
 
 class CoinCommunity : Community() {
-    override val serviceId = "02313685c1912a141279f8248fc8db5899c5df55"
+    //override val serviceId = "02313685c1912a141279f8248fc8db5899c5df55"
+    override val serviceId = "02313685c1912a141279f8248fc8db5899c5df56"
 
     private fun getTrustChainCommunity(): TrustChainCommunity {
         return IPv8Network.getInstance().getOverlay()
