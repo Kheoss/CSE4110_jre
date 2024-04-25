@@ -1,5 +1,11 @@
 package nl.tudelft.ipv8.jvm.demo
 
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import java.security.cert.X509Certificate
+
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
 import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver.Companion.IN_MEMORY
@@ -45,9 +51,9 @@ class Application {
     private val logger = KotlinLogging.logger {}
     private val simContext = SimulatedContext()
     //DOCKER CONFIG
-    private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
+    // private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
 
-    // private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
+    private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
 
@@ -55,6 +61,22 @@ class Application {
         logger.error ("start")
         commandListener.connect()
         startIpv8()
+    }
+
+  
+
+    protected fun getIpv8(): IPv8 {
+        return IPv8Network.getInstance()
+    }
+
+    private fun getCoinCommunity(): CoinCommunity {
+        return getIpv8().getOverlay()
+            ?: throw IllegalStateException("CoinCommunity is not configured")
+    }
+
+    private fun getTrustChainCommunity(): TrustChainCommunity {
+        return IPv8Network.getInstance().getOverlay()
+            ?: throw IllegalStateException("TrustChainCommunity is not configured")
     }
 
     fun interpretCommand(command: String) {
@@ -83,16 +105,12 @@ class Application {
 
                     if(wallet != null) {
                         joinSharedWallet(wallet)
-                        commandListener.send(
-                            Klaxon().toJsonString(
-                                Message(
-                                    Operation.JOIN_WALLET.op, Klaxon().toJsonString(
-                                        ParamsDAOIdResponse(id)
-                                    )
-                                )
-                            )
-                        )
+                     
                     }
+                }
+                Operation.START_SIMULATION -> {
+                    val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
+                    getCoinCommunity().broadCastNotification(id)         
                 }
                 else -> {
                     println("no such command")
@@ -106,27 +124,12 @@ class Application {
     }
 
 
-    protected fun getIpv8(): IPv8 {
-        return IPv8Network.getInstance()
-    }
-
-    private fun getCoinCommunity(): CoinCommunity {
-        return getIpv8().getOverlay()
-            ?: throw IllegalStateException("CoinCommunity is not configured")
-    }
-
-    private fun getTrustChainCommunity(): TrustChainCommunity {
-        return IPv8Network.getInstance().getOverlay()
-            ?: throw IllegalStateException("TrustChainCommunity is not configured")
-    }
-
     private fun joinSharedWallet(block: TrustChainBlock) {
         val mostRecentSWBlock =
             getCoinCommunity().fetchLatestSharedWalletBlock(block.calculateHash())
                 ?: block
 
         // Add a proposal to trust chain to join a shared wallet
-        val proposeBlockData =
             try {
                 getCoinCommunity().proposeJoinWallet(
                     mostRecentSWBlock
@@ -136,29 +139,29 @@ class Application {
                 return
             }
 
-        // Wait and collect signatures
-        var signatures: List<SWResponseSignatureBlockTD>? = null
-        while (signatures == null) {
-            Thread.sleep(1000)
-            signatures = collectJoinWalletResponses(proposeBlockData)
-        }
+        // // Wait and collect signatures
+        // var signatures: List<SWResponseSignatureBlockTD>? = null
+        // while (signatures == null) {
+        //     Thread.sleep(1000)
+        //     signatures = collectJoinWalletResponses(proposeBlockData)
+        // }
 
-        // Create a new shared wallet using the signatures of the others.
-        // Broadcast the new shared bitcoin wallet on trust chain.
-        try {
-            getCoinCommunity().joinBitcoinWallet(
-                mostRecentSWBlock.transaction,
-                proposeBlockData,
-                signatures,
-                simContext
-            )
+        // // Create a new shared wallet using the signatures of the others.
+        // // Broadcast the new shared bitcoin wallet on trust chain.
+        // try {
+        //     getCoinCommunity().joinBitcoinWallet(
+        //         mostRecentSWBlock.transaction,
+        //         proposeBlockData,
+        //         signatures,
+        //         simContext
+        //     )
             
-            // Add new nonceKey after joining a DAO
-            WalletManager.getInstance()
-                .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-        } catch (t: Throwable) {
-            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
-        }
+        //     // Add new nonceKey after joining a DAO
+        //     WalletManager.getInstance()
+        //         .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
+        // } catch (t: Throwable) {
+        //     Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        // }
 
         // Update wallets UI list
     }
@@ -199,28 +202,30 @@ class Application {
 
         val walletManager = if(WalletManager.isInitialized()) WalletManager.getInstance() else WalletManager.createInstance(config, walletDir, config.key, config.addressPrivateKeyPair)
 
+        walletManager.setCommandListenerWalletManager(commandListener);
+        getCoinCommunity().setCommandListenerForCoin(commandListener);
+
         return walletManager;
     }
-
+   
+    
     private fun addBTC(address: String): Boolean {
+        // disableCertificateValidation()
+       
         val executor: ExecutorService =
             Executors.newCachedThreadPool(Executors.defaultThreadFactory())
         val future: Future<Boolean>
-
-        val url = "https://taproot.tribler.org/addBTC?address=$address"
+        val url = "http://127.0.0.1:443/addBTC?address=$address"
 
         future =
             executor.submit(
                 object : Callable<Boolean> {
                     override fun call(): Boolean {
                         val connection = URL(url).openConnection() as HttpURLConnection
-
+                        Log.i("ADD BTC", url)
+                        Log.i("ADD BTC", connection.responseMessage)
+                        
                         try {
-                            // If it fails, check if there is enough balance available on the server
-                            // Otherwise reset the bitcoin network on the server (there is only 15k BTC available).
-                            // Also check if the Python server is still running!
-                            logger.error("Coin", url)
-                            logger.error("Coin", connection.responseMessage)
                             return connection.responseCode == 200
                         } finally {
                             connection.disconnect()
@@ -237,35 +242,28 @@ class Application {
     }
 
     private fun startIpv8() {
-        Log.e("schimbat", "DADADADA")
         val myKey = JavaCryptoProvider.generateKey()
-
         IPv8Network.Factory().setPrivateKey(myKey).init();
-
         generateWalletManagerInstance(getCoinCommunity().myPeer)
-        addBTC(WalletManager.getInstance().protocolAddress().toString())
-
-        Thread.sleep(5000)
-
-
+        if(!addBTC(WalletManager.getInstance().protocolAddress().toString())){
+            Log.i("ADD BTC", "FAILED")
+        }
 
         scope.launch {
-            while (true) {
+            while(true){
                 val databaseProposals = getCoinCommunity().fetchProposalBlocks()
-                // Log.i("Coin", "${databaseProposals.size} proposals found in database!")
                 updateProposals(databaseProposals)
                 crawlProposalsAndUpdateIfNewFound()
                 val toVote = filterByNotVoted()
-
+                
                 val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
                 for (b in toVote) {
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
 
-                // getCoinCommunity().broadcastGreeting()
-                delay(10)
+                delay(1000)
             }
-        }
+            }
 
         while (IPv8Network.getInstance().isStarted()) {
             Thread.sleep(1000)
@@ -291,7 +289,6 @@ class Application {
                         )
                     ).map { it.SW_BITCOIN_PK }
 
-                // Check if I voted
                 val myPublicBitcoinKey = WalletManager.getInstance().protocolECKey().publicKeyAsHex
                 !(favorVotes.contains(myPublicBitcoinKey) ||
                     negativeVotes.contains(
@@ -301,6 +298,7 @@ class Application {
     }
 
     private fun updateProposals(newProposals: List<TrustChainBlock>) {
+        Log.e("schim", "${newProposals.size}")
         val coinCommunity = getCoinCommunity()
         val proposalIds =
             proposals.map {
@@ -341,6 +339,7 @@ class Application {
                     "Coin",
                     "Crawl result: ${crawlResult.size} proposals found (from ${peer.address})"
                 )
+            
                 if (crawlResult.isNotEmpty()) {
                     updateProposals(crawlResult)
                 }

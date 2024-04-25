@@ -12,6 +12,9 @@ import nl.tudelft.ipv8.util.hexToBytes
 import nl.tudelft.ipv8.util.toHex
 import nl.tudelft.ipv8.jvm.demo.util.NotificationMessage
 import nl.tudelft.ipv8.messaging.Packet
+import com.beust.klaxon.Klaxon
+import kotlin.random.Random
+
 
 class CoinCommunity : Community() {
     override val serviceId = "02313685c1912a141279f8248fc8db5899c5df55"
@@ -29,14 +32,53 @@ class CoinCommunity : Community() {
     private val daoJoinHelper = DAOJoinHelper()
     private val daoTransferFundsHelper = DAOTransferFundsHelper()
 
+    public var commandListener: CommandListener? = null
+
+    public fun setCommandListenerForCoin(aux: CommandListener){
+        commandListener = aux;
+    }
+
+    private val receivedMessages = mutableSetOf<String>()
 
     init {
        messageHandlers[MessageId.MESSAGE_ID] = ::onNotificationMessage
     }
 
+
+    private fun gossip(msg: NotificationMessage, newTTL: UInt, senderPeer: Peer){
+        val randomPeer = getPeers().filter { it != senderPeer }.randomOrNull()
+        val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage(msg.message, msg.messageId, newTTL))
+        if(randomPeer != null)
+            send(randomPeer, packet)
+    }
+
+    
+
     private fun onNotificationMessage(packet: Packet) {
-        Log.i("MESSAGE", "RECEIVED GREETING")
-        // val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer)        
+        val (peer, payload) = packet.getAuthPayload(NotificationMessage.Deserializer) 
+      
+        var newTTL = payload.ttl
+        if (payload.messageId !in receivedMessages) {
+            receivedMessages.add(payload.messageId)
+         
+           commandListener!!.send(
+            Klaxon().toJsonString(
+                Message(
+                    Operation.NOTIFICATION.op, Klaxon().toJsonString(
+                        ParamsDAOIdResponse(payload.messageId)
+                    )
+                )
+            )
+        )   
+            
+                newTTL--
+            
+        }
+
+        if(payload.ttl > 0u){
+            gossip(payload, newTTL, peer)
+        }
+        
         // Log.i("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
@@ -44,12 +86,35 @@ class CoinCommunity : Community() {
         // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
     }
 
-    fun broadcastGreeting() {
-        for (peer in getPeers()) {
-            // Log.i("MESSAGE", "SENT GREETING")
-            val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage("Hello!"))
+    fun generate1KBString(): String {
+       
+        val charToRepeat = 'a' 
+        val sizeInBytes = 1024
+       
+        return charToRepeat.toString().repeat(sizeInBytes)
+    }
+    
+
+    fun broadCastNotification(id: String){
+        val selectedPeers = getPeers().shuffled().take(1)
+
+        for (peer in selectedPeers) {
+            val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage(generate1KBString(), id, 16.toUInt()))
             send(peer, packet)
         }
+    }
+
+    fun broadCastNotificationWithGossip(id: String){
+        val peers = getPeers()
+        for (peer in peers) {
+            val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage(generate1KBString(), id, 16.toUInt()))
+            send(peer, packet)
+        }
+    }
+
+    fun sendVoteFinishedMessage(peer: Peer, message: String) {
+        // val packet = serializePacket(MessageId.MESSAGE_ID, NotificationMessage(message))
+        // send(peer, packet)
     }
 
     /**
@@ -388,7 +453,60 @@ class CoinCommunity : Community() {
         val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 
+        Log.i("SIGNING", "SIGNED")
         DAOJoinHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
+
+        // CHECK FOR ENOUGH
+
+        // @TODO : delete this delay
+        // delay(5000)
+
+        // @TODO : make the transaction if enough votes.
+        val latestAskForSignaturesBlock =
+            SWSignatureAskTransactionData(block.transaction).getData()
+        var signatures: List<SWResponseSignatureBlockTD>? = collectJoinWalletResponses(latestAskForSignaturesBlock);
+        if (signatures != null) {
+           Log.i("SIGNING", "SIGNATURES ALIVE")
+            //make the transaction
+            val newMostRecentSWBlock =
+            fetchLatestSharedWalletBlock(block.calculateHash())
+                ?: block
+
+            joinBitcoinWallet(
+                newMostRecentSWBlock.transaction,
+                latestAskForSignaturesBlock,
+                signatures,
+                context
+            )
+
+
+            // .addNewNonceKey(latestAskForSignaturesBlock.SW_UNIQUE_ID, simContext)
+            // @TODO : consider add notification (I've made the transaction)
+            // sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
+        }
+
+
+     
+        // getCoinCommunity().sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
+
+    }
+
+    fun collectJoinWalletResponses(blockData: SWSignatureAskBlockTD): List<SWResponseSignatureBlockTD>? {
+        val responses = fetchProposalResponses(
+                blockData.SW_UNIQUE_ID,
+                blockData.SW_UNIQUE_PROPOSAL_ID
+            )
+
+        Log.i(
+            "Coin",
+            "Waiting for signatures. ${responses.size}/${blockData.SW_SIGNATURES_REQUIRED} received!"
+        )
+
+
+        if (responses.size >= blockData.SW_SIGNATURES_REQUIRED-1) {
+            return responses
+        }
+        return null
     }
 
     /**
@@ -487,7 +605,7 @@ class CoinCommunity : Community() {
     }
 
     object MessageId {
-        const val MESSAGE_ID = 1206
+        const val MESSAGE_ID = 1
     }
 
     companion object {

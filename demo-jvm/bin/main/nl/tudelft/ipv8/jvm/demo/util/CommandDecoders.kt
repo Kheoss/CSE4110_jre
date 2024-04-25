@@ -7,7 +7,10 @@ enum class Operation(val op: Int){
     PRINT_USER_COUNT(2),
     CREATE_DAO(3),
     SEND_NEW_DAO_ID(4),
-    JOIN_WALLET(5);
+    JOIN_WALLET(5),
+    NOTIFICATION(6),
+    START_SIMULATION(7),
+    SYNC_COMPLETE(8);
     companion object {
         fun fromInt(value: Int) = entries.first { it.op == value }
     }

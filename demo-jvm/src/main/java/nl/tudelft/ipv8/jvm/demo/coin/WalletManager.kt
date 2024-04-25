@@ -1,6 +1,6 @@
 package nl.tudelft.trustchain.currencyii.coin
 
-
+import com.beust.klaxon.Klaxon
 import com.google.common.base.Joiner
 import nl.tudelft.ipv8.jvm.demo.coin.AddressPrivateKeyPair
 import nl.tudelft.ipv8.jvm.demo.coin.BitcoinNetworkOptions
@@ -30,6 +30,8 @@ import java.net.URL
 import java.net.UnknownHostException
 import java.util.*
 import java.util.concurrent.*
+import nl.tudelft.ipv8.jvm.demo.util.*
+import nl.tudelft.ipv8.jvm.demo.util.Message
 
 const val TEST_NET_WALLET_NAME = "forwarding-service-testnet"
 const val REG_TEST_WALLET_NAME = "forwarding-service-regtest"
@@ -37,8 +39,8 @@ const val MAIN_NET_WALLET_NAME = "forwarding-service"
 const val MIN_BLOCKCHAIN_PEERS_TEST_NET = 5
 const val MIN_BLOCKCHAIN_PEERS_REG_TEST = 1
 const val MIN_BLOCKCHAIN_PEERS_PRODUCTION = 5
-const val REG_TEST_FAUCET_IP = "131.180.27.224"
-const val REG_TEST_FAUCET_DOMAIN = "taproot.tribler.org"
+const val REG_TEST_FAUCET_IP = "127.0.0.1"
+const val REG_TEST_FAUCET_DOMAIN = "127.0.0.1:443"
 
 var minBlockchainPeers = MIN_BLOCKCHAIN_PEERS_TEST_NET
 
@@ -70,12 +72,20 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
     var progress: Int = 0
     val key = addressPrivateKeyPair
 
+   
 
     val onSetupCompletedListeners = mutableListOf<() -> Unit>()
 
     fun addOnSetupCompletedListener(listener: () -> Unit) {
         onSetupCompletedListeners.add(listener)
     }
+
+    public var commandListener: CommandListener? = null
+
+    public fun setCommandListenerWalletManager(aux: CommandListener){
+        commandListener = aux;
+    }
+
 
     init {
         Log.i("Coin", "Coin: WalletManager attempting to start.")
@@ -160,6 +170,16 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
                 override fun doneDownload() {
                     super.doneDownload()
                     progress = 100
+
+                    commandListener!!.send(
+                        Klaxon().toJsonString(
+                            Message(
+                                Operation.SYNC_COMPLETE.op, Klaxon().toJsonString(
+                                    ParamsDAOIdResponse("message")
+                                )
+                            )
+                        )
+                    ) 
                     Log.i("Coin", "Download Complete!")
                     Log.i("Coin", "Balance: ${kit.wallet().balance}")
                     isDownloading = false
@@ -624,7 +644,7 @@ class WalletManager private constructor(walletManagerConfiguration: WalletManage
         Log.i("Coin", "Sending serialized transaction to the server: ${transaction.serialize().toHex()}")
         val url =
             URL(
-                "https://$REG_TEST_FAUCET_DOMAIN/generateBlock?tx_id=${
+                "http://$REG_TEST_FAUCET_DOMAIN/generateBlock?tx_id=${
                     transaction.serialize().toHex()
                 }"
             )

@@ -7,7 +7,7 @@ class Client {
   joinedWallets;
   timer;
   last_join_time;
-  constructor(id, ws, newDaoCreated, onJoinSucceed) {
+  constructor(id, ws, newDaoCreated, onJoinSucceed, receivePing, onSync) {
     this.id = id;
     this.ws = ws;
     this.wallet = [];
@@ -16,12 +16,14 @@ class Client {
     this.last_join_time = 0;
     this.newDaoCreated = newDaoCreated;
     this.onJoinSucceed = onJoinSucceed;
+    this.receivePing = receivePing;
+    this.onSync = onSync;
   }
 
   send(op, msg) {
     msg = JSON.stringify(msg);
 
-    console.log("SENT: ", msg)
+    console.log("SENT: ", msg);
     this.ws.send(
       JSON.stringify({
         operation: op,
@@ -31,8 +33,6 @@ class Client {
   }
 
   interpret(data) {
-    console.log("received: %s", data);
-
     try {
       const msg = JSON.parse(data);
 
@@ -48,6 +48,16 @@ class Client {
           this.joinedWallets.push(join_params.id);
           this.last_join_time = Date.now() - this.timer;
           this.onJoinSucceed(this);
+          break;
+
+        case operations.NOTIFICATION:
+          const notificationParams = JSON.parse(msg.params);
+          this.receivePing(this);
+          break;
+
+        case operations.SYNC_COMPLETE:
+          this.onSync(this);
+          break;
       }
     } catch (error) {
       console.log(error);
