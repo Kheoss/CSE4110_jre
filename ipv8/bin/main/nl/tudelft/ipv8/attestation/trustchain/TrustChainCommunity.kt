@@ -15,6 +15,8 @@ import nl.tudelft.ipv8.messaging.Address
 import nl.tudelft.ipv8.util.toHex
 import kotlin.coroutines.Continuation
 import kotlin.math.max
+import nl.tudelft.ipv8.attestation.trustchain.CallbackInterface
+
 
 private val logger = KotlinLogging.logger {}
 
@@ -36,6 +38,13 @@ open class TrustChainCommunity(
     private val blockSigners: MutableMap<String, BlockSigner> = mutableMapOf()
 
     private val crawlRequestCache: MutableMap<UInt, CrawlRequest> = mutableMapOf()
+
+    private var onJoinCallback: CallbackInterface? = null
+
+    fun setJoinCallback(callback: CallbackInterface) {
+        this.onJoinCallback = callback
+    }
+
 
     init {
         messageHandlers[MessageId.HALF_BLOCK] = ::onHalfBlockPacket
@@ -592,6 +601,13 @@ open class TrustChainCommunity(
         } else {
             if (!database.contains(block)) {
                 try {
+
+                    println("DADADADADASDASDASDASDSASADASDASDASDASDASDASDASD")
+                    println(block.type)
+                    if(block.type == "v1DAO_JOIN")
+                        {
+                            onJoinCallback?.onCallbackEvent()
+                        }
                     logger.debug("addBlock " + block.publicKey.toHex() + " " + block.sequenceNumber)
                     database.addBlock(block)
                 } catch (e: Exception) {

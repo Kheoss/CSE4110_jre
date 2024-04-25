@@ -1,0 +1,252 @@
+[main] ERROR nl.tudelft.ipv8.jvm.demo.Application - start
+[main] INFO nl.tudelft.ipv8.messaging.udp.UdpEndpoint - Opened UDP socket on port 8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.18.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.96.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.17.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.124.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 172.19.0.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 10.0.3.1:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.1.162:8091
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.messaging.Endpoint - Estimated LAN address: 192.168.1.162:8091
+[main] INFO nl.tudelft.ipv8.Community - Loading DiscoveryCommunity for peer 86db86683215bc4d8ab9a921ff5563bffdc98180
+[main] INFO nl.tudelft.ipv8.Community - Loading TrustChainCommunity for peer 86db86683215bc4d8ab9a921ff5563bffdc98180
+[main] INFO nl.tudelft.ipv8.Community - Loading CoinCommunity for peer 86db86683215bc4d8ab9a921ff5563bffdc98180
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 151.4 ms
+[main] INFO org.bitcoinj.core.Context - Creating bitcoinj 0.15.10 context.
+[main] INFO org.bitcoinj.crypto.MnemonicCode - PBKDF2 took 31.39 ms
+[ STARTING] INFO org.bitcoinj.kits.WalletAppKit - Starting up with directory = /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-86db86683215bc4d8ab9a921ff5563bffdc98180
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 1 keys needed for M/0H/0 = 1 issued + 0 lookahead size + 0 lookahead threshold - 0 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 1.695 ms
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/0 = 1 issued + 100 lookahead size + 33 lookahead threshold - 1 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 86.50 ms
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - 133 keys needed for M/0H/1 = 0 issued + 100 lookahead size + 33 lookahead threshold - 0 num children
+[ STARTING] INFO org.bitcoinj.wallet.DeterministicKeyChain - Took 67.98 ms
+[ STARTING] INFO org.bitcoinj.store.SPVBlockStore - Creating new SPV block chain file /home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/wallet-86db86683215bc4d8ab9a921ff5563bffdc98180/forwarding-service-regtest.spvchain
+[ STARTING] INFO org.bitcoinj.core.AbstractBlockChain - chain head is at height 0:
+ block: 
+   hash: 0f9188f13cb7b2c71f2a335e3a4fc328bf5beb436012afca590b1a11466e2206
+   version: 1
+   previous block: 0000000000000000000000000000000000000000000000000000000000000000
+   time: 1296688602 (2011-02-02T23:16:42Z)
+   difficulty target (nBits): 545259519
+   nonce: 2
+
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Starting ...
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Localhost peer detected, trying to use it instead of P2P discovery
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 0 max)
+[NioClientManager] INFO org.bitcoinj.net.NioClientManager - Connected to localhost/127.0.0.1:18444
+[NioClientManager] INFO org.bitcoinj.core.Peer - Announcing to localhost/127.0.0.1:18444 as: /bitcoinj:0.15.10/
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}: New peer      (1 connected, 0 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}: Sending Bloom filter and querying mempool
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Setting download peer: Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Downloading block chain of size 22840. This may take a while.
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 1% done with 22611 blocks to go, block date 2024-04-01T19:49:54Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 2% done with 22383 blocks to go, block date 2024-04-01T19:50:32Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 3% done with 22154 blocks to go, block date 2024-04-01T19:51:11Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 4% done with 21926 blocks to go, block date 2024-04-01T19:51:49Z
+[NioClientManager] INFO org.bitcoinj.core.Peer - Passed the fast catchup time (2024-04-18T21:54:22Z) at height 1001, discarding 1000 headers and requesting full blocks
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 5% done with 21698 blocks to go, block date 2024-04-25T14:37:20Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 6% done with 21469 blocks to go, block date 2024-04-25T14:37:59Z
+[NioClientManager] WARN org.bitcoinj.core.AbstractBlockChain - Block does not connect: 122d240ee8b2b1efc28c9c8d8681f4f07ed22f0469dd988e85f2860be7683a17 prev 4e05c71c747215a6448f5cfc7c07ed9026e6e5fea2f1f34d5ef595c7860ce4b7
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 7% done with 21241 blocks to go, block date 2024-04-25T14:38:37Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 8% done with 21012 blocks to go, block date 2024-04-25T14:39:15Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 9% done with 20784 blocks to go, block date 2024-04-25T14:39:53Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 10% done with 20556 blocks to go, block date 2024-04-25T14:40:31Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 11% done with 20327 blocks to go, block date 2024-04-25T14:41:09Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 12% done with 20099 blocks to go, block date 2024-04-25T14:41:47Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 13% done with 19870 blocks to go, block date 2024-04-25T14:42:25Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 14% done with 19642 blocks to go, block date 2024-04-25T14:43:03Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 15% done with 19414 blocks to go, block date 2024-04-25T14:43:41Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 16% done with 19185 blocks to go, block date 2024-04-25T14:44:19Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 17% done with 18957 blocks to go, block date 2024-04-25T14:44:57Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 18% done with 18728 blocks to go, block date 2024-04-25T14:45:35Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 19% done with 18500 blocks to go, block date 2024-04-25T14:46:13Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 20% done with 18272 blocks to go, block date 2024-04-25T14:46:51Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 21% done with 18043 blocks to go, block date 2024-04-25T14:47:30Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 22% done with 17815 blocks to go, block date 2024-04-25T14:48:08Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 23% done with 17586 blocks to go, block date 2024-04-25T14:48:46Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 24% done with 17358 blocks to go, block date 2024-04-25T14:49:24Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 25% done with 17130 blocks to go, block date 2024-04-25T14:50:02Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 26% done with 16901 blocks to go, block date 2024-04-25T14:50:40Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 27% done with 16673 blocks to go, block date 2024-04-25T14:51:18Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 28% done with 16444 blocks to go, block date 2024-04-25T14:51:56Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 29% done with 16216 blocks to go, block date 2024-04-25T14:52:34Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 30% done with 15988 blocks to go, block date 2024-04-25T14:53:12Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 31% done with 15759 blocks to go, block date 2024-04-25T14:53:50Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 32% done with 15531 blocks to go, block date 2024-04-25T14:54:28Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 33% done with 15302 blocks to go, block date 2024-04-25T14:55:06Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 34% done with 15074 blocks to go, block date 2024-04-25T14:55:44Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 35% done with 14846 blocks to go, block date 2024-04-25T14:56:22Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 36% done with 14617 blocks to go, block date 2024-04-25T14:57:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 37% done with 14389 blocks to go, block date 2024-04-25T14:57:39Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 38% done with 14160 blocks to go, block date 2024-04-25T14:58:17Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 39% done with 13932 blocks to go, block date 2024-04-25T14:58:55Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 40% done with 13704 blocks to go, block date 2024-04-25T14:59:33Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 41% done with 13475 blocks to go, block date 2024-04-25T15:00:11Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 42% done with 13247 blocks to go, block date 2024-04-25T15:00:49Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 43% done with 13018 blocks to go, block date 2024-04-25T15:01:27Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 44% done with 12790 blocks to go, block date 2024-04-25T15:02:05Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 45% done with 12561 blocks to go, block date 2024-04-25T15:02:43Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 46% done with 12333 blocks to go, block date 2024-04-25T15:03:21Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 47% done with 12105 blocks to go, block date 2024-04-25T15:03:59Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 48% done with 11876 blocks to go, block date 2024-04-25T15:04:37Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 49% done with 11648 blocks to go, block date 2024-04-25T15:05:15Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 50% done with 11420 blocks to go, block date 2024-04-25T15:05:53Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 51% done with 11191 blocks to go, block date 2024-04-25T15:06:32Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 52% done with 10963 blocks to go, block date 2024-04-25T15:07:10Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 53% done with 10734 blocks to go, block date 2024-04-25T15:07:48Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 54% done with 10506 blocks to go, block date 2024-04-25T15:08:26Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 55% done with 10278 blocks to go, block date 2024-04-25T15:09:04Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 56% done with 10049 blocks to go, block date 2024-04-25T15:09:42Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 57% done with 9821 blocks to go, block date 2024-04-25T15:10:20Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 58% done with 9592 blocks to go, block date 2024-04-25T15:10:58Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 59% done with 9364 blocks to go, block date 2024-04-25T15:11:36Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 60% done with 9136 blocks to go, block date 2024-04-25T15:12:14Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 61% done with 8907 blocks to go, block date 2024-04-25T15:12:52Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 62% done with 8679 blocks to go, block date 2024-04-25T15:13:30Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 63% done with 8450 blocks to go, block date 2024-04-25T15:14:08Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 64% done with 8222 blocks to go, block date 2024-04-25T15:14:46Z
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 14734 blocks/sec, 0 tx/sec, 13735 pre-filtered tx/sec, avg/last 116.52/1151.09 kilobytes per sec, chain/common height 14734/22841 (warming up 14 more seconds)
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 65% done with 7994 blocks to go, block date 2024-04-25T15:15:24Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 66% done with 7765 blocks to go, block date 2024-04-25T15:16:03Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 67% done with 7537 blocks to go, block date 2024-04-25T15:16:41Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 68% done with 7308 blocks to go, block date 2024-04-25T15:17:19Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 69% done with 7080 blocks to go, block date 2024-04-25T15:17:57Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 70% done with 6852 blocks to go, block date 2024-04-25T15:18:35Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 71% done with 6623 blocks to go, block date 2024-04-25T15:19:13Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 72% done with 6395 blocks to go, block date 2024-04-25T15:19:51Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 73% done with 6166 blocks to go, block date 2024-04-25T15:20:29Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 74% done with 5938 blocks to go, block date 2024-04-25T15:21:07Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 75% done with 5710 blocks to go, block date 2024-04-25T15:21:45Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 76% done with 5481 blocks to go, block date 2024-04-25T15:22:23Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 77% done with 5253 blocks to go, block date 2024-04-25T15:23:01Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 78% done with 5024 blocks to go, block date 2024-04-25T15:23:39Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 79% done with 4796 blocks to go, block date 2024-04-25T15:24:17Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 80% done with 4568 blocks to go, block date 2024-04-25T15:24:55Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 81% done with 4339 blocks to go, block date 2024-04-25T15:25:34Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 82% done with 4111 blocks to go, block date 2024-04-25T15:26:12Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 83% done with 3882 blocks to go, block date 2024-04-25T15:26:50Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 84% done with 3654 blocks to go, block date 2024-04-25T15:27:28Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 85% done with 3426 blocks to go, block date 2024-04-25T15:28:06Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 86% done with 3197 blocks to go, block date 2024-04-25T15:28:44Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 87% done with 2969 blocks to go, block date 2024-04-25T15:29:22Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 88% done with 2740 blocks to go, block date 2024-04-25T15:30:00Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 89% done with 2512 blocks to go, block date 2024-04-25T15:30:38Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 90% done with 2284 blocks to go, block date 2024-04-25T15:31:16Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 91% done with 2055 blocks to go, block date 2024-04-25T15:31:54Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 92% done with 1827 blocks to go, block date 2024-04-25T15:32:32Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 93% done with 1598 blocks to go, block date 2024-04-25T15:33:10Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 94% done with 1370 blocks to go, block date 2024-04-25T15:33:48Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 95% done with 1142 blocks to go, block date 2024-04-25T15:34:26Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 96% done with 913 blocks to go, block date 2024-04-25T15:35:05Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 97% done with 685 blocks to go, block date 2024-04-25T15:35:43Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 98% done with 456 blocks to go, block date 2024-04-25T15:36:21Z
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 99% done with 228 blocks to go, block date 2024-04-25T15:36:59Z
+[NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected orphan 122d240ee8b2b1efc28c9c8d8681f4f07ed22f0469dd988e85f2860be7683a17
+[NioClientManager] INFO org.bitcoinj.core.AbstractBlockChain - Connected 1 orphan blocks.
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download 100% done with 0 blocks to go, block date 2024-04-25T21:53:27Z
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 8105 blocks/sec, 0 tx/sec, 8190 pre-filtered tx/sec, avg/last 179.68/633.20 kilobytes per sec, chain/common height 22840/22841 (warming up 13 more seconds)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 1 blocks/sec, 0 tx/sec, 2 pre-filtered tx/sec, avg/last 179.53/0.08 kilobytes per sec, chain/common height 22841/22842 (warming up 12 more seconds)
+[NioClientManager] INFO org.bitcoinj.wallet.KeyChainGroup - Marking key as used: DeterministicKey{pub=02cdb0a582178f3bce97ff8f4dafe434eb514320dcd266aea88e540f93defe8199, chainCode=66b30302f54ad510a8740ed4fba19df4f7e07acf60d09be6a56f69e5edaf10a5, path=M/0H/0/0, isEncrypted=false, isPubKeyOnly=false}
+[NioClientManager] INFO org.bitcoinj.wallet.Wallet - Received tx for 0.005 BTC: a6589df6364c0efc5e0b6bb80dcadd27ebd52cce78db5c2b3369ec8f8606c11e [0] in block 4e38a4b4e79658b0ce12221c7a6ee0d87a2bf4e303b6b35b4eb4bc9fe8962e4d
+[NioClientManager] INFO org.bitcoinj.wallet.Wallet -   tx a6589df6364c0efc5e0b6bb80dcadd27ebd52cce78db5c2b3369ec8f8606c11e ->unspent
+[NioClientManager] INFO org.bitcoinj.wallet.Wallet - Balance is now: 0.005 BTC
+[NioClientManager] INFO org.bitcoinj.wallet.WalletFiles - Saving wallet; last seen block is height 22842, date 2024-04-25T21:54:27Z, hash 4e38a4b4e79658b0ce12221c7a6ee0d87a2bf4e303b6b35b4eb4bc9fe8962e4d
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 48
+[NioClientManager] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 110.0 ms
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 1 blocks/sec, 1 tx/sec, 2 pre-filtered tx/sec, avg/last 179.41/0.32 kilobytes per sec, chain/common height 22842/22843 (warming up 11 more seconds)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-9] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 77
+[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 22842, date 2024-04-25T21:54:27Z, hash 4e38a4b4e79658b0ce12221c7a6ee0d87a2bf4e303b6b35b4eb4bc9fe8962e4d
+[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save completed in 122.0 ms
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 98
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 119
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 137
+[DefaultDispatcher-worker-9] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 159
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 175
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 199
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 214
+[DefaultDispatcher-worker-9] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 237
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 251
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 273
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 298
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - 0 blocks/sec, 0 tx/sec, 0 pre-filtered tx/sec, avg/last 0.00/0.00 kilobytes per sec, chain/common height 22842/22843, STALLED (threshold <0.78 KB/sec for 10 seconds)
+[PeerGroup Thread] WARN org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - Chain download stalled: received 0.00 KB/sec for 10 seconds, require average of 0.78 KB/sec, disconnecting Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}, 2 stalls left
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - [127.0.0.1]:18444: Peer died      (0 connected, 0 pending, 1 max)
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Download peer died. Picking a new one.
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Unsetting download peer: Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:23, height=22840}
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Peer discovery took 19.90 μs and returned 0 items from 0 discoverers
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Waiting 1501 ms before next connect attempt to [127.0.0.1]:18444
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 314
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup - Attempting connection to [127.0.0.1]:18444     (0 connected, 1 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.net.NioClientManager - Connected to localhost/127.0.0.1:18444
+[NioClientManager] INFO org.bitcoinj.core.Peer - Announcing to localhost/127.0.0.1:18444 as: /bitcoinj:0.15.10/
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:41, height=22842}
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:41, height=22842}: New peer      (1 connected, 0 pending, 1 max)
+[NioClientManager] INFO org.bitcoinj.core.Peer - Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:41, height=22842}: Sending Bloom filter and querying mempool
+[NioClientManager] INFO org.bitcoinj.core.PeerGroup - Setting download peer: Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:41, height=22842}
+[NioClientManager] INFO org.bitcoinj.core.listeners.DownloadProgressTracker - Chain download switched to Peer{[127.0.0.1]:18444, version=70016, subVer=/Satoshi:0.21.0/, services=1037 (NETWORK, BLOOM, WITNESS, NETWORK_LIMITED), time=2024-04-25 23:54:41, height=22842}
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 329
+[PeerGroup Thread] INFO org.bitcoinj.core.PeerGroup$ChainDownloadSpeedCalculator - End of sync detected at height 22842.
+[DefaultDispatcher-worker-9] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 350
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-7] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 371
+[WebSocketConnectReadThread-14] ERROR org.bitcoinj.core.Context - Performing thread fixup: you are accessing bitcoinj via a thread that has not had any context set on it.
+[WebSocketConnectReadThread-14] ERROR org.bitcoinj.core.Context - This error has been corrected for, but doing this makes your app less robust.
+[WebSocketConnectReadThread-14] ERROR org.bitcoinj.core.Context - You should use Context.propagate() or a ContextPropagatingThreadFactory.
+[WebSocketConnectReadThread-14] ERROR org.bitcoinj.core.Context - Please refer to the user guide for more information about this.
+[WebSocketConnectReadThread-14] ERROR org.bitcoinj.core.Context - Thread name is WebSocketConnectReadThread-14.
+[WebSocketConnectReadThread-14] INFO org.bitcoinj.wallet.Wallet - Completing send tx with 1 outputs totalling 0.0005 BTC and a fee of 0.00 BTC/kB
+[WebSocketConnectReadThread-14] INFO org.bitcoinj.wallet.Wallet -   with 0.0045 BTC change
+[WebSocketConnectReadThread-14] INFO org.bitcoinj.wallet.Wallet -   completed: Transaction{bb83ab2cdc6ed5c4faba2b812823bd53eddb35a245f720287069f911990a4a5f
+purpose: USER_PAYMENT
+   in   PUSHDATA(71)[304402203253616cd219af77328fc3cb75851dde6d9a3ec8acdf896c9ddc4a353a66a301022060bede5385f86e1ae7ba6f5e45fb03729a5cad34a9193f2f8e758705a83cd8e201] PUSHDATA(33)[02cdb0a582178f3bce97ff8f4dafe434eb514320dcd266aea88e540f93defe8199]  0.005 BTC
+        P2PKH addr:mmiSqpkQPY5y44Lb6XrHeHzhFry4rSQ6yv  outpoint:a6589df6364c0efc5e0b6bb80dcadd27ebd52cce78db5c2b3369ec8f8606c11e:0
+   out  DUP HASH160[DefaultDispatcher-worker-9] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 420
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 439
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 463
+[DefaultDispatcher-worker-13] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-13] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 479
+[DefaultDispatcher-worker-13] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelf[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainC[DefaultDispatcher-worker-13] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, [DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCo[DefaultDispatcher-worke[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Background saving wallet; last seen block is height 22843, date 2024-04-25T21:54:44Z, hash 25011945f6d365d39261a9af4e5158cba9a859fc3177c2edcc2bee124b3591f2
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateK[Wallet autosave thread] INFO org.bitcoinj.wallet.WalletFiles - Save [Wallet autosave threa[DefaultDispatcher-worker-11] INFO nl.tudelft.ipv8.attestation.trustc[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-2] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 508
+[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 531
+[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-5] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 554
+[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-4] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 572
+[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 592
+[DefaultDispatcher-worker-3] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Sent 1 blocks
+[DefaultDispatcher-worker-10] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 612
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-12] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=aceb3fa87eb09a716c1a984c5f36f83a7333bfcf, address=192.168.1.162:8090, lanAddress=192.168.1.162:8090, wanAddress=84.117.110.135:8090, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 628
+ nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
+[DefaultDispatcher-worker-6] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Requesting crawl of node Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=192.168.1.162:8091, wanAddress=84.117.110.135:8091, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null) (blocks -1..-1) with id 615
+[DefaultDispatcher-worker-14] INFO nl.tudelft.ipv8.attestation.trustchain.TrustChainCommunity - Processing half-block from Peer(key=86db86683215bc4d8ab9a921ff5563bffdc98180, address=192.168.1.162:8091, lanAddress=0.0.0.0:0, wanAddress=0.0.0.0:0, bluetoothAddress=null, intro=true, supportsTFTP=false, identityPrivateKeySmall=null, identityPrivateKeyBig=null, identityPrivateKeyHuge=null)
+[DefaultDispatcher-worker-3] WARN nl.tudelft.ipv8.Community - Unable to decode authenticated payload: nl.tudelft.ipv8.exception.PacketDecodingException: Incoming packet has an invalid public key
