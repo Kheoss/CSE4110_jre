@@ -495,7 +495,7 @@ class EVAProtocolTest : BaseCommunityTest() {
 
         // Initialize eva protocol with smaller binary size limit
         val binarySizeLimit = 1000000
-        val scope = CoroutineScope(Dispatchers.Main)
+        val scope = CoroutineScope(Dispatchers.Default)
         community.evaProtocol = EVAProtocol(community, scope, binarySizeLimit = binarySizeLimit)
 
         var error = ""

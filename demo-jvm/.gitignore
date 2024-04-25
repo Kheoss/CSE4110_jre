@@ -1,1 +1,4 @@
 /build
+
+demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/*
+demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets

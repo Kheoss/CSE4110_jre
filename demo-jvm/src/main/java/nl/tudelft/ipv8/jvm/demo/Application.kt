@@ -45,14 +45,13 @@ import java.net.URL
 import java.util.*
 import java.util.concurrent.*
 import kotlin.math.roundToInt
+import nl.tudelft.ipv8.attestation.trustchain.CallbackInterface
 
-class Application {
+class Application : CallbackInterface {
     private val scope = CoroutineScope(Dispatchers.Default)
     private val logger = KotlinLogging.logger {}
     private val simContext = SimulatedContext()
-    //DOCKER CONFIG
-    // private val commandListener: CommandListener = CommandListener(URI("ws://host.docker.internal:7071"), this)
-
+   
     private val commandListener: CommandListener = CommandListener(URI("ws://localhost:7071"), this)
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
@@ -63,6 +62,17 @@ class Application {
         startIpv8()
     }
 
+    override fun onCallbackEvent() {
+        commandListener!!.send(
+                        Klaxon().toJsonString(
+                            Message(
+                                Operation.SYNC_COMPLETE.op, Klaxon().toJsonString(
+                                    ParamsDAOIdResponse("sync")
+                                )
+                            )
+                        )
+                    ) 
+    }
   
 
     protected fun getIpv8(): IPv8 {
@@ -204,6 +214,7 @@ class Application {
 
         walletManager.setCommandListenerWalletManager(commandListener);
         getCoinCommunity().setCommandListenerForCoin(commandListener);
+        getTrustChainCommunity().setJoinCallback(this);
 
         return walletManager;
     }
