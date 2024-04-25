@@ -141,7 +141,7 @@ class Application : CallbackInterface {
 
         // Add a proposal to trust chain to join a shared wallet
             try {
-                getCoinCommunity().proposeJoinWallet(
+                DatagetCoinCommunity().proposeJoinWallet(
                     mostRecentSWBlock
                 ).getData()
             } catch (t: Throwable) {
@@ -150,28 +150,28 @@ class Application : CallbackInterface {
             }
 
         // // Wait and collect signatures
-        // var signatures: List<SWResponseSignatureBlockTD>? = null
-        // while (signatures == null) {
-        //     Thread.sleep(1000)
-        //     signatures = collectJoinWalletResponses(proposeBlockData)
-        // }
+        var signatures: List<SWResponseSignatureBlockTD>? = null
+        while (signatures == null) {
+            Thread.sleep(1000)
+            signatures = collectJoinWalletResponses(proposeBlockData)
+        }
 
-        // // Create a new shared wallet using the signatures of the others.
-        // // Broadcast the new shared bitcoin wallet on trust chain.
-        // try {
-        //     getCoinCommunity().joinBitcoinWallet(
-        //         mostRecentSWBlock.transaction,
-        //         proposeBlockData,
-        //         signatures,
-        //         simContext
-        //     )
+        // Create a new shared wallet using the signatures of the others.
+        // Broadcast the new shared bitcoin wallet on trust chain.
+        try {
+            getCoinCommunity().joinBitcoinWallet(
+                mostRecentSWBlock.transaction,
+                proposeBlockData,
+                signatures,
+                simContext
+            )
             
-        //     // Add new nonceKey after joining a DAO
-        //     WalletManager.getInstance()
-        //         .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-        // } catch (t: Throwable) {
-        //     Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
-        // }
+            // Add new nonceKey after joining a DAO
+            WalletManager.getInstance()
+                .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
+        } catch (t: Throwable) {
+            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        }
 
         // Update wallets UI list
     }

@@ -62,8 +62,6 @@ const startSimulation = async () => {
 
 const nextClientJoin = () => {
   peerToJoinWallet++;
-  console.log(otherClients.length);
-  console.log(Math.floor(Math.random() * otherClients.length));
   const nextClient = otherClients[Math.floor(Math.random() * otherClients.length)];
   individualTimer = Date.now();
   nextClient.send(operations.JOIN_WALLET, { id: walletId });
@@ -83,7 +81,7 @@ const newDaoCreated = (client) => {
     tableManager.setPeerDesynced(otherClient.id);
   }
   walletId = client.wallet[0].id;
-  // nextClientJoin();
+  nextClientJoin();
   //   peerToJoinWallet += otherClients.length;
   //   for (let otherClient of otherClients) {
   //     otherClient.send(operations.JOIN_WALLET, { id: walletId });
@@ -102,6 +100,12 @@ const onJoinSucceed = (client) => {
   tableManager.writeToLog("[JOINED] CLIENT " + client.id);
   tableManager.writeToLog("TIME TO JOIN: " + (individualTimer - Date.now()));
 
+  otherClients = clients.filter((x) => x.id != client.id);
+
+  // make all other guys async
+  for (let otherClient of otherClients) {
+    tableManager.setPeerDesynced(otherClient.id);
+  }
   //   if (peerToJoinWallet == 0 && walletsToBeCreated == 0) {
   // if (otherClients.length == 0) {
   //   tableManager.writeToLog("SIMULATION ENDED");
