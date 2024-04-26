@@ -52,7 +52,7 @@ class Client {
 
         case operations.NOTIFICATION:
           const notificationParams = JSON.parse(msg.params);
-          this.receivePing(this);
+          this.receivePing(this, parseInt(notificationParams.id));
           break;
 
         case operations.SYNC_COMPLETE:

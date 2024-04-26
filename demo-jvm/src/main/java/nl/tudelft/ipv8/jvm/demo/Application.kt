@@ -56,6 +56,8 @@ class Application : CallbackInterface {
 
     private var proposals: ArrayList<TrustChainBlock> = ArrayList()
 
+    private var currentKnowledge = 0;
+
     fun run() {
         logger.error ("start")
         commandListener.connect()
@@ -63,17 +65,25 @@ class Application : CallbackInterface {
     }
 
     override fun onCallbackEvent() {
-        println("Am dat notificare")
-                    
-        commandListener!!.send(
-                        Klaxon().toJsonString(
-                            Message(
-                                Operation.NOTIFICATION.op, Klaxon().toJsonString(
-                                    ParamsDAOIdResponse("sync")
-                                )
+    
+        // scope.launch {
+            val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
+        Log.i("NOTIFICATION", wallets.size.toString())    
+        if(wallets.size > 0){
+            val knowledge = SWJoinBlockTransactionData(wallets[0].transaction).getData().SW_TRUSTCHAIN_PKS.size
+            println("Am dat notificare")
+            Log.i("NOTIFICATION", knowledge.toString())
+                commandListener!!.send(
+                    Klaxon().toJsonString(
+                        Message(
+                            Operation.NOTIFICATION.op, Klaxon().toJsonString(
+                                ParamsDAOIdResponse(knowledge.toString())
                             )
                         )
-                    ) 
+                    )
+                )
+            }
+        // }
     }
   
 
@@ -101,6 +111,7 @@ class Application : CallbackInterface {
                     val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 100, simContext)
                     WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
                     val id: String = newDAO.getData().SW_UNIQUE_ID
+                    Log.i("CREATION", "Send creation notification")
                     commandListener.send(
                         Klaxon().toJsonString(
                             Message(
@@ -180,7 +191,7 @@ class Application : CallbackInterface {
             // Add new nonceKey after joining a DAO
             WalletManager.getInstance()
                 .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-
+            Log.i("JOINING", "SEND NOTIFICATION")
                 commandListener.send(
                     Klaxon().toJsonString(
                         Message(

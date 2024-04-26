@@ -4,14 +4,12 @@ import { clients, wallets } from "../clients_tracker/clientsList.js";
 import operations from "../api/operations.js";
 import * as readline from "readline";
 import TableManager from "./tableManager.js";
-import { table } from "console";
 
 const PEERS_ON_TRIAL = 2;
 
-let walletCreated = false;
-
-let walletsToBeCreated = parseInt(PEERS_ON_TRIAL / 2);
 let peerToJoinWallet = 0;
+
+let clientKnowledge = [];
 
 function askQuestion(query) {
   const rl = readline.createInterface({
@@ -39,28 +37,27 @@ function shuffleArray(array) {
   }
 }
 
-function selectHalfRandomly(arr) {
-  shuffleArray(arr);
-  return arr.slice(0, arr.length / 2);
-}
-
 let timer;
 let otherClients = [];
 let walletId = "";
 
-let individualTimer;
+const getMaximumKnowledge = () => {
+  return Math.max(...clientKnowledge);
+};
+
 const startSimulation = async () => {
   clients.sort(function (a, b) {
-    return a.id - b.id;
+    return b.id - a.id;
   });
+
+  for (let client of clients) {
+    clientKnowledge.push(0);
+  }
+
   const ans = await askQuestion("Are you sure you want to START the simulation? ");
   timer = Date.now();
-  const clientsToGenerateWallets = selectHalfRandomly(clients);
 
-  // for (let client of clients) {
   clients[0].send(operations.CREATE_DAO, { id: clients[0].id.toString() });
-  // break;
-  // }
 };
 
 const nextClientJoin = () => {
@@ -75,89 +72,59 @@ const nextClientJoin = () => {
   tableManager.writeToLog("TO JOIN: " + nextClient.id);
 
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
+
   nextClient.send(operations.JOIN_WALLET, { id: walletId });
 };
 
+const updateSyncOfClients = () => {
+  // make all other peers async
+  const maximumKnowledge = getMaximumKnowledge();
+  tableManager.writeToLog(clientKnowledge);
+  for (let client of clients) {
+    if (clientKnowledge[client.id] < maximumKnowledge)
+      tableManager.setPeerDesynced(client.id);
+    else tableManager.setPeerSynced(client.id);
+  }
+
+  if (tableManager.arePeerBeforeSync()) {
+    tableManager.writeToLog("ALL SYNC: ");
+    // nextClientJoin();
+  }
+};
 const newDaoCreated = async (client) => {
-  // chose half of the clients to join my wallet
   tableManager.writeToLog("WALLET CREATED BY: " + client.id);
+
+  updateSyncOfClients();
+
   tableManager.setPeerJoinedWallet(client.id);
-  walletsToBeCreated--;
 
   otherClients = clients.filter((x) => x.id != client.id);
 
-  // make all other guys async
-  for (let otherClient of otherClients) {
-    tableManager.setPeerDesynced(otherClient.id);
-  }
   walletId = client.wallet[0].id;
 
-  // block untill all peers before client are sync
-  // let x = setInterval(() => {}, 1);
-  walletCreated = true;
-  // let x = setInterval(() => {
-  //   if (tableManager.arePeerBeforeSync(client.id)) {
-  //     tableManager.writeToLog("ALL SYNC: ");
-  //     // nextClientJoin();
-  //     clearInterval(x);
-  //   }
-  // }, 1);
+  // while (!tableManager.arePeerBeforeSync(client.id)) {}
 
-  // peerToJoinWallet += otherClients.length;
-  // for (let otherClient of otherClients) {
-  //   otherClient.send(operations.JOIN_WALLET, { id: walletId });
-  // }
+  // tableManager.writeToLog("ALL SYNC: ");
+  // nextClientJoin();
 };
 
-let isFirst = false;
-const receivePing = (client) => {
-  tableManager.writeToLog("a dat notificare: " + client.id);
-  // tableManager.writeToLog("NOTIFICATION FROM " + client.id);
-  // peerToReceiveNotification--;
-  // if (peerToReceiveNotification == 0) {
-  //   console.log("TIME ON TRIAL: " + (Date.now() - timer));
-  // tableManager.writeToLog("BA PULAAAA :" + client.id);
-  tableManager.setPeerSynced(client.id);
-  if (walletCreated && !isFirst) {
-    if (tableManager.arePeerBeforeSync(client.id)) {
-      tableManager.writeToLog("ALL SYNC: ");
-      isFirst = true;
-      // setTimeout(() => {
-      nextClientJoin();
-      // }, 10000);
-    }
-  }
-  // }
+const receivePing = (client, knowledge) => {
+  tableManager.writeToLog("client: " + client.id + "->" + knowledge);
+  clientKnowledge[client.id] = knowledge;
+  updateSyncOfClients();
 };
 
 const onJoinSucceed = async (client) => {
   peerToJoinWallet--;
   tableManager.writeToLog("[JOINED] CLIENT " + client.id);
-  // tableManager.writeToLog("TIME TO JOIN: " + (individualTimer - Date.now()));
   tableManager.setPeerJoinedWallet(client.id);
   otherClients = clients.filter((x) => x.id != client.id);
 
-  // make all other guys async
-  for (let otherClient of otherClients) {
-    tableManager.setPeerDesynced(otherClient.id);
-  }
-  // let y = setInterval(() => {
-  //   if (tableManager.arePeerBeforeSync(client.id)) {
-  //     tableManager.writeToLog("ALL SYNC: ");
-  //     nextClientJoin();
-  //     clearInterval(y);
-  //   }
-  // }, 1);
+  updateSyncOfClients();
 };
 const onSync = (client) => {
   tableManager.writeToLog("BA PULAAAA :" + client.id);
-  tableManager.setPeerSynced(client.id);
-  if (walletCreated) {
-    if (tableManager.arePeerBeforeSync(client.id)) {
-      tableManager.writeToLog("ALL SYNC: ");
-      // nextClientJoin();
-    }
-  }
+  // tableManager.setPeerSynced(client.id);
 };
 wss.on("connection", (ws) => {
   console.log("connected");
@@ -174,11 +141,7 @@ wss.on("connection", (ws) => {
   tableManager.setPeerActive(client.id);
 
   if (clients.length == PEERS_ON_TRIAL) {
-    // start simulation
-    // console.log("START?");
-    // setTimeout(() => {
     startSimulation();
-    // }, 1000);
   }
 
   ws.on("message", function message(data) {

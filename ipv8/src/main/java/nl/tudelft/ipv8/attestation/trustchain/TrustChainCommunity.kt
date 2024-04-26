@@ -599,19 +599,18 @@ open class TrustChainCommunity(
         if (validationResult is ValidationResult.Invalid) {
             logger.warn { "Block is invalid: ${validationResult.errors}" }
         } else {
+            println("RECEIVED BLOCK BUT IS IN DB:")
+            if(block.type == "v1DAO_JOIN"){
+                onJoinCallback?.onCallbackEvent()
+            }
             if (!database.contains(block)) {
                 try {
 
-                    println("DADADADADASDASDASDASDSASADASDASDASDASDASDASDASD")
-                    println(block.type)
-                    if(block.type == "v1DAO_JOIN")
-                        {
-                            println("TREBUIE SA DAU NOTIFICARE")
                     
-                            onJoinCallback?.onCallbackEvent()
-                        }
                     logger.debug("addBlock " + block.publicKey.toHex() + " " + block.sequenceNumber)
                     database.addBlock(block)
+
+                   
                 } catch (e: Exception) {
                     logger.error(e) { "Failed to insert block into database" }
                 }

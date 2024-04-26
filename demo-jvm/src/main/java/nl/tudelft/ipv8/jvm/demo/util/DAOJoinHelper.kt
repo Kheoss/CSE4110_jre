@@ -131,45 +131,33 @@ class DAOJoinHelper {
         responses: List<SWResponseSignatureBlockTD>,
         context: SimulatedContext
     ) {
-        Log.i("SIGNING", "1")
         val oldWalletBlockData = SWJoinBlockTransactionData(walletBlockData)
 
-        Log.i("SIGNING", "2")
         val newTransactionSerialized = blockData.SW_TRANSACTION_SERIALIZED
 
 
-        Log.i("SIGNING", "3")
         val walletManager = WalletManager.getInstance()
 
 
-        Log.i("SIGNING", "4")
         val signaturesOfOldOwners =
             responses.map {
                 BigInteger(1, it.SW_SIGNATURE_SERIALIZED.hexToBytes())
             }
 
-
-        Log.i("SIGNING", "5")
-        Log.i("SINIGN", responses.size.toString())
         val newNonces: ArrayList<String> = ArrayList(responses.map { it.SW_NONCE })
 
 
-        Log.i("SIGNING", "6")
-        Log.i("SIGNING", oldWalletBlockData.getData().SW_NONCE_PKS.size.toString())
         val noncePoints =
             oldWalletBlockData.getData().SW_NONCE_PKS.map {
                 ECKey.fromPublicOnly(it.hexToBytes())
             }
 
 
-        Log.i("SIGNING", "7")
         val (aggregateNoncePoint, _) = MuSig.aggregateSchnorrNonces(noncePoints)
 
 
-        Log.i("SIGNING", "8")
         val newTransactionProposal = newTransactionSerialized.hexToBytes()
 
-        Log.i("SIGNING", "9")
         val (status, serializedTransaction) =
             walletManager.safeSendingJoinWalletTransaction(
                 signaturesOfOldOwners,
@@ -177,7 +165,6 @@ class DAOJoinHelper {
                 CTransaction().deserialize(newTransactionProposal)
             )
 
-            Log.i("SIGNING", "10")
         if (status) {
             Log.i("Coin", "Successfully submitted taproot transaction to server")
         } else {
