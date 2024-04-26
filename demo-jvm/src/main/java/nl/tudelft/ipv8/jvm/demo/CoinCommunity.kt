@@ -462,28 +462,28 @@ class CoinCommunity : Community() {
         // delay(5000)
 
         // @TODO : make the transaction if enough votes.
-        val latestAskForSignaturesBlock =
-            SWSignatureAskTransactionData(block.transaction).getData()
-        var signatures: List<SWResponseSignatureBlockTD>? = collectJoinWalletResponses(latestAskForSignaturesBlock);
-        if (signatures != null) {
-           Log.i("SIGNING", "SIGNATURES ALIVE")
-            //make the transaction
-            val newMostRecentSWBlock =
-            fetchLatestSharedWalletBlock(block.calculateHash())
-                ?: block
+        // val latestAskForSignaturesBlock =
+        //     SWSignatureAskTransactionData(block.transaction).getData()
+        // var signatures: List<SWResponseSignatureBlockTD>? = collectJoinWalletResponses(latestAskForSignaturesBlock);
+        // if (signatures != null) {
+        //    Log.i("SIGNING", "SIGNATURES ALIVE")
+        //     //make the transaction
+        //     val newMostRecentSWBlock =
+        //     fetchLatestSharedWalletBlock(block.calculateHash())
+        //         ?: block
 
-            joinBitcoinWallet(
-                newMostRecentSWBlock.transaction,
-                latestAskForSignaturesBlock,
-                signatures,
-                context
-            )
+        //     joinBitcoinWallet(
+        //         newMostRecentSWBlock.transaction,
+        //         latestAskForSignaturesBlock,
+        //         signatures,
+        //         context
+        //     )
 
 
-            // .addNewNonceKey(latestAskForSignaturesBlock.SW_UNIQUE_ID, simContext)
-            // @TODO : consider add notification (I've made the transaction)
-            // sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
-        }
+        //     // .addNewNonceKey(latestAskForSignaturesBlock.SW_UNIQUE_ID, simContext)
+        //     // @TODO : consider add notification (I've made the transaction)
+        //     // sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
+        // }
 
 
      

@@ -6,7 +6,7 @@ import * as readline from "readline";
 import TableManager from "./tableManager.js";
 import { table } from "console";
 
-const PEERS_ON_TRIAL = 3;
+const PEERS_ON_TRIAL = 2;
 
 let walletCreated = false;
 
@@ -70,12 +70,10 @@ const nextClientJoin = () => {
     return;
   }
 
-  tableManager.writeToLog("ACUM AICI");
-  // peerToJoinWallet++;
   const nextClient = otherClients[0];
 
-  tableManager.writeToLog("DEDICATIE PT MATEI: " + walletId);
-  // individualTimer = Date.now();
+  tableManager.writeToLog("TO JOIN: " + nextClient.id);
+
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
   nextClient.send(operations.JOIN_WALLET, { id: walletId });
 };
@@ -113,6 +111,7 @@ const newDaoCreated = async (client) => {
 
 let isFirst = false;
 const receivePing = (client) => {
+  tableManager.writeToLog("a dat notificare: " + client.id);
   // tableManager.writeToLog("NOTIFICATION FROM " + client.id);
   // peerToReceiveNotification--;
   // if (peerToReceiveNotification == 0) {
@@ -123,9 +122,9 @@ const receivePing = (client) => {
     if (tableManager.arePeerBeforeSync(client.id)) {
       tableManager.writeToLog("ALL SYNC: ");
       isFirst = true;
-      setTimeout(() => {
-        nextClientJoin();
-      }, 10000);
+      // setTimeout(() => {
+      nextClientJoin();
+      // }, 10000);
     }
   }
   // }

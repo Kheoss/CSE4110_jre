@@ -9,7 +9,7 @@ num_instances=$1
 
 for ((i=1; i<=num_instances; i++))
 do
-  java -jar demo-jvm/build/libs/demo-jvm-all.jar  > /dev/null; 
+  java -jar demo-jvm/build/libs/demo-jvm-all.jar  > /dev/null & 
   #  ./gradlew :demo-jvm:run &
 done
 

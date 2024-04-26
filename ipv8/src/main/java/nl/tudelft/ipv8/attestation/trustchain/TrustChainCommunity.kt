@@ -606,6 +606,8 @@ open class TrustChainCommunity(
                     println(block.type)
                     if(block.type == "v1DAO_JOIN")
                         {
+                            println("TREBUIE SA DAU NOTIFICARE")
+                    
                             onJoinCallback?.onCallbackEvent()
                         }
                     logger.debug("addBlock " + block.publicKey.toHex() + " " + block.sequenceNumber)

@@ -63,6 +63,8 @@ class Application : CallbackInterface {
     }
 
     override fun onCallbackEvent() {
+        println("Am dat notificare")
+                    
         commandListener!!.send(
                         Klaxon().toJsonString(
                             Message(
@@ -111,12 +113,17 @@ class Application : CallbackInterface {
                 }
                 Operation.JOIN_WALLET -> {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
-                    val wallet: TrustChainBlock? = getCoinCommunity().getSharedWalletBySWID(id)
-
-                    if(wallet != null) {
-                        joinSharedWallet(wallet)
-                     
+                    // val wallet: TrustChainBlock? = getCoinCommunity().getSharedWalletBySWID(id)
+                    val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
+                    Log.i("JOINING", wallets.size.toString())
+                    if(wallets.size > 0){
+                        joinSharedWallet(wallets[0])
                     }
+
+                    // if(wallet != null) {
+                    //     joinSharedWallet(wallet)
+                     
+                    // }
                 }
                 Operation.START_SIMULATION -> {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
@@ -140,7 +147,11 @@ class Application : CallbackInterface {
                 ?: block
 
         // Add a proposal to trust chain to join a shared wallet
-            try {
+            // val blockData = SWJoinBlockTransactionData(mostRecentSWBlock).getData()
+            
+            
+
+            val proposeBlockData = try {
                 getCoinCommunity().proposeJoinWallet(
                     mostRecentSWBlock
                 ).getData()
@@ -150,28 +161,28 @@ class Application : CallbackInterface {
             }
 
         // // Wait and collect signatures
-        // var signatures: List<SWResponseSignatureBlockTD>? = null
-        // while (signatures == null) {
-        //     Thread.sleep(1000)
-        //     signatures = collectJoinWalletResponses(proposeBlockData)
-        // }
+        var signatures: List<SWResponseSignatureBlockTD>? = null
+        while (signatures == null) {
+            Thread.sleep(1000)
+            signatures = collectJoinWalletResponses(proposeBlockData)
+        }
 
-        // // Create a new shared wallet using the signatures of the others.
-        // // Broadcast the new shared bitcoin wallet on trust chain.
-        // try {
-        //     getCoinCommunity().joinBitcoinWallet(
-        //         mostRecentSWBlock.transaction,
-        //         proposeBlockData,
-        //         signatures,
-        //         simContext
-        //     )
+        // Create a new shared wallet using the signatures of the others.
+        // Broadcast the new shared bitcoin wallet on trust chain.
+        try {
+            getCoinCommunity().joinBitcoinWallet(
+                mostRecentSWBlock.transaction,
+                proposeBlockData,
+                signatures,
+                simContext
+            )
             
-        //     // Add new nonceKey after joining a DAO
-        //     WalletManager.getInstance()
-        //         .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-        // } catch (t: Throwable) {
-        //     Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
-        // }
+            // Add new nonceKey after joining a DAO
+            WalletManager.getInstance()
+                .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
+        } catch (t: Throwable) {
+            Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
+        }
 
         // Update wallets UI list
     }
@@ -227,7 +238,7 @@ class Application : CallbackInterface {
             Executors.newCachedThreadPool(Executors.defaultThreadFactory())
         val future: Future<Boolean>
         val url = "http://127.0.0.1:443/addBTC?address=$address"
-
+        
         future =
             executor.submit(
                 object : Callable<Boolean> {
