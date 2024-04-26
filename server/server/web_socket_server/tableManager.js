@@ -27,6 +27,13 @@ export default class TableManager {
     this.updateTable();
   }
 
+  arePeerBeforeSync(peerId) {
+    for (let i = 1; i < this.activityMatrix[1].length; i++) {
+      if (this.activityMatrix[1][i].length == 12) return false;
+    }
+    return true;
+  }
+
   initiateActivityMatrix() {
     this.activityMatrix = [
       this.initiateProcessStatusColumn(),
@@ -82,6 +89,7 @@ export default class TableManager {
   }
 
   setPeerDesynced(peerId) {
+    this.writeToLog("Peer desync: " + peerId);
     this.activityMatrix[1][peerId + 1] = chalk.red("NO");
     this.updateTable();
   }

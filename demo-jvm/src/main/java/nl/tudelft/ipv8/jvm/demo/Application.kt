@@ -66,7 +66,7 @@ class Application : CallbackInterface {
         commandListener!!.send(
                         Klaxon().toJsonString(
                             Message(
-                                Operation.SYNC_COMPLETE.op, Klaxon().toJsonString(
+                                Operation.NOTIFICATION.op, Klaxon().toJsonString(
                                     ParamsDAOIdResponse("sync")
                                 )
                             )
