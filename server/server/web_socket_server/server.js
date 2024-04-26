@@ -11,6 +11,7 @@ let peerToJoinWallet = 0;
 
 let clientKnowledge = [];
 
+let roundOnGoing = false;
 function askQuestion(query) {
   const rl = readline.createInterface({
     input: process.stdin,
@@ -61,9 +62,9 @@ const startSimulation = async () => {
 };
 
 const nextClientJoin = () => {
-  tableManager.writeToLog("SUNTEM AICI");
+  // tableManager.writeToLog("SUNTEM AICI");
   if (otherClients.length == 0) {
-    tableManager.writeToLog("DONE");
+    // tableManager.writeToLog("DONE");
     return;
   }
 
@@ -77,7 +78,6 @@ const nextClientJoin = () => {
 };
 
 const updateSyncOfClients = () => {
-  // make all other peers async
   const maximumKnowledge = getMaximumKnowledge();
   tableManager.writeToLog(clientKnowledge);
   for (let client of clients) {
@@ -87,8 +87,8 @@ const updateSyncOfClients = () => {
   }
 
   if (tableManager.arePeerBeforeSync()) {
-    tableManager.writeToLog("ALL SYNC: ");
-    // nextClientJoin();
+    // tableManager.writeToLog("ALL SYNC: ");
+    nextClientJoin();
   }
 };
 const newDaoCreated = async (client) => {
@@ -101,11 +101,6 @@ const newDaoCreated = async (client) => {
   otherClients = clients.filter((x) => x.id != client.id);
 
   walletId = client.wallet[0].id;
-
-  // while (!tableManager.arePeerBeforeSync(client.id)) {}
-
-  // tableManager.writeToLog("ALL SYNC: ");
-  // nextClientJoin();
 };
 
 const receivePing = (client, knowledge) => {
