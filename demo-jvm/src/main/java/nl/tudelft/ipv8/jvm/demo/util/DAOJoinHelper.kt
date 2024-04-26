@@ -235,9 +235,12 @@ class DAOJoinHelper {
             }
             Log.i("Coin", "Signing join block transaction: $blockData")
 
-            val walletManager = WalletManager.getInstance()
 
+            val walletManager = WalletManager.getInstance()
             val newTransactionSerialized = blockData.SW_TRANSACTION_SERIALIZED
+   
+
+            
             val signature =
                 walletManager.safeSigningJoinWalletTransaction(
                     CTransaction().deserialize(oldTransactionSerialized.hexToBytes()),
@@ -249,9 +252,12 @@ class DAOJoinHelper {
                     context
                 )
 
+            Log.i("Coin", "3")
             val nonce = walletManager.addNewNonceKey(joinBlock.SW_UNIQUE_ID, context)
 
+            Log.i("Coin", "4")
             val signatureSerialized = signature.toByteArray().toHex()
+            Log.i("Coin", "5")
             if (votedInFavor) {
                 val agreementData =
                     SWResponseSignatureTransactionData(
@@ -261,12 +267,15 @@ class DAOJoinHelper {
                         walletManager.protocolECKey().publicKeyAsHex,
                         walletManager.nonceECPointHex(nonce)
                     )
+                    Log.i("Coin", "6")
 
                 trustchain.createProposalBlock(
                     agreementData.getTransactionData(),
                     myPublicKey,
                     agreementData.blockType
+                  
                 )
+                Log.i("Coin", "7")
             } else {
                 val negativeResponseData =
                     SWResponseNegativeSignatureTransactionData(
@@ -276,12 +285,14 @@ class DAOJoinHelper {
                         walletManager.protocolECKey().publicKeyAsHex,
                         walletManager.nonceECPointHex(nonce)
                     )
+                    Log.i("Coin", "8")
 
                 trustchain.createProposalBlock(
                     negativeResponseData.getTransactionData(),
                     myPublicKey,
                     negativeResponseData.blockType
                 )
+                Log.i("Coin", "9")
             }
         }
     }

@@ -449,45 +449,14 @@ class CoinCommunity : Community() {
                 .SW_PREVIOUS_BLOCK_HASH
         val mostRecentSWBlock =
             fetchLatestSharedWalletBlock(latestHash.hexToBytes())
-                ?: throw IllegalStateException("Most recent DAO block not found")
+                ?: block
         val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 
         Log.i("SIGNING", "SIGNED")
         DAOJoinHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
 
-        // CHECK FOR ENOUGH
 
-        // @TODO : delete this delay
-        // delay(5000)
-
-        // @TODO : make the transaction if enough votes.
-        // val latestAskForSignaturesBlock =
-        //     SWSignatureAskTransactionData(block.transaction).getData()
-        // var signatures: List<SWResponseSignatureBlockTD>? = collectJoinWalletResponses(latestAskForSignaturesBlock);
-        // if (signatures != null) {
-        //    Log.i("SIGNING", "SIGNATURES ALIVE")
-        //     //make the transaction
-        //     val newMostRecentSWBlock =
-        //     fetchLatestSharedWalletBlock(block.calculateHash())
-        //         ?: block
-
-        //     joinBitcoinWallet(
-        //         newMostRecentSWBlock.transaction,
-        //         latestAskForSignaturesBlock,
-        //         signatures,
-        //         context
-        //     )
-
-
-        //     // .addNewNonceKey(latestAskForSignaturesBlock.SW_UNIQUE_ID, simContext)
-        //     // @TODO : consider add notification (I've made the transaction)
-        //     // sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
-        // }
-
-
-     
-        // getCoinCommunity().sendVoteFinishedMessage(peer, "Crawl result: ${crawlResult.size} proposals")
 
     }
 

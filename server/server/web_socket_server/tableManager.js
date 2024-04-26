@@ -73,7 +73,7 @@ export default class TableManager {
   }
 
   setPeerActive(peerId) {
-    this.writeToLog("Peer set to active: " + peerId);
+    // this.writeToLog("Peer set to active: " + peerId);
     this.activityMatrix[0][peerId + 1] = chalk.green("YES");
     this.updateTable();
   }
@@ -89,7 +89,7 @@ export default class TableManager {
   }
 
   setPeerDesynced(peerId) {
-    this.writeToLog("Peer desync: " + peerId);
+    // this.writeToLog("Peer desync: " + peerId);
     this.activityMatrix[1][peerId + 1] = chalk.red("NO");
     this.updateTable();
   }

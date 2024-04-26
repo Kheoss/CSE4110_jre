@@ -52,13 +52,13 @@ const startSimulation = async () => {
   const ans = await askQuestion("Are you sure you want to START the simulation? ");
   timer = Date.now();
 
+  otherClients = clients.filter((x) => x.id != clients[0].id);
   clients[0].send(operations.CREATE_DAO, { id: clients[0].id.toString() });
 };
 
 const nextClientJoin = () => {
-  // tableManager.writeToLog("SUNTEM AICI");
   if (otherClients.length == 0) {
-    // tableManager.writeToLog("DONE");
+    tableManager.writeToLog("FINISHED");
     return;
   }
 
@@ -68,13 +68,15 @@ const nextClientJoin = () => {
 
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
   roundOnGoing = true;
-  timer = Date.now();
-  nextClient.send(operations.JOIN_WALLET, { id: walletId });
+  setTimeout(() => {
+    timer = Date.now();
+    nextClient.send(operations.JOIN_WALLET, { id: walletId });
+  }, 5000);
 };
 
 const updateSyncOfClients = () => {
   const maximumKnowledge = getMaximumKnowledge();
-  tableManager.writeToLog(clientKnowledge);
+  // tableManager.writeToLog(clientKnowledge);
   for (let client of clients) {
     if (clientKnowledge[client.id] < maximumKnowledge)
       tableManager.setPeerDesynced(client.id);
@@ -82,7 +84,7 @@ const updateSyncOfClients = () => {
   }
 
   if (tableManager.arePeerBeforeSync() && !roundOnGoing) {
-    // tableManager.writeToLog("ALL SYNC: ");
+    tableManager.writeToLog("ALL SYNC: ");
     nextClientJoin();
   }
 };
@@ -91,6 +93,9 @@ const newDaoCreated = async (client) => {
   roundOnGoing = false;
 
   tableManager.writeToLog("WALLET CREATED BY: " + client.id);
+  for (let i = 0; i < clientKnowledge.length; i++) {
+    clientKnowledge[i] = getMaximumKnowledge();
+  }
 
   updateSyncOfClients();
 
@@ -102,7 +107,7 @@ const newDaoCreated = async (client) => {
 };
 
 const receivePing = (client, knowledge) => {
-  tableManager.writeToLog("client: " + client.id + "->" + knowledge);
+  // tableManager.writeToLog("client: " + client.id + "->" + knowledge);
   clientKnowledge[client.id] = knowledge;
   updateSyncOfClients();
 };
@@ -122,6 +127,9 @@ const onJoinSucceed = async (client) => {
   tableManager.setPeerJoinedWallet(client.id);
   otherClients = clients.filter((x) => x.id != client.id);
 
+  for (let i = 0; i < clientKnowledge.length; i++) {
+    clientKnowledge[i] = getMaximumKnowledge();
+  }
   updateSyncOfClients();
 };
 const onSync = (client) => {
