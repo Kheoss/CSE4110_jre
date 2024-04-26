@@ -599,10 +599,7 @@ open class TrustChainCommunity(
         if (validationResult is ValidationResult.Invalid) {
             logger.warn { "Block is invalid: ${validationResult.errors}" }
         } else {
-            println("RECEIVED BLOCK BUT IS IN DB:")
-            if(block.type == "v1DAO_JOIN"){
-                onJoinCallback?.onCallbackEvent()
-            }
+         
             if (!database.contains(block)) {
                 try {
 
@@ -616,6 +613,9 @@ open class TrustChainCommunity(
                 }
                 notifyListeners(block)
             }
+            // if(block.type == "v1DAO_JOIN"){
+            onJoinCallback?.onCallbackEvent()
+            // }
         }
         return validationResult
     }

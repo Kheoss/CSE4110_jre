@@ -116,7 +116,6 @@ open class TrustChainCommunity(
      * Notify listeners of a specific new block.
      */
     internal fun notifyListeners(block: TrustChainBlock) {
-
         val universalListeners = listenersMap[null] ?: listOf<BlockListener>()
         for (listener in universalListeners) {
             listener.onBlockReceived(block)
@@ -595,47 +594,28 @@ open class TrustChainCommunity(
      * @return The validation result.
      */
     internal fun validateAndPersistBlock(block: TrustChainBlock): ValidationResult {
-<<<<<<< Updated upstream
-=======
-        println("ASDASDASDASDSADASDASDASDASDAS FOUND BLOCK")
-
-        
->>>>>>> Stashed changes
         val validationResult = validateBlock(block)
 
         if (validationResult is ValidationResult.Invalid) {
             logger.warn { "Block is invalid: ${validationResult.errors}" }
         } else {
-<<<<<<< Updated upstream
+         
             if (!database.contains(block)) {
-=======
-            println("ASDASDASDASDSADASDASDASDASDAS FOUND BLOCK 2")
-
-            if (!database.contains(block)) {
-
-                if(block.type == "v1DAO_JOIN"){
-                    println("ASDASDASDASDSADASDASDASDASDAS FOUND BLOCK 3")
-                     println(block.type)
-           
-                    callback?.onCallbackEvent()   
-                }
-
->>>>>>> Stashed changes
                 try {
 
-                    println("DADADADADASDASDASDASDSASADASDASDASDASDASDASDASD")
-                    println(block.type)
-                    if(block.type == "v1DAO_JOIN")
-                        {
-                            onJoinCallback?.onCallbackEvent()
-                        }
+                    
                     logger.debug("addBlock " + block.publicKey.toHex() + " " + block.sequenceNumber)
                     database.addBlock(block)
+
+                   
                 } catch (e: Exception) {
                     logger.error(e) { "Failed to insert block into database" }
                 }
                 notifyListeners(block)
             }
+            // if(block.type == "v1DAO_JOIN"){
+            onJoinCallback?.onCallbackEvent()
+            // }
         }
         return validationResult
     }

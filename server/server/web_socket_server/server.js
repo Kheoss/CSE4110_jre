@@ -5,7 +5,7 @@ import operations from "../api/operations.js";
 import * as readline from "readline";
 import TableManager from "./tableManager.js";
 
-const PEERS_ON_TRIAL = 2;
+const PEERS_ON_TRIAL = 5;
 
 let peerToJoinWallet = 0;
 
@@ -31,12 +31,6 @@ const wss = new WebSocketServer({ port: 7071 });
 const tableManager = new TableManager(PEERS_ON_TRIAL);
 
 tableManager.start(1000);
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
 
 let timer;
 let otherClients = [];
@@ -73,7 +67,8 @@ const nextClientJoin = () => {
   tableManager.writeToLog("TO JOIN: " + nextClient.id);
 
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
-
+  roundOnGoing = true;
+  timer = Date.now();
   nextClient.send(operations.JOIN_WALLET, { id: walletId });
 };
 
@@ -86,12 +81,15 @@ const updateSyncOfClients = () => {
     else tableManager.setPeerSynced(client.id);
   }
 
-  if (tableManager.arePeerBeforeSync()) {
+  if (tableManager.arePeerBeforeSync() && !roundOnGoing) {
     // tableManager.writeToLog("ALL SYNC: ");
     nextClientJoin();
   }
 };
 const newDaoCreated = async (client) => {
+  tableManager.writeToLog("Peer created DAO in " + (Date.now() - timer) + "ms");
+  roundOnGoing = false;
+
   tableManager.writeToLog("WALLET CREATED BY: " + client.id);
 
   updateSyncOfClients();
@@ -110,6 +108,15 @@ const receivePing = (client, knowledge) => {
 };
 
 const onJoinSucceed = async (client) => {
+  tableManager.writeToLog(
+    "Peer joined a DAO of size " +
+      (PEERS_ON_TRIAL - otherClients.length) +
+      " in " +
+      (Date.now() - timer) +
+      "ms"
+  );
+  roundOnGoing = false;
+
   peerToJoinWallet--;
   tableManager.writeToLog("[JOINED] CLIENT " + client.id);
   tableManager.setPeerJoinedWallet(client.id);
@@ -119,7 +126,7 @@ const onJoinSucceed = async (client) => {
 };
 const onSync = (client) => {
   tableManager.writeToLog("BA PULAAAA :" + client.id);
-  // tableManager.setPeerSynced(client.id);
+  tableManager.setPeerSynced(client.id);
 };
 wss.on("connection", (ws) => {
   console.log("connected");
