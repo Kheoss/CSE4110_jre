@@ -180,6 +180,16 @@ class Application : CallbackInterface {
             // Add new nonceKey after joining a DAO
             WalletManager.getInstance()
                 .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
+
+                commandListener.send(
+                    Klaxon().toJsonString(
+                        Message(
+                            Operation.JOIN_WALLET.op, Klaxon().toJsonString(
+                                ParamsDAOIdResponse("join")
+                            )
+                        )
+                    )
+                )
         } catch (t: Throwable) {
             Log.e("Coin", "Joining failed. ${t.message ?: "No further information"}.")
         }
