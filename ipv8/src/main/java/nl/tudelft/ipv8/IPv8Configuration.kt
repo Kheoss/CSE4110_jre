@@ -12,5 +12,5 @@ class IPv8Configuration(
 class OverlayConfiguration<T : Overlay>(
     val factory: Overlay.Factory<T>,
     val walkers: List<DiscoveryStrategy.Factory<*>>,
-    val maxPeers: Int = 30
+    val maxPeers: Int = 200
 )

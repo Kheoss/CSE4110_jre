@@ -672,7 +672,7 @@ abstract class Community : Overlay {
 
         // Timeout before we bootstrap again (bootstrap kills performance)
         private const val BOOTSTRAP_TIMEOUT_MS = 5_000
-        const val DEFAULT_MAX_PEERS = 30
+        const val DEFAULT_MAX_PEERS = 200
 
         const val PREFIX_IPV8: Byte = 0
         const val VERSION: Byte = 2

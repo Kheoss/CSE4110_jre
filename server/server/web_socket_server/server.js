@@ -1,18 +1,37 @@
 import { WebSocketServer } from "ws";
 import Client from "../clients_tracker/client.js";
-import { clients, wallets } from "../clients_tracker/clientsList.js";
+import { clients } from "../clients_tracker/clientsList.js";
 import operations from "../api/operations.js";
 import * as readline from "readline";
 import TableManager from "./tableManager.js";
 
-const PEERS_ON_TRIAL = 5;
+const getArgs = () =>
+  process.argv.reduce((args, arg) => {
+    // long arg
+    if (arg.slice(0, 2) === "--") {
+      const longArg = arg.split("=");
+      const longArgFlag = longArg[0].slice(2);
+      const longArgValue = longArg.length > 1 ? longArg[1] : true;
+      args[longArgFlag] = longArgValue;
+    }
+    // flags
+    else if (arg[0] === "-") {
+      const flags = arg.slice(1).split("");
+      flags.forEach((flag) => {
+        args[flag] = true;
+      });
+    }
+    return args;
+  }, {});
 
-let peerToJoinWallet = 0;
+const args = getArgs();
 
+let setupNotifications = 0;
+const PEERS_ON_TRIAL = args.peers;
 let clientKnowledge = [];
 
 let roundOnGoing = false;
-function askQuestion(query) {
+function blockUntillKeyboard(query) {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -30,7 +49,11 @@ const wss = new WebSocketServer({ port: 7071 });
 
 const tableManager = new TableManager(PEERS_ON_TRIAL);
 
-tableManager.start(1000);
+if (!args.peers) {
+  console.log("INCORRECT FORMAT, PLEASE SPECIFIY --peers");
+} else {
+  tableManager.start(1000);
+}
 
 let timer;
 let otherClients = [];
@@ -49,7 +72,8 @@ const startSimulation = async () => {
     clientKnowledge.push(0);
   }
 
-  const ans = await askQuestion("Are you sure you want to START the simulation? ");
+  tableManager.writeToLog("Simulation started");
+  // const ans = await blockUntillKeyboard("");
   timer = Date.now();
 
   otherClients = clients.filter((x) => x.id != clients[0].id);
@@ -58,6 +82,7 @@ const startSimulation = async () => {
 
 const nextClientJoin = () => {
   if (otherClients.length == 0) {
+    roundOnGoing = true;
     tableManager.writeToLog("FINISHED");
     return;
   }
@@ -68,15 +93,15 @@ const nextClientJoin = () => {
 
   otherClients = otherClients.filter((x) => x.id != nextClient.id);
   roundOnGoing = true;
-  setTimeout(() => {
-    timer = Date.now();
-    nextClient.send(operations.JOIN_WALLET, { id: walletId });
-  }, 5000);
+  // setTimeout(() => {
+  timer = Date.now();
+  nextClient.send(operations.JOIN_WALLET, { id: walletId });
+  // }, 5000);
 };
 
 const updateSyncOfClients = () => {
   const maximumKnowledge = getMaximumKnowledge();
-  // tableManager.writeToLog(clientKnowledge);
+
   for (let client of clients) {
     if (clientKnowledge[client.id] < maximumKnowledge)
       tableManager.setPeerDesynced(client.id);
@@ -84,7 +109,6 @@ const updateSyncOfClients = () => {
   }
 
   if (tableManager.arePeerBeforeSync() && !roundOnGoing) {
-    tableManager.writeToLog("ALL SYNC: ");
     nextClientJoin();
   }
 };
@@ -122,10 +146,9 @@ const onJoinSucceed = async (client) => {
   );
   roundOnGoing = false;
 
-  peerToJoinWallet--;
   tableManager.writeToLog("[JOINED] CLIENT " + client.id);
   tableManager.setPeerJoinedWallet(client.id);
-  otherClients = clients.filter((x) => x.id != client.id);
+  otherClients = otherClients.filter((x) => x.id != client.id);
 
   for (let i = 0; i < clientKnowledge.length; i++) {
     clientKnowledge[i] = getMaximumKnowledge();
@@ -133,11 +156,13 @@ const onJoinSucceed = async (client) => {
   updateSyncOfClients();
 };
 const onSync = (client) => {
-  tableManager.writeToLog("BA PULAAAA :" + client.id);
   tableManager.setPeerSynced(client.id);
+  setupNotifications++;
+  if (setupNotifications == PEERS_ON_TRIAL * 2) {
+    startSimulation();
+  }
 };
 wss.on("connection", (ws) => {
-  console.log("connected");
   const client = new Client(
     clients.length,
     ws,
@@ -150,12 +175,7 @@ wss.on("connection", (ws) => {
 
   tableManager.setPeerActive(client.id);
 
-  if (clients.length == PEERS_ON_TRIAL) {
-    startSimulation();
-  }
-
   ws.on("message", function message(data) {
-    // console.log(data);
     client.interpret(data);
   });
 

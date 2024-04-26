@@ -26,6 +26,7 @@ import nl.tudelft.ipv8.jvm.demo.coin.WalletManagerConfiguration
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWJoinBlockTransactionData
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWResponseSignatureBlockTD
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWSignatureAskBlockTD
+import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWSignatureAskTransactionData
 import nl.tudelft.ipv8.jvm.demo.sharedWallet.SWTransferFundsAskTransactionData
 import nl.tudelft.ipv8.jvm.demo.util.*
 import nl.tudelft.ipv8.keyvault.JavaCryptoProvider
@@ -66,13 +67,9 @@ class Application : CallbackInterface {
 
     override fun onCallbackEvent() {
     
-        // scope.launch {
             val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
-        Log.i("NOTIFICATION", wallets.size.toString())    
         if(wallets.size > 0){
             val knowledge = SWJoinBlockTransactionData(wallets[0].transaction).getData().SW_BITCOIN_PKS.size
-            println("Am dat notificare")
-            Log.i("NOTIFICATION", knowledge.toString())
                 commandListener!!.send(
                     Klaxon().toJsonString(
                         Message(
@@ -111,7 +108,6 @@ class Application : CallbackInterface {
                     val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 100, simContext)
                     WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
                     val id: String = newDAO.getData().SW_UNIQUE_ID
-                    Log.i("CREATION", "Send creation notification")
                     commandListener.send(
                         Klaxon().toJsonString(
                             Message(
@@ -126,15 +122,11 @@ class Application : CallbackInterface {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
                     // val wallet: TrustChainBlock? = getCoinCommunity().getSharedWalletBySWID(id)
                     val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
-                    Log.i("JOINING", wallets.size.toString())
                     if(wallets.size > 0){
                         joinSharedWallet(wallets[0])
                     }
 
-                    // if(wallet != null) {
-                    //     joinSharedWallet(wallet)
-                     
-                    // }
+                 
                 }
                 Operation.START_SIMULATION -> {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
@@ -191,7 +183,6 @@ class Application : CallbackInterface {
             // Add new nonceKey after joining a DAO
             WalletManager.getInstance()
                 .addNewNonceKey(proposeBlockData.SW_UNIQUE_ID, simContext)
-            Log.i("JOINING", "SEND NOTIFICATION")
                 commandListener.send(
                     Klaxon().toJsonString(
                         Message(
@@ -237,7 +228,6 @@ class Application : CallbackInterface {
             seed,
             null
         )
-//        val walletDir = File("wallet-" + myPeer.publicKey)
 
         val walletDir = File("/home/kheoss/UniStuff/Blockchain/CSE4110_jre/demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets//wallet-" + myPeer.publicKey)
         walletDir.mkdir()
@@ -265,9 +255,7 @@ class Application : CallbackInterface {
                 object : Callable<Boolean> {
                     override fun call(): Boolean {
                         val connection = URL(url).openConnection() as HttpURLConnection
-                        Log.i("ADD BTC", url)
-                        Log.i("ADD BTC", connection.responseMessage)
-                        
+                  
                         try {
                             return connection.responseCode == 200
                         } finally {
@@ -301,6 +289,7 @@ class Application : CallbackInterface {
                 
                 val myPublicKey = getTrustChainCommunity().myPeer.publicKey.keyToBin()
                 for (b in toVote) {
+                    // Log.i("TO VOTE: ", SWSignatureAskTransactionData(b.transaction).getData().SW_SIGNATURES_REQUIRED.toString())
                     getCoinCommunity().joinAskBlockReceived(b, myPublicKey, true, simContext)
                 }
 
@@ -362,12 +351,11 @@ class Application : CallbackInterface {
 
     private suspend fun crawlProposalsAndUpdateIfNewFound() {
         val allUsers = getCoinCommunity().getPeers()
-        Log.i("Coin", "Found ${allUsers.size} peers, crawling")
-
+      
         for (peer in allUsers) {
+
             try {
-                // TODO: Commented this line out, it causes the app to crash
-//                withTimeout(JoinDAOFragment.SW_CRAWLING_TIMEOUT_MILLI) {
+
                 getCoinCommunity().trustChainHelper.crawlChain(peer)
                 val crawlResult =
                     getCoinCommunity().trustChainHelper

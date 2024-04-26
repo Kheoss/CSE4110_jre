@@ -447,9 +447,10 @@ class CoinCommunity : Community() {
         val latestHash =
             SWSignatureAskTransactionData(block.transaction).getData()
                 .SW_PREVIOUS_BLOCK_HASH
+                
         val mostRecentSWBlock =
             fetchLatestSharedWalletBlock(latestHash.hexToBytes())
-                ?: throw IllegalStateException("Most recent DAO block not found")
+                ?: throw Exception("Could not fetch the latest dao block")
         val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 

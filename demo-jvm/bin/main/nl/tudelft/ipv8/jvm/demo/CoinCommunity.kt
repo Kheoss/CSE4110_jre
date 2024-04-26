@@ -79,11 +79,6 @@ class CoinCommunity : Community() {
             gossip(payload, newTTL, peer)
         }
         
-        // Log.i("DemoCommunity", peer.mid + ": " + payload.message)
-        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
-        // Log.e("DemoCommunity", peer.mid + ": " + payload.message)
     }
 
     fun generate1KBString(): String {
@@ -291,7 +286,6 @@ class CoinCommunity : Community() {
         addToWalletsList(wallets, discoveredWallets)
 
         val allUsers = getPeers()
-        // Log.i("Coin", "Found ${allUsers.size} peers, crawling")
 
         for (peer in allUsers) {
             val newWallets = crawlAvailableSharedWallets(peer)
@@ -453,10 +447,8 @@ class CoinCommunity : Community() {
         val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 
-        Log.i("SIGNING", "SIGNED")
+       
         DAOJoinHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
-
-
 
     }
 

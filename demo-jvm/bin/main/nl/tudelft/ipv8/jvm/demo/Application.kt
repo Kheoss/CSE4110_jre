@@ -66,13 +66,10 @@ class Application : CallbackInterface {
 
     override fun onCallbackEvent() {
     
-        // scope.launch {
             val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
-        Log.i("NOTIFICATION", wallets.size.toString())    
         if(wallets.size > 0){
             val knowledge = SWJoinBlockTransactionData(wallets[0].transaction).getData().SW_BITCOIN_PKS.size
             println("Am dat notificare")
-            Log.i("NOTIFICATION", knowledge.toString())
                 commandListener!!.send(
                     Klaxon().toJsonString(
                         Message(
@@ -83,7 +80,6 @@ class Application : CallbackInterface {
                     )
                 )
             }
-        // }
     }
   
 
@@ -111,7 +107,6 @@ class Application : CallbackInterface {
                     val newDAO = getCoinCommunity().createBitcoinGenesisWallet(50000, 100, simContext)
                     WalletManager.getInstance().addNewNonceKey(newDAO.getData().SW_UNIQUE_ID, simContext)
                     val id: String = newDAO.getData().SW_UNIQUE_ID
-                    Log.i("CREATION", "Send creation notification")
                     commandListener.send(
                         Klaxon().toJsonString(
                             Message(
@@ -126,15 +121,11 @@ class Application : CallbackInterface {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
                     // val wallet: TrustChainBlock? = getCoinCommunity().getSharedWalletBySWID(id)
                     val wallets: List<TrustChainBlock> = getCoinCommunity().discoverSharedWallets()                    
-                    Log.i("JOINING", wallets.size.toString())
                     if(wallets.size > 0){
                         joinSharedWallet(wallets[0])
                     }
 
-                    // if(wallet != null) {
-                    //     joinSharedWallet(wallet)
-                     
-                    // }
+               
                 }
                 Operation.START_SIMULATION -> {
                     val id: String  = Klaxon().parse<ParamsDAOIdResponse>(message.params)!!.id
