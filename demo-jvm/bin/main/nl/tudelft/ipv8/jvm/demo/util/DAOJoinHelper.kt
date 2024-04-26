@@ -237,9 +237,10 @@ class DAOJoinHelper {
 
 
             val walletManager = WalletManager.getInstance()
-             Log.i("Coin", "1")
             val newTransactionSerialized = blockData.SW_TRANSACTION_SERIALIZED
-            Log.i("Coin", "2")
+   
+
+            
             val signature =
                 walletManager.safeSigningJoinWalletTransaction(
                     CTransaction().deserialize(oldTransactionSerialized.hexToBytes()),

@@ -10,3 +10,5 @@ build
 demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/coin/wallet-*
 demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets/*
 demo-jvm/src/main/java/nl/tudelft/ipv8/jvm/demo/wallets
+demo-jvm/bin
+ipv8/bin

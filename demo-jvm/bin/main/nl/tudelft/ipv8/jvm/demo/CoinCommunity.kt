@@ -449,14 +449,14 @@ class CoinCommunity : Community() {
                 .SW_PREVIOUS_BLOCK_HASH
         val mostRecentSWBlock =
             fetchLatestSharedWalletBlock(latestHash.hexToBytes())
-                ?: block
+                ?: throw IllegalStateException("Most recent DAO block not found")
         val joinBlock = SWJoinBlockTransactionData(mostRecentSWBlock.transaction).getData()
         val oldTransaction = joinBlock.SW_TRANSACTION_SERIALIZED
 
         Log.i("SIGNING", "SIGNED")
         DAOJoinHelper.joinAskBlockReceived(oldTransaction, block, joinBlock, myPublicKey, votedInFavor, context)
 
-
+       
 
     }
 
